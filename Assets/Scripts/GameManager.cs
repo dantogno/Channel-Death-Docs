@@ -16,9 +16,20 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private GameObject[] channelPrefabs;
 
+    [Tooltip("Victim dies after this many seconds.")]
+    public float killTimeInSeconds = 180;
+
+    public float TimeUntilNextKill { get; private set; } = 0;
+
     private Channel[] channels;
 
+    public GameObject victimSpawnPoint;
+
+    public GameObject killPosition;
+
     public int ChannelIndex { get; private set; } = 0;
+
+    private float conveyorBeltSpeed;
 
     private void Start()
     {
@@ -27,6 +38,31 @@ public class GameManager : Singleton<GameManager>
         channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
         UpdateChannelText();
+
+        // the conveyorBeltSpeed should move victim position to killPosition in killTimeInSeconds
+        conveyorBeltSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
+        SetUpNextVictim();
+    }
+
+    private void Update()
+    {
+        UpdateKillTimer();
+        // move victim along conveyor belt
+        //victimSpawnPoint.transform.position = 
+          //  Vector3.MoveTowards(victimSpawnPoint.transform.position, killPosition.transform.position, conveyorBeltSpeed * Time.deltaTime);
+
+        // move the victim along the conveyor belt at a constant speed
+        victimSpawnPoint.transform.position += victimSpawnPoint.transform.forward * conveyorBeltSpeed * Time.deltaTime;
+    }
+
+    private void UpdateKillTimer()
+    {
+        TimeUntilNextKill -= Time.deltaTime;
+    }
+
+    private void SetUpNextVictim()
+    {
+        TimeUntilNextKill = killTimeInSeconds;
     }
 
     private void InitializeChannelArray()
@@ -101,4 +137,7 @@ public class GameManager : Singleton<GameManager>
         InputManager.InputActions.Gameplay.ChannelUp.performed += OnChannelUpPressed;
         InputManager.InputActions.Gameplay.ChannelDown.performed += OnChannelDownPressed;
     }
+
+
+
 }
