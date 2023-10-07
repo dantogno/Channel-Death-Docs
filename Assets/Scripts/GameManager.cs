@@ -19,21 +19,30 @@ public class GameManager : Singleton<GameManager>
     [Tooltip("Victim dies after this many seconds.")]
     public float killTimeInSeconds = 180;
 
-    public float TimeUntilNextKill { get; private set; } = 0;
-
-    private Channel[] channels;
-
+    public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
-
     public GameObject killPosition;
+    public GameObject[] victimPrefabs;
+    public Vector3 victimLocalRotation = new Vector3(0, 279.761871f, 0);
 
+    public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;
 
     private float conveyorBeltSpeed;
     private bool currentVictimIsDead;
+    private Channel[] channels;
+    private Vector3 originalSpawnPosition;
+    private int victimIndex = 0;
+    private Vector3 outOfViewPosition;
 
     private void Start()
     {
+        outOfViewPosition = killPosition.transform.position + Vector3.down * 100;
+        foreach (var victim in victimPrefabs)
+        {
+            victim.transform.position = outOfViewPosition;
+        }
+        originalSpawnPosition = victimSpawnPoint.transform.position;
         InitializeChannelArray();
         ChannelIndex = 0;
         channels[ChannelIndex].ChannelEntered?.Invoke();
@@ -42,15 +51,14 @@ public class GameManager : Singleton<GameManager>
 
         // the conveyorBeltSpeed should move victim position to killPosition in killTimeInSeconds
         conveyorBeltSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
-        SetUpNextVictim();
+        beltUVAnimation.speed = conveyorBeltSpeed/2;
+        ResetKillTimer();
+        MoveVictimToPosition();
     }
 
     private void Update()
     {
-        UpdateKillTimer();
-        // move victim along conveyor belt
-        //victimSpawnPoint.transform.position = 
-          //  Vector3.MoveTowards(victimSpawnPoint.transform.position, killPosition.transform.position, conveyorBeltSpeed * Time.deltaTime);
+        UpdateKillTimer(); 
 
         // move the victim along the conveyor belt at a constant speed
         victimSpawnPoint.transform.position += victimSpawnPoint.transform.forward * conveyorBeltSpeed * Time.deltaTime;
@@ -68,8 +76,38 @@ public class GameManager : Singleton<GameManager>
 
     private void SetUpNextVictim()
     {
-        TimeUntilNextKill = killTimeInSeconds;
+        // Move old victim out of view
+        victimPrefabs[victimIndex].transform.SetParent(null);
+        victimPrefabs[victimIndex].transform.position = outOfViewPosition;
+        UpdateVictimIndex();
+        MoveVictimToPosition();
+        ResetKillTimer();
         currentVictimIsDead = false;
+    }
+
+    private void ResetKillTimer()
+    {
+        TimeUntilNextKill = killTimeInSeconds;
+    }
+
+    /// <summary>
+    /// Update victim index so we get a different victim next time
+    /// </summary>
+    private void UpdateVictimIndex()
+    {
+        victimIndex = victimIndex == victimPrefabs.Length - 1 ? 0 : victimIndex + 1;
+    }
+
+    /// <summary>
+    /// move new victim to spawn position and set its parent as the spawn point 
+    /// (the spawn point is what moves along belt)
+    /// </summary>
+    private void MoveVictimToPosition()
+    {
+        victimSpawnPoint.transform.position = originalSpawnPosition;
+        victimPrefabs[victimIndex].transform.SetParent(victimSpawnPoint.transform, false);
+        victimPrefabs[victimIndex].transform.localPosition = Vector3.zero;
+        victimPrefabs[victimIndex].transform.rotation = Quaternion.Euler(victimLocalRotation);
     }
 
     private void KillVictim()
@@ -139,6 +177,7 @@ public class GameManager : Singleton<GameManager>
     private void OnChannelUpPressed(CallbackContext context)
     {
         ChannelUp();
+        SetUpNextVictim();
     }
 
     private void OnChannelDownPressed(CallbackContext context)
@@ -151,7 +190,4 @@ public class GameManager : Singleton<GameManager>
         InputManager.InputActions.Gameplay.ChannelUp.performed += OnChannelUpPressed;
         InputManager.InputActions.Gameplay.ChannelDown.performed += OnChannelDownPressed;
     }
-
-
-
 }
