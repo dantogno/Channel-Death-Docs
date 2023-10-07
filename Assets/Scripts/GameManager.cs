@@ -30,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     public int ChannelIndex { get; private set; } = 0;
 
     private float conveyorBeltSpeed;
+    private bool currentVictimIsDead;
 
     private void Start()
     {
@@ -53,6 +54,11 @@ public class GameManager : Singleton<GameManager>
 
         // move the victim along the conveyor belt at a constant speed
         victimSpawnPoint.transform.position += victimSpawnPoint.transform.forward * conveyorBeltSpeed * Time.deltaTime;
+
+        if (!currentVictimIsDead && TimeUntilNextKill <=0 )
+        {
+            KillVictim();
+        }
     }
 
     private void UpdateKillTimer()
@@ -63,6 +69,14 @@ public class GameManager : Singleton<GameManager>
     private void SetUpNextVictim()
     {
         TimeUntilNextKill = killTimeInSeconds;
+        currentVictimIsDead = false;
+    }
+
+    private void KillVictim()
+    {
+        currentVictimIsDead = true;
+        var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
+        animController.SetTrigger("Die");
     }
 
     private void InitializeChannelArray()
