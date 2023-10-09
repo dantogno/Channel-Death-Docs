@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class GameManager : Singleton<GameManager>
     [Tooltip("Victim dies after this many seconds.")]
     public float killTimeInSeconds = 180;
 
+    public float timePenaltyMultiplier = 5;
+    public float timePenaltyDuration = 2f;
+
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
     public GameObject killPosition;
@@ -28,12 +32,14 @@ public class GameManager : Singleton<GameManager>
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;
 
-    private float conveyorBeltSpeed;
+    private float conveyorBeltDefaultSpeed;
     private bool currentVictimIsDead;
     private Channel[] channels;
     private Vector3 originalSpawnPosition;
     private int victimIndex = 0;
     private Vector3 outOfViewPosition;
+    private Coroutine channelTextCoroutine;
+    private float timePenaltyTimer = 0;
 
     private void Start()
     {
@@ -48,33 +54,71 @@ public class GameManager : Singleton<GameManager>
         channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
         UpdateChannelText();
-
-        // the conveyorBeltSpeed should move victim position to killPosition in killTimeInSeconds
-        conveyorBeltSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
-        beltUVAnimation.speed = conveyorBeltSpeed/2;
         ResetKillTimer();
         MoveVictimToPosition();
+        conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
+
     }
 
     private void Update()
-    {
-        UpdateKillTimer(); 
+    {   
+        float timeMultiplier = GetMultiplierBasedOnPenaltyStatus();
+        UpdateKillTimer(timeMultiplier);
+        UpdateBeltSpeed(timeMultiplier);
+        UpdateVictimPosition(timeMultiplier);
 
-        // move the victim along the conveyor belt at a constant speed
-        victimSpawnPoint.transform.position += victimSpawnPoint.transform.forward * conveyorBeltSpeed * Time.deltaTime;
-
-        if (!currentVictimIsDead && TimeUntilNextKill <=0 )
+        if (!currentVictimIsDead && TimeUntilNextKill <= 0)
         {
             KillVictim();
+            StartCoroutine(SpawnNewVictimAfterDelay());
         }
     }
 
-    private void UpdateKillTimer()
+    private IEnumerator SpawnNewVictimAfterDelay()
     {
-        TimeUntilNextKill -= Time.deltaTime;
+        yield return new WaitForSeconds(3);
+        SetUpNextVictim();
     }
 
-    private void SetUpNextVictim()
+    private float GetMultiplierBasedOnPenaltyStatus()
+    {
+        float timeMultiplier = 1;
+        if (timePenaltyTimer >= 0)
+        {
+            timePenaltyTimer -= Time.deltaTime;
+            timeMultiplier = timePenaltyTimer > 0 ? timePenaltyMultiplier : 1;
+        }
+        else 
+            timePenaltyTimer = 0;
+
+        Debug.Log($"timePenaltyTimer: {timePenaltyTimer}");
+
+        return timeMultiplier;
+    }
+
+    private void UpdateBeltSpeed(float multiplier)
+    {
+        var beltSpeed = conveyorBeltDefaultSpeed * multiplier;
+        // the conveyorBeltSpeed should move victim position to killPosition in killTimeInSeconds
+        beltUVAnimation.speed = beltSpeed / 2;
+    }
+    private void UpdateVictimPosition(float multiplier)
+    {
+        // move the victim along the conveyor belt at a constant speed
+        victimSpawnPoint.transform.position += victimSpawnPoint.transform.forward * conveyorBeltDefaultSpeed * Time.deltaTime * multiplier;
+    }
+
+    public void IncurPenalty()
+    {
+        timePenaltyTimer += timePenaltyDuration;
+    }
+
+    private void UpdateKillTimer(float multiplier)
+    {
+        TimeUntilNextKill -= Time.deltaTime * multiplier;
+    }
+
+    public void SetUpNextVictim()
     {
         // Move old victim out of view
         victimPrefabs[victimIndex].transform.SetParent(null);
@@ -88,6 +132,7 @@ public class GameManager : Singleton<GameManager>
     private void ResetKillTimer()
     {
         TimeUntilNextKill = killTimeInSeconds;
+        timePenaltyTimer = 0;
     }
 
     /// <summary>
@@ -161,8 +206,11 @@ public class GameManager : Singleton<GameManager>
 
     private void UpdateChannelText()
     {
-        StopAllCoroutines();
-        StartCoroutine(ShowTextForFixedDuration());
+        if (channelTextCoroutine != null)
+        {
+            StopCoroutine(channelTextCoroutine);
+        }
+        channelTextCoroutine = StartCoroutine(ShowTextForFixedDuration());
     }
 
     private IEnumerator ShowTextForFixedDuration()
@@ -177,7 +225,6 @@ public class GameManager : Singleton<GameManager>
     private void OnChannelUpPressed(CallbackContext context)
     {
         ChannelUp();
-        SetUpNextVictim();
     }
 
     private void OnChannelDownPressed(CallbackContext context)

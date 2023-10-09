@@ -28,4 +28,29 @@ public class PasscodeDigitEntry : MonoBehaviour
     {
         inputField.ActivateInputField();
     }
+
+    public void ResetInputField()
+    {
+        inputField.text = string.Empty;
+    }
+
+    private void OnValidationCompleted(bool isSuccessful)
+    {
+        ResetInputField();
+        if (isFirstDigit)
+        {
+            ActivateInputField();
+        }
+    }
+
+    private void OnEnable()
+    {
+        PasscodeManager.ValidationCompleted += OnValidationCompleted;
+    }
+
+
+    private void OnDisable()
+    {
+        PasscodeManager.ValidationCompleted -= OnValidationCompleted;
+    }
 }
