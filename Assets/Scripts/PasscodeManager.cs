@@ -62,7 +62,7 @@ public class PasscodeManager : Singleton<PasscodeManager>
 
     private IEnumerator SetUpNextVictimAfterDelay()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(GameManager.Instance.DelayInSecondsBetweenVictims);
         GameManager.Instance.SetUpNextVictim();
     }
 

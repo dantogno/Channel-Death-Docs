@@ -23,6 +23,9 @@ public class GameManager : Singleton<GameManager>
     public float timePenaltyMultiplier = 5;
     public float timePenaltyDuration = 2f;
 
+    [Tooltip("How long to wait before spawning a new victim after the previous one dies or is rescued.")]
+    public float DelayInSecondsBetweenVictims = 5;
+
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
     public GameObject killPosition;
@@ -45,6 +48,7 @@ public class GameManager : Singleton<GameManager>
     private Vector3 outOfViewPosition;
     private Coroutine channelTextCoroutine;
     private float timePenaltyTimer = 0;
+    private bool victimIsBeingRescued = false;
 
     private void Start()
     {
@@ -86,7 +90,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator SpawnNewVictimAfterDelay()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(DelayInSecondsBetweenVictims);
         SetUpNextVictim();
     }
 
@@ -108,7 +112,7 @@ public class GameManager : Singleton<GameManager>
 
     private void UpdateBeltSpeed(float multiplier)
     {
-        var beltSpeed = conveyorBeltDefaultSpeed * multiplier;
+        var beltSpeed = victimIsBeingRescued ? 0 : conveyorBeltDefaultSpeed * multiplier;
         // the conveyorBeltSpeed should move victim position to killPosition in killTimeInSeconds
         beltUVAnimation.speed = beltSpeed / 2;
     }
@@ -138,6 +142,7 @@ public class GameManager : Singleton<GameManager>
         MoveVictimToPosition();
         ResetKillTimer();
         currentVictimIsDead = false;
+        victimIsBeingRescued = false;
         NewVictimSpawned?.Invoke();
     }
     
@@ -256,5 +261,15 @@ public class GameManager : Singleton<GameManager>
     {
         InputManager.InputActions.Gameplay.ChannelUp.performed += OnChannelUpPressed;
         InputManager.InputActions.Gameplay.ChannelDown.performed += OnChannelDownPressed;
+        PasscodeManager.ValidationCompleted += OnPasscodeValidationCompleted;
+    }
+
+    private void OnPasscodeValidationCompleted(bool isSuccessful)
+    {
+        if (isSuccessful)
+        {
+            victimIsBeingRescued = true;
+            victimSpawnPoint.transform.position = outOfViewPosition;
+        }        
     }
 }
