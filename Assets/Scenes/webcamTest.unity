@@ -363,13 +363,46 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177821975}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &178758245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 178758246}
+  m_Layer: 0
+  m_Name: Victims
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &178758246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178758245}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1189781575}
+  - {fileID: 1607248944}
+  m_Father: {fileID: 305314140}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &257415961
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 305314140}
+    m_TransformParent: {fileID: 178758246}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7a2e48bd5761e12438666b605aba0494,
         type: 3}
@@ -434,7 +467,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a2e48bd5761e12438666b605aba0494,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1607248946}
   m_SourcePrefab: {fileID: 100100000, guid: 7a2e48bd5761e12438666b605aba0494, type: 3}
 --- !u!850595691 &268183569
 LightingSettings:
@@ -537,9 +574,8 @@ Transform:
   - {fileID: 1380555534}
   - {fileID: 1267367890}
   - {fileID: 1600061590}
-  - {fileID: 1189781575}
-  - {fileID: 1607248944}
   - {fileID: 2000401018}
+  - {fileID: 178758246}
   m_Father: {fileID: 2066552066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &317559038
@@ -1734,6 +1770,19 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1783901660}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1189781576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189781573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f5e9c189edfb1f45898d1cdd134bdbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFemale: 1
 --- !u!1001 &1256591610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2341,6 +2390,19 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 257415961}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1607248946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278560112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f5e9c189edfb1f45898d1cdd134bdbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFemale: 0
 --- !u!1 &1638457766
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,7 +2560,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 305314140}
+    m_TransformParent: {fileID: 178758246}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d6a827831a7ce4646aa8afecd25a8966,
         type: 3}
@@ -2563,6 +2625,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1189781574}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d6a827831a7ce4646aa8afecd25a8966,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1189781576}
   m_SourcePrefab: {fileID: 100100000, guid: d6a827831a7ce4646aa8afecd25a8966, type: 3}
 --- !u!1 &1819957283
 GameObject:

@@ -29,8 +29,12 @@ public class GameManager : Singleton<GameManager>
     public GameObject[] victimPrefabs;
     public Vector3 victimLocalRotation = new Vector3(0, 279.761871f, 0);
 
+    public static event Action<string> VictimDied;
+
     public float TimeUntilNextKill { get; private set; } = 0;
-    public int ChannelIndex { get; private set; } = 0;
+    public int ChannelIndex { get; private set; } = 0;  
+
+    public Victim CurrentVictim { get; private set; }
 
     private float conveyorBeltDefaultSpeed;
     private bool currentVictimIsDead;
@@ -43,21 +47,26 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        ChannelIndex = 0;
+        InitializeChannelArray();
+        channels[ChannelIndex].ChannelEntered?.Invoke();
+        channelNumberText.gameObject.SetActive(false);
+        UpdateChannelText();
+        InitializeVictimsOutOfViewPosition();
+        ResetKillTimer();
+        SetNewVictimName();
+        MoveVictimToPosition();
+        conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
+    }
+
+    private void InitializeVictimsOutOfViewPosition()
+    {
         outOfViewPosition = killPosition.transform.position + Vector3.down * 100;
         foreach (var victim in victimPrefabs)
         {
             victim.transform.position = outOfViewPosition;
         }
         originalSpawnPosition = victimSpawnPoint.transform.position;
-        InitializeChannelArray();
-        ChannelIndex = 0;
-        channels[ChannelIndex].ChannelEntered?.Invoke();
-        channelNumberText.gameObject.SetActive(false);
-        UpdateChannelText();
-        ResetKillTimer();
-        MoveVictimToPosition();
-        conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
-
     }
 
     private void Update()
@@ -124,9 +133,17 @@ public class GameManager : Singleton<GameManager>
         victimPrefabs[victimIndex].transform.SetParent(null);
         victimPrefabs[victimIndex].transform.position = outOfViewPosition;
         UpdateVictimIndex();
+        SetNewVictimName();
         MoveVictimToPosition();
         ResetKillTimer();
         currentVictimIsDead = false;
+    }
+    
+    private void SetNewVictimName()
+    {
+        var victim = victimPrefabs[victimIndex].GetComponent<Victim>();
+        CurrentVictim = victim;
+        victim.SetRandomName();
     }
 
     private void ResetKillTimer()
@@ -160,6 +177,7 @@ public class GameManager : Singleton<GameManager>
         currentVictimIsDead = true;
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
+        VictimDied?.Invoke(CurrentVictim.Name);
     }
 
     private void InitializeChannelArray()
