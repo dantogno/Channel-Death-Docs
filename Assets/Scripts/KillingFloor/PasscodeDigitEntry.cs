@@ -9,12 +9,10 @@ public class PasscodeDigitEntry : MonoBehaviour
 
     private TMPro.TMP_InputField inputField;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         inputField = GetComponentInChildren<TMPro.TMP_InputField>();
 
-        if (isFirstDigit ) { StartCoroutine(DelayBeforeActivating()); }
     }
 
     // coroutine to delay activation of first digit for one frame
@@ -36,21 +34,48 @@ public class PasscodeDigitEntry : MonoBehaviour
 
     private void OnValidationCompleted(bool isSuccessful)
     {
+        if (isSuccessful)
+        {
+            inputField.interactable = false;
+        }
+        else
+        {
+            ResetInputField();
+            if (isFirstDigit)
+            {
+                ActivateInputField();
+            }
+        }
+    }
+    private void OnNewVictimSpawed()
+    {
+        inputField.interactable = true;
         ResetInputField();
         if (isFirstDigit)
         {
             ActivateInputField();
         }
     }
+    private void OnVictimDied(string obj)
+    {
+        inputField.interactable = false;
+        ResetInputField();
+    }
 
     private void OnEnable()
     {
+        ResetInputField();
+        if (isFirstDigit) { StartCoroutine(DelayBeforeActivating()); }
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
+        GameManager.NewVictimSpawned += OnNewVictimSpawed;
+        GameManager.VictimDied += OnVictimDied;
     }
 
 
     private void OnDisable()
     {
         PasscodeManager.ValidationCompleted -= OnValidationCompleted;
+        GameManager.NewVictimSpawned -= OnNewVictimSpawed;
+        GameManager.VictimDied -= OnVictimDied;
     }
 }

@@ -30,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     public Vector3 victimLocalRotation = new Vector3(0, 279.761871f, 0);
 
     public static event Action<string> VictimDied;
+    public static event Action NewVictimSpawned;
 
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
@@ -137,6 +138,7 @@ public class GameManager : Singleton<GameManager>
         MoveVictimToPosition();
         ResetKillTimer();
         currentVictimIsDead = false;
+        NewVictimSpawned?.Invoke();
     }
     
     private void SetNewVictimName()

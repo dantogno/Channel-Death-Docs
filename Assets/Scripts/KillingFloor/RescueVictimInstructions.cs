@@ -17,14 +17,22 @@ public class RescueVictimInstructions : MonoBehaviour
         instructionsText.text = $"Oh no! {name} has died!";
     }
 
+    private void ShowRescueMessage(bool wasRescued)
+    {
+        if (wasRescued)
+            instructionsText.text = $"Correct! {GameManager.Instance.CurrentVictim.Name} has been set free.";
+    }
+
     private void OnEnable()
     {
         Victim.VictimNameUpdated += ShowRescueInstructions;
         GameManager.VictimDied += ShowDeathMessage;
+        PasscodeManager.ValidationCompleted += ShowRescueMessage;
     }
     private void OnDisable()
     {
         Victim.VictimNameUpdated -= ShowRescueInstructions;
         GameManager.VictimDied -= ShowDeathMessage;
+        PasscodeManager.ValidationCompleted -= ShowRescueMessage;
     }
 }
