@@ -44,6 +44,33 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VolumeUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""2bfed443-73a1-4460-8259-ae1da3fe659d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VolumeDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""a31ab7c0-b613-46c5-86d8-b914daaebfbf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mute"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b55919f-d61d-4ea7-8bc1-3ab40ed3ac75"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -68,6 +95,39 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""ChannelDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""513d38f7-5e9c-4142-b850-c3f8d8d1f02a"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VolumeUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0c5ea88-bec2-4409-a333-14bd3885b14b"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VolumeDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""368b7bbe-f5de-4039-a24d-de7d57a0f099"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +138,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_ChannelUp = m_Gameplay.FindAction("ChannelUp", throwIfNotFound: true);
         m_Gameplay_ChannelDown = m_Gameplay.FindAction("ChannelDown", throwIfNotFound: true);
+        m_Gameplay_VolumeUp = m_Gameplay.FindAction("VolumeUp", throwIfNotFound: true);
+        m_Gameplay_VolumeDown = m_Gameplay.FindAction("VolumeDown", throwIfNotFound: true);
+        m_Gameplay_Mute = m_Gameplay.FindAction("Mute", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -141,12 +204,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_ChannelUp;
     private readonly InputAction m_Gameplay_ChannelDown;
+    private readonly InputAction m_Gameplay_VolumeUp;
+    private readonly InputAction m_Gameplay_VolumeDown;
+    private readonly InputAction m_Gameplay_Mute;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
         public GameplayActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChannelUp => m_Wrapper.m_Gameplay_ChannelUp;
         public InputAction @ChannelDown => m_Wrapper.m_Gameplay_ChannelDown;
+        public InputAction @VolumeUp => m_Wrapper.m_Gameplay_VolumeUp;
+        public InputAction @VolumeDown => m_Wrapper.m_Gameplay_VolumeDown;
+        public InputAction @Mute => m_Wrapper.m_Gameplay_Mute;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -162,6 +231,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ChannelDown.started += instance.OnChannelDown;
             @ChannelDown.performed += instance.OnChannelDown;
             @ChannelDown.canceled += instance.OnChannelDown;
+            @VolumeUp.started += instance.OnVolumeUp;
+            @VolumeUp.performed += instance.OnVolumeUp;
+            @VolumeUp.canceled += instance.OnVolumeUp;
+            @VolumeDown.started += instance.OnVolumeDown;
+            @VolumeDown.performed += instance.OnVolumeDown;
+            @VolumeDown.canceled += instance.OnVolumeDown;
+            @Mute.started += instance.OnMute;
+            @Mute.performed += instance.OnMute;
+            @Mute.canceled += instance.OnMute;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -172,6 +250,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ChannelDown.started -= instance.OnChannelDown;
             @ChannelDown.performed -= instance.OnChannelDown;
             @ChannelDown.canceled -= instance.OnChannelDown;
+            @VolumeUp.started -= instance.OnVolumeUp;
+            @VolumeUp.performed -= instance.OnVolumeUp;
+            @VolumeUp.canceled -= instance.OnVolumeUp;
+            @VolumeDown.started -= instance.OnVolumeDown;
+            @VolumeDown.performed -= instance.OnVolumeDown;
+            @VolumeDown.canceled -= instance.OnVolumeDown;
+            @Mute.started -= instance.OnMute;
+            @Mute.performed -= instance.OnMute;
+            @Mute.canceled -= instance.OnMute;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -193,5 +280,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnChannelUp(InputAction.CallbackContext context);
         void OnChannelDown(InputAction.CallbackContext context);
+        void OnVolumeUp(InputAction.CallbackContext context);
+        void OnVolumeDown(InputAction.CallbackContext context);
+        void OnMute(InputAction.CallbackContext context);
     }
 }

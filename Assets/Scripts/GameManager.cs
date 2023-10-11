@@ -105,7 +105,7 @@ public class GameManager : Singleton<GameManager>
         else 
             timePenaltyTimer = 0;
 
-        Debug.Log($"timePenaltyTimer: {timePenaltyTimer}");
+        //Debug.Log($"timePenaltyTimer: {timePenaltyTimer}");
 
         return timeMultiplier;
     }
