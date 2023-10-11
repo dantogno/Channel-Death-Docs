@@ -24,27 +24,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "VolumeUp",
+                    "name": "Input2",
                     "type": "Button",
-                    "id": "2bfed443-73a1-4460-8259-ae1da3fe659d",
+                    "id": "85c213f6-9e1e-4d70-9a1b-59a446ba43ab",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "VolumeDown",
+                    "name": "Input4",
                     "type": "Button",
-                    "id": "a31ab7c0-b613-46c5-86d8-b914daaebfbf",
+                    "id": "0e507b4f-2b4f-4fea-ae73-32b6985a7bb8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Mute",
+                    "name": "Input6",
                     "type": "Button",
-                    "id": "7b55919f-d61d-4ea7-8bc1-3ab40ed3ac75",
+                    "id": "c4739fed-ec73-4942-9690-52eb182ba1d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Input8",
+                    "type": "Button",
+                    "id": "bc5dae79-434b-41ba-84e5-ccd7097f0a4e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -76,34 +85,45 @@
                 },
                 {
                     "name": "",
-                    "id": "513d38f7-5e9c-4142-b850-c3f8d8d1f02a",
-                    "path": "<Keyboard>/equals",
+                    "id": "b6560f04-8d86-423b-84e1-c0b095a1fcd2",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "VolumeUp",
+                    "action": "Input2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "d0c5ea88-bec2-4409-a333-14bd3885b14b",
-                    "path": "<Keyboard>/minus",
+                    "id": "81b383b7-8fad-40a5-9749-74f4ae43d2fe",
+                    "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "VolumeDown",
+                    "action": "Input4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "368b7bbe-f5de-4039-a24d-de7d57a0f099",
-                    "path": "<Keyboard>/backquote",
+                    "id": "0118218d-6531-42e6-8e94-f5165132ece2",
+                    "path": "<Keyboard>/6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mute",
+                    "action": "Input6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "457c1aba-c6e7-4c06-bee3-839129ee355d",
+                    "path": "<Keyboard>/8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Input8",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
