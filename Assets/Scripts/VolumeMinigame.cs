@@ -60,6 +60,9 @@ public class VolumeMinigame : MonoBehaviour
         var adjustedPercentage = (VolumePercentage * 100) - 50;
         adjustedPercentage = adjustedPercentage == -50 ? -80 : adjustedPercentage;
         audioMixer.SetFloat("Volume", adjustedPercentage);
+
+        // mute ends if volume is changed
+        muteText.gameObject.SetActive(false);
     }
 
     private void DecreaseVolume()
