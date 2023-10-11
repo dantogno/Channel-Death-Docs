@@ -44,6 +44,42 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input2"",
+                    ""type"": ""Button"",
+                    ""id"": ""85c213f6-9e1e-4d70-9a1b-59a446ba43ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input4"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e507b4f-2b4f-4fea-ae73-32b6985a7bb8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input6"",
+                    ""type"": ""Button"",
+                    ""id"": ""c4739fed-ec73-4942-9690-52eb182ba1d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input8"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc5dae79-434b-41ba-84e5-ccd7097f0a4e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -68,6 +104,50 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""ChannelDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6560f04-8d86-423b-84e1-c0b095a1fcd2"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81b383b7-8fad-40a5-9749-74f4ae43d2fe"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0118218d-6531-42e6-8e94-f5165132ece2"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""457c1aba-c6e7-4c06-bee3-839129ee355d"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +158,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_ChannelUp = m_Gameplay.FindAction("ChannelUp", throwIfNotFound: true);
         m_Gameplay_ChannelDown = m_Gameplay.FindAction("ChannelDown", throwIfNotFound: true);
+        m_Gameplay_Input2 = m_Gameplay.FindAction("Input2", throwIfNotFound: true);
+        m_Gameplay_Input4 = m_Gameplay.FindAction("Input4", throwIfNotFound: true);
+        m_Gameplay_Input6 = m_Gameplay.FindAction("Input6", throwIfNotFound: true);
+        m_Gameplay_Input8 = m_Gameplay.FindAction("Input8", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -141,12 +225,20 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_ChannelUp;
     private readonly InputAction m_Gameplay_ChannelDown;
+    private readonly InputAction m_Gameplay_Input2;
+    private readonly InputAction m_Gameplay_Input4;
+    private readonly InputAction m_Gameplay_Input6;
+    private readonly InputAction m_Gameplay_Input8;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
         public GameplayActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChannelUp => m_Wrapper.m_Gameplay_ChannelUp;
         public InputAction @ChannelDown => m_Wrapper.m_Gameplay_ChannelDown;
+        public InputAction @Input2 => m_Wrapper.m_Gameplay_Input2;
+        public InputAction @Input4 => m_Wrapper.m_Gameplay_Input4;
+        public InputAction @Input6 => m_Wrapper.m_Gameplay_Input6;
+        public InputAction @Input8 => m_Wrapper.m_Gameplay_Input8;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -162,6 +254,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ChannelDown.started += instance.OnChannelDown;
             @ChannelDown.performed += instance.OnChannelDown;
             @ChannelDown.canceled += instance.OnChannelDown;
+            @Input2.started += instance.OnInput2;
+            @Input2.performed += instance.OnInput2;
+            @Input2.canceled += instance.OnInput2;
+            @Input4.started += instance.OnInput4;
+            @Input4.performed += instance.OnInput4;
+            @Input4.canceled += instance.OnInput4;
+            @Input6.started += instance.OnInput6;
+            @Input6.performed += instance.OnInput6;
+            @Input6.canceled += instance.OnInput6;
+            @Input8.started += instance.OnInput8;
+            @Input8.performed += instance.OnInput8;
+            @Input8.canceled += instance.OnInput8;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -172,6 +276,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ChannelDown.started -= instance.OnChannelDown;
             @ChannelDown.performed -= instance.OnChannelDown;
             @ChannelDown.canceled -= instance.OnChannelDown;
+            @Input2.started -= instance.OnInput2;
+            @Input2.performed -= instance.OnInput2;
+            @Input2.canceled -= instance.OnInput2;
+            @Input4.started -= instance.OnInput4;
+            @Input4.performed -= instance.OnInput4;
+            @Input4.canceled -= instance.OnInput4;
+            @Input6.started -= instance.OnInput6;
+            @Input6.performed -= instance.OnInput6;
+            @Input6.canceled -= instance.OnInput6;
+            @Input8.started -= instance.OnInput8;
+            @Input8.performed -= instance.OnInput8;
+            @Input8.canceled -= instance.OnInput8;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -193,5 +309,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnChannelUp(InputAction.CallbackContext context);
         void OnChannelDown(InputAction.CallbackContext context);
+        void OnInput2(InputAction.CallbackContext context);
+        void OnInput4(InputAction.CallbackContext context);
+        void OnInput6(InputAction.CallbackContext context);
+        void OnInput8(InputAction.CallbackContext context);
     }
 }
