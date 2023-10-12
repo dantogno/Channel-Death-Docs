@@ -12,6 +12,7 @@ public class VolumeMinigame : MonoBehaviour
 {
     public float testSpeedScale = 1;
     public float commercialViewTimeThreshold = 8;
+    public float musicMutedTimeThreshold = 5;
     public GameObject jumpScare;
     public TMP_Text volumeSymbolText;
     public TMP_Text muteText;
@@ -29,6 +30,7 @@ public class VolumeMinigame : MonoBehaviour
     private float repeatInputTimer = 0;
     private bool isCommercialPlaying = false;
     private float commercialViewTimer = 0;
+    private float musicMutedTimer = 0;
     private bool playingJumpScare = false;
 
     /// <summary>
@@ -40,7 +42,7 @@ public class VolumeMinigame : MonoBehaviour
     /// <summary>
     /// The number of volume symbols in the volume symbol string divided by the max volume
     /// </summary>
-    public float VolumePercentage => VolumeSymbolString.Count(c => c == volumeSymbol) / (float)maxVolume;
+    public float VolumePercentage => muteText.gameObject.activeSelf ? 0 : VolumeSymbolString.Count(c => c == volumeSymbol) / (float)maxVolume;
     public string VolumeSymbolString
     {
         get => volumeSymbolString;
@@ -188,13 +190,25 @@ public class VolumeMinigame : MonoBehaviour
             DecreaseVolume(); 
         }
 
-        if (isCommercialPlaying && VolumePercentage > 0.1f)
+        if (isCommercialPlaying && VolumePercentage > 0.15f)
         {
             commercialViewTimer += Time.deltaTime;
             if (commercialViewTimer > commercialViewTimeThreshold && !playingJumpScare)
             {
                 StopAllCoroutines();
                 StartCoroutine(PlayJumpScareFailureCoroutine());
+            }
+        }
+        else
+        {
+            if (!isCommercialPlaying && VolumePercentage < 0.2f)
+            {
+                musicMutedTimer += Time.deltaTime;
+                if (musicMutedTimer > musicMutedTimeThreshold && !playingJumpScare)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(PlayJumpScareFailureCoroutine());
+                }            
             }
         }
         //Debug.Log($"commercialViewTimer: {commercialViewTimer}");
@@ -232,6 +246,7 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
+        musicMutedTimer = 0;
         commercialViewTimer = 0;
         playingJumpScare = false;
         muteText.gameObject.SetActive(false);
@@ -262,6 +277,7 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnDisable()
     {
+        musicMutedTimer = 0;
         commercialViewTimer = 0;
         playingJumpScare = false;
         jumpScare.SetActive(false );
