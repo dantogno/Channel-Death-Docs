@@ -229,6 +229,12 @@ public class GameManager : Singleton<GameManager>
         UpdateChannelText();
     }
 
+    public void GoToRandomChannel()
+    {
+        var randomIndex = UnityEngine.Random.Range(0, channels.Length);
+        ChangeChannel(randomIndex);
+    }
+
     private void UpdateChannelText()
     {
         if (channelTextCoroutine != null)

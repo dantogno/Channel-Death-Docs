@@ -12,6 +12,7 @@ public class VolumeMinigame : MonoBehaviour
 {
     public float testSpeedScale = 1;
     public float commercialViewTimeThreshold = 8;
+    public GameObject jumpScare;
     public TMP_Text volumeSymbolText;
     public TMP_Text muteText;
     public AudioMixer audioMixer;
@@ -28,6 +29,7 @@ public class VolumeMinigame : MonoBehaviour
     private float repeatInputTimer = 0;
     private bool isCommercialPlaying = false;
     private float commercialViewTimer = 0;
+    private bool playingJumpScare = false;
 
     /// <summary>
     /// Must set this for each new victim!
@@ -74,7 +76,7 @@ public class VolumeMinigame : MonoBehaviour
 
         // play second commercial break
         StartCommercial();
-        yield return new WaitForSeconds(29);
+        yield return new WaitForSeconds(29.1f);
         PauseCommercial();
 
         // resume feature
@@ -86,7 +88,7 @@ public class VolumeMinigame : MonoBehaviour
 
         // play third commercial break
         StartCommercial();
-        yield return new WaitForSeconds(24.25f);
+        yield return new WaitForSeconds(24.2f);
         PauseCommercial();
 
         // resume feature with clue
@@ -189,17 +191,25 @@ public class VolumeMinigame : MonoBehaviour
         if (isCommercialPlaying && VolumePercentage > 0.1f)
         {
             commercialViewTimer += Time.deltaTime;
-            if (commercialViewTimer > commercialViewTimeThreshold)
+            if (commercialViewTimer > commercialViewTimeThreshold && !playingJumpScare)
             {
                 StopAllCoroutines();
                 StartCoroutine(PlayJumpScareFailureCoroutine());
             }
         }
+        //Debug.Log($"commercialViewTimer: {commercialViewTimer}");
     }
 
-    private string PlayJumpScareFailureCoroutine()
+    private IEnumerator PlayJumpScareFailureCoroutine()
     {
-        throw new NotImplementedException();
+        playingJumpScare = true;
+        audioMixer.SetFloat("Volume", -80);
+        muteText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.6f);
+        Debug.Log("Jump scare.");
+        jumpScare.SetActive(true);
+        yield return new WaitForSeconds(2.1f);
+        GameManager.Instance.GoToRandomChannel();
     }
 
     private void OnVolumeUpPressed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -222,6 +232,10 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
+        commercialViewTimer = 0;
+        playingJumpScare = false;
+        muteText.gameObject.SetActive(false);
+        jumpScare.SetActive(false);
         commercialRenderTexture.SetActive(false);
         commercialVideo.Stop();
         StopAllCoroutines();
@@ -248,9 +262,13 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnDisable()
     {
+        commercialViewTimer = 0;
+        playingJumpScare = false;
+        jumpScare.SetActive(false );
         clueAudioSource.Stop();
         music.Stop();
         StopAllCoroutines();
+        audioMixer.SetFloat("Volume", 0);
         InputManager.InputActions.Gameplay.VolumeUp.performed -= OnVolumeUpPressed;
         InputManager.InputActions.Gameplay.VolumeDown.performed -= OnVolumeDownPressed;
         InputManager.InputActions.Gameplay.VolumeUp.canceled -= OnVolumeUpReleased;
