@@ -16,15 +16,30 @@ public class MessageListener : OnScreenControl
     public string lastCommand;
 
     private string m_ControlPath;
+    private float timeSinceLast = 0f;
+    private bool waitingRelease = false;
 
     protected override string controlPathInternal {
         get => m_ControlPath;
         set => m_ControlPath = value;
     }
 
+    private void Update()
+    {
+        if (waitingRelease) {
+            timeSinceLast += Time.deltaTime;
+            if (timeSinceLast > .15f) {
+                ReleaseInput();
+            }
+        }
+    }
+
     public void OnMessageArrived(string msg)
     {
-        if (msg.Contains("Repeat")) return;
+        if (msg.Contains("Repeat")) {
+            timeSinceLast = 0f;
+            return;
+        } 
 
         string[] messages = msg.Split(" ");
 
@@ -41,23 +56,35 @@ public class MessageListener : OnScreenControl
 
     void TriggerInput(string message)
     {
-
+        ReleaseInput();
         foreach (ButtonConnection bCon in currentRemoteSettings.buttonConnections) {
             if (bCon.remoteCommand == message) {
                 this.gameObject.SetActive(false);
                 controlPath = bCon.input.action.bindings[0].path;
                 this.gameObject.SetActive(true);
                 SendValueToControl(1.0f);
-                SendValueToControl(0.0f);
+                waitingRelease = true;
+                timeSinceLast = 0f;
+                return;
             }
         }
 
+    }
+
+    void ReleaseInput()
+    {
+        if (controlPath == null) return;
+        Debug.Log("release");
+        waitingRelease = false;
+        timeSinceLast = 0f;
+        SendValueToControl(0.0f);
     }
 
     public void OnConnectionEvent(bool connection)
     {
         if (connection) {
             Debug.Log("Connected " + connection);
+            controlPath = currentRemoteSettings.buttonConnections[0].input.action.bindings[0].path;
         }
         
     }
