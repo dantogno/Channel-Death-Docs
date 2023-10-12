@@ -35,8 +35,20 @@ public class PasscodeManager : Singleton<PasscodeManager>
 
     private void Start()
     {
-        Passcode = "1234";
         initialOutcomeTextMessage = outcomeText.text;
+    }
+
+    public void CreateNewPasscode()
+    {
+        //Passcode = "1234";
+
+        // create a random 4 digit passcode
+        Passcode = string.Empty;
+        for (int i = 0; i < 4; i++)
+        {
+            Passcode += UnityEngine.Random.Range(0, 10);
+        }
+        Debug.Log($"Passcode is {Passcode}");
     }
 
     public void Validate()
@@ -83,6 +95,7 @@ public class PasscodeManager : Singleton<PasscodeManager>
 
     private void OnNewVictimSpawned()
     {
+        CreateNewPasscode();
         ResetOutcomeMessage();
     }
 
