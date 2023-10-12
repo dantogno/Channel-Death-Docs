@@ -18,4 +18,21 @@ public class Channel : MonoBehaviour
     [Tooltip("Invoked when channel is entered.")]
     public UnityEvent ChannelExited;
 
+    private List<Renderer> renderers;
+
+    private void Start()
+    {
+        renderers = new List<Renderer>(GetComponentsInChildren<Renderer>());
+    }
+
+    public void EnableAllRenderers(bool shouldEnable)
+    {
+        if (renderers == null) { return; }  
+        // disable or enable all renderers based on shouldEnable
+        foreach (var renderer in renderers)
+        {
+            renderer.enabled = shouldEnable;
+        }
+    }
+
 }
