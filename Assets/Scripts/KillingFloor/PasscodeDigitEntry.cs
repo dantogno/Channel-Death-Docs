@@ -27,44 +27,54 @@ public class PasscodeDigitEntry : MonoBehaviour
         inputField.ActivateInputField();
     }
 
-    public void ResetInputField()
+    public void ClearInputField()
     {
         inputField.text = string.Empty;
     }
 
     private void OnValidationCompleted(bool isSuccessful)
     {
-        if (isSuccessful)
+        inputField.interactable = false;
+
+        // if unsuccesful, we start a cooldown before re-enabling the input field
+        // if successful, the victim spawned event will do it for us
+        if (!isSuccessful)
         {
-            inputField.interactable = false;
+            StartCoroutine(ResetInputFieldAfterCooldown());
         }
-        else
-        {
-            ResetInputField();
-            if (isFirstDigit)
-            {
-                ActivateInputField();
-            }
-        }
+
     }
+
+    private IEnumerator ResetInputFieldAfterCooldown()
+    {
+        yield return new WaitForSeconds(0.25f);
+        ResetInputField();
+    }
+
     private void OnNewVictimSpawed()
     {
-        inputField.interactable = true;
         ResetInputField();
+    }
+
+    private void ResetInputField()
+    {
+        inputField.interactable = true;
+        ClearInputField();
         if (isFirstDigit)
         {
             ActivateInputField();
         }
     }
+
     private void OnVictimDied(string obj)
     {
         inputField.interactable = false;
-        ResetInputField();
+        ClearInputField();
     }
 
     private void OnEnable()
     {
-        ResetInputField();
+        ClearInputField();
         if (isFirstDigit) { StartCoroutine(DelayBeforeActivating()); }
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
         GameManager.NewVictimSpawned += OnNewVictimSpawed;
