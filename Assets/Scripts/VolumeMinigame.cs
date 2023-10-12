@@ -5,13 +5,20 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Video;
 using static UnityEngine.Rendering.DebugUI;
 
 public class VolumeMinigame : MonoBehaviour
 {
+    public float testSpeedScale = 1;
+    public float commercialViewTimeThreshold = 8;
     public TMP_Text volumeSymbolText;
     public TMP_Text muteText;
     public AudioMixer audioMixer;
+    public VideoPlayer commercialVideo;
+    public GameObject phonographImage, commercialRenderTexture;
+    public AudioSource music, instructions, instructions2, instructions3, clueAudioSource;
+    public AudioClip[] clueClips;
     private string volumeSymbolString = string.Empty;
     private const int maxVolume = 20;
     private const char noVolumeSymbol = '.';
@@ -19,6 +26,14 @@ public class VolumeMinigame : MonoBehaviour
     private bool volumeUpPressed, volumeDownPressed= false;
     private float repeatInputDelay = 0.1f;
     private float repeatInputTimer = 0;
+    private bool isCommercialPlaying = false;
+    private float commercialViewTimer = 0;
+
+    /// <summary>
+    /// Must set this for each new victim!
+    /// </summary>
+    private int Clue { get; set; } = 3;
+
 
     /// <summary>
     /// The number of volume symbols in the volume symbol string divided by the max volume
@@ -33,6 +48,76 @@ public class VolumeMinigame : MonoBehaviour
             volumeSymbolText.text = volumeSymbolString;
             ModifyMixerVolume();
         }
+    }
+
+    private AudioClip GetClueClip() => clueClips[Clue];
+
+    private IEnumerator PlayMinigameSequence()
+    {
+        // start feature
+        instructions.Play();
+        PlayMainFeature();
+        yield return new WaitForSeconds(10);
+        PauseMainFeature();
+
+        // play first commercial break
+        StartCommercial();
+        yield return new WaitForSeconds(16);
+        PauseCommercial();
+
+        //resume feature
+        PlayMainFeature();
+        yield return new WaitForSeconds(1);
+        instructions2.Play();
+        yield return new WaitForSeconds(15);
+        PauseMainFeature();
+
+        // play second commercial break
+        StartCommercial();
+        yield return new WaitForSeconds(29);
+        PauseCommercial();
+
+        // resume feature
+        PlayMainFeature();
+        yield return new WaitForSeconds(1);
+        instructions3.Play();
+        yield return new WaitForSeconds(10);
+        PauseMainFeature();
+
+        // play third commercial break
+        StartCommercial();
+        yield return new WaitForSeconds(24.25f);
+        PauseCommercial();
+
+        // resume feature with clue
+        PlayMainFeature();
+        clueAudioSource.clip = GetClueClip();
+        clueAudioSource.Play();
+    }
+
+
+    private void PauseCommercial()
+    {
+        isCommercialPlaying = false;
+        commercialVideo.Pause();
+        commercialRenderTexture.SetActive(false);
+    }
+
+    private void StartCommercial()
+    {
+        isCommercialPlaying = true;
+        commercialRenderTexture.SetActive(true);
+        commercialVideo.Play();
+    }
+    private void PlayMainFeature()
+    {
+        music.Play();
+        phonographImage.SetActive(true);
+    }
+    private void PauseMainFeature()
+    {
+        music.Pause();
+        phonographImage.SetActive(false);
     }
 
 
@@ -77,6 +162,10 @@ public class VolumeMinigame : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_EDITOR
+        Time.timeScale = testSpeedScale;
+        commercialVideo.playbackSpeed = testSpeedScale;
+#endif
         SetHalfVolume();
         muteText.gameObject.SetActive(false);
     }
@@ -96,6 +185,21 @@ public class VolumeMinigame : MonoBehaviour
             repeatInputTimer = 0;
             DecreaseVolume(); 
         }
+
+        if (isCommercialPlaying && VolumePercentage > 0.1f)
+        {
+            commercialViewTimer += Time.deltaTime;
+            if (commercialViewTimer > commercialViewTimeThreshold)
+            {
+                StopAllCoroutines();
+                StartCoroutine(PlayJumpScareFailureCoroutine());
+            }
+        }
+    }
+
+    private string PlayJumpScareFailureCoroutine()
+    {
+        throw new NotImplementedException();
     }
 
     private void OnVolumeUpPressed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -118,6 +222,10 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
+        commercialRenderTexture.SetActive(false);
+        commercialVideo.Stop();
+        StopAllCoroutines();
+        StartCoroutine(PlayMinigameSequence());
         InputManager.InputActions.Gameplay.VolumeUp.performed += OnVolumeUpPressed;
         InputManager.InputActions.Gameplay.VolumeDown.performed += OnVolumeDownPressed;
         InputManager.InputActions.Gameplay.VolumeUp.canceled += OnVolumeUpReleased;
@@ -140,6 +248,9 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnDisable()
     {
+        clueAudioSource.Stop();
+        music.Stop();
+        StopAllCoroutines();
         InputManager.InputActions.Gameplay.VolumeUp.performed -= OnVolumeUpPressed;
         InputManager.InputActions.Gameplay.VolumeDown.performed -= OnVolumeDownPressed;
         InputManager.InputActions.Gameplay.VolumeUp.canceled -= OnVolumeUpReleased;
