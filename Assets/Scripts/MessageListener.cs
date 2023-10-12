@@ -56,7 +56,9 @@ public class MessageListener : OnScreenControl
 
     public void OnConnectionEvent(bool connection)
     {
-        Debug.Log("Connected " + connection);
+        if (connection) {
+            Debug.Log("Connected " + connection);
+        }
         
     }
 
