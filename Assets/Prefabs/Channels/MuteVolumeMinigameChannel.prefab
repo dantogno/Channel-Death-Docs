@@ -1659,8 +1659,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testSpeedScale: 1
-  commercialViewTimeThreshold: 10
-  musicMutedTimeThreshold: 10
+  commercialViewTimeThreshold: 25
+  musicMutedTimeThreshold: 15
   jumpScare: {fileID: 5025396349105540086}
   volumeSymbolText: {fileID: 3099040053684868039}
   muteText: {fileID: 1224176652540117691}
