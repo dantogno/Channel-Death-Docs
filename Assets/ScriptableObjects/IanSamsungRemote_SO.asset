@@ -20,3 +20,28 @@ MonoBehaviour:
   - name: Gameplay/ChannelDown
     input: {fileID: 370025797773610565, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
     remoteCommand: 0x10
+  - name: Gameplay/Input2
+    input: {fileID: -6607760944493965600, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x5
+  - name: Gameplay/Input4
+    input: {fileID: -5757293461128871583, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x8
+  - name: Gameplay/Input6
+    input: {fileID: 3802411096385122831, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+    remoteCommand: 0xA
+  - name: Gameplay/Input8
+    input: {fileID: 3425330769196804032, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+    remoteCommand: 0xD
+  - name: Gameplay/Mute
+    input: {fileID: 6343564881143798939, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+    remoteCommand: 0xF
+  - name: Gameplay/VolumeDown
+    input: {fileID: -1894195292515731976, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0xB
+  - name: Gameplay/VolumeUp
+    input: {fileID: -2001625572539161971, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x7
