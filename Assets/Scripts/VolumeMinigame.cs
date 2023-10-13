@@ -170,8 +170,6 @@ public class VolumeMinigame : MonoBehaviour
         Time.timeScale = testSpeedScale;
         commercialVideo.playbackSpeed = testSpeedScale;
 #endif
-        SetHalfVolume();
-        muteText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -246,6 +244,8 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
+        SetHalfVolume();
+        muteText.gameObject.SetActive(false);
         musicMutedTimer = 0;
         commercialViewTimer = 0;
         playingJumpScare = false;
