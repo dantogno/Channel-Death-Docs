@@ -26,7 +26,7 @@ public class VolumeMinigame : MonoBehaviour
     private const char noVolumeSymbol = '.';
     private const char volumeSymbol = '|';
     private bool volumeUpPressed, volumeDownPressed= false;
-    private float repeatInputDelay = 0.1f;
+    private float repeatInputDelay = 0.15f;
     private float repeatInputTimer = 0;
     private bool isCommercialPlaying = false;
     private float commercialViewTimer = 0;
@@ -170,8 +170,6 @@ public class VolumeMinigame : MonoBehaviour
         Time.timeScale = testSpeedScale;
         commercialVideo.playbackSpeed = testSpeedScale;
 #endif
-        SetHalfVolume();
-        muteText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -246,6 +244,8 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
+        SetHalfVolume();
+        muteText.gameObject.SetActive(false);
         musicMutedTimer = 0;
         commercialViewTimer = 0;
         playingJumpScare = false;
