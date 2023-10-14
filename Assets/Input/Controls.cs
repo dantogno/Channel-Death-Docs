@@ -107,6 +107,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UpPlusR"",
+                    ""type"": ""Button"",
+                    ""id"": ""2ef7471a-1250-47c4-b1a8-ab2e24823e37"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DownMinusL"",
+                    ""type"": ""Button"",
+                    ""id"": ""1450ef26-f43f-433d-90a5-f46a8a77d41c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +270,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Mute"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06c2d17d-b956-4b2c-b72e-5f9e998358e1"",
+                    ""path"": ""<Keyboard>/rightBracket"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpPlusR"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb293304-3a40-4f92-a2c2-537e18344d0b"",
+                    ""path"": ""<Keyboard>/leftBracket"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownMinusL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +309,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_VolumeDown = m_Gameplay.FindAction("VolumeDown", throwIfNotFound: true);
         m_Gameplay_VolumeUp = m_Gameplay.FindAction("VolumeUp", throwIfNotFound: true);
         m_Gameplay_Mute = m_Gameplay.FindAction("Mute", throwIfNotFound: true);
+        m_Gameplay_UpPlusR = m_Gameplay.FindAction("UpPlusR", throwIfNotFound: true);
+        m_Gameplay_DownMinusL = m_Gameplay.FindAction("DownMinusL", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +381,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_VolumeDown;
     private readonly InputAction m_Gameplay_VolumeUp;
     private readonly InputAction m_Gameplay_Mute;
+    private readonly InputAction m_Gameplay_UpPlusR;
+    private readonly InputAction m_Gameplay_DownMinusL;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -352,6 +396,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @VolumeDown => m_Wrapper.m_Gameplay_VolumeDown;
         public InputAction @VolumeUp => m_Wrapper.m_Gameplay_VolumeUp;
         public InputAction @Mute => m_Wrapper.m_Gameplay_Mute;
+        public InputAction @UpPlusR => m_Wrapper.m_Gameplay_UpPlusR;
+        public InputAction @DownMinusL => m_Wrapper.m_Gameplay_DownMinusL;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +434,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Mute.started += instance.OnMute;
             @Mute.performed += instance.OnMute;
             @Mute.canceled += instance.OnMute;
+            @UpPlusR.started += instance.OnUpPlusR;
+            @UpPlusR.performed += instance.OnUpPlusR;
+            @UpPlusR.canceled += instance.OnUpPlusR;
+            @DownMinusL.started += instance.OnDownMinusL;
+            @DownMinusL.performed += instance.OnDownMinusL;
+            @DownMinusL.canceled += instance.OnDownMinusL;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -419,6 +471,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Mute.started -= instance.OnMute;
             @Mute.performed -= instance.OnMute;
             @Mute.canceled -= instance.OnMute;
+            @UpPlusR.started -= instance.OnUpPlusR;
+            @UpPlusR.performed -= instance.OnUpPlusR;
+            @UpPlusR.canceled -= instance.OnUpPlusR;
+            @DownMinusL.started -= instance.OnDownMinusL;
+            @DownMinusL.performed -= instance.OnDownMinusL;
+            @DownMinusL.canceled -= instance.OnDownMinusL;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -447,5 +505,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnVolumeDown(InputAction.CallbackContext context);
         void OnVolumeUp(InputAction.CallbackContext context);
         void OnMute(InputAction.CallbackContext context);
+        void OnUpPlusR(InputAction.CallbackContext context);
+        void OnDownMinusL(InputAction.CallbackContext context);
     }
 }
