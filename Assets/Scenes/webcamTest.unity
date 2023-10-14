@@ -3997,6 +3997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testSpeedScale: 1
   commercialViewTimeThreshold: 8
+  musicMutedTimeThreshold: 5
   jumpScare: {fileID: 1523115029}
   volumeSymbolText: {fileID: 1369076022}
   muteText: {fileID: 2044393626}
@@ -4161,7 +4162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1846106499
 Transform:
   m_ObjectHideFlags: 0
@@ -4240,7 +4241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1884102249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4334,8 +4335,8 @@ Transform:
   m_GameObject: {fileID: 1884102248}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 1.27082}
-  m_LocalScale: {x: 1.92, y: 1.08, z: -1}
+  m_LocalPosition: {x: -2.6137, y: 0, z: 1.27082}
+  m_LocalScale: {x: 1.66, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 456406644}
@@ -5361,6 +5362,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3889132620741367977, guid: 531fa3e76924f5e4195f57ca9d1159ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
