@@ -8,10 +8,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3696621652371130446, guid: 8a830afff2820d5409fdd0185b1db851,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 35.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7219081854890470689, guid: 8a830afff2820d5409fdd0185b1db851,
         type: 3}
       propertyPath: m_Name
-      value: PanAndScanDistraction1
+      value: PanAndScanDistraction2
       objectReference: {fileID: 0}
     - target: {fileID: 8592915721825877702, guid: 8a830afff2820d5409fdd0185b1db851,
         type: 3}
@@ -67,7 +72,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6c892a3f58de35d4bbcc5d4ffaa56a7c,
+      objectReference: {fileID: 21300000, guid: b65a7fb9d38593e4782784d9c5d50d2c,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

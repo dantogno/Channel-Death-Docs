@@ -21,23 +21,18 @@ public class PanAndScanMinigame : MonoBehaviour
     private float repeatInputTimer = 0;
     private Vector3[] boundsCorners = new Vector3[4];
     private Camera mainCamera;
+    private PanAndScanClueText clueText;
 
     void Start()
     {
         mainCamera = Camera.main;
+        Spawn();
     }
     // Spawn a single instance of the prefab within the spawn area
-    void SpawnItem(GameObject prefab)
+    void SpawnItem(GameObject prefab, bool isClue)
     {
-        // Get the size of the spawn area
-        Vector3 size = plane.size;
-        var zStartPos = -0.23f;
-        // Get a random position within the spawn area
-        Vector3 position = plane.transform.position + new Vector3(
-            Random.Range(-size.x / 2, size.x / 2),
-            Random.Range(-size.y / 2, size.y / 2),
-            zStartPos         
-        );
+        GameObject toReturn = null;
+        Vector3 position = GetRandomPositionInBounds();
 
         // Instantiate the prefab at the position with a random rotation
         GameObject instance = Instantiate(prefab, position, Quaternion.identity);
@@ -64,22 +59,42 @@ public class PanAndScanMinigame : MonoBehaviour
         if (overlaps)
         {
             Destroy(instance);
-            SpawnItem(decoyPrefabs[Random.Range(0, decoyPrefabs.Length)]);
+            SpawnItem(decoyPrefabs[Random.Range(0, decoyPrefabs.Length)], isClue);
         }
         else
         {
             // Otherwise, add it to the list of instances
             instances.Add(instance);
+            if (isClue)
+            {
+                clueText = instance.GetComponentInChildren<PanAndScanClueText>();
+            }
         }
     }
+
+    private Vector3 GetRandomPositionInBounds()
+    {
+        // Get the size of the spawn area
+        Vector3 size = plane.size;
+        var zStartPos = -0.23f;
+        // Get a random position within the spawn area
+        Vector3 position = plane.transform.position + new Vector3(
+            Random.Range(-size.x / 2, size.x / 2),
+            Random.Range(-size.y / 2, size.y / 2),
+            zStartPos
+        );
+        return position;
+    }
+
     void Spawn()
     {
         for (int i = 0; i < numberToSpawn - 1; i++)
         {
-            SpawnItem(decoyPrefabs[Random.Range(0, decoyPrefabs.Length)]);
+            SpawnItem(decoyPrefabs[Random.Range(0, decoyPrefabs.Length)], false);
         }
-        SpawnItem(cluePrefab);
+        SpawnItem(cluePrefab, true);
     }
+
 
     private void Update()
     {
@@ -202,9 +217,9 @@ public class PanAndScanMinigame : MonoBehaviour
 
     private void OnEnable()
     {
-        instances.Clear();
-        Spawn();
+        foreach (var item in instances)
+        {
+            item.transform.position = GetRandomPositionInBounds();
+        }
     }
-
-
 }
