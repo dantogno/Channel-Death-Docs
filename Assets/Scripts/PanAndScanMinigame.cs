@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class PanAndScanMinigame : MonoBehaviour
@@ -10,25 +13,21 @@ public class PanAndScanMinigame : MonoBehaviour
     public GameObject[] decoyPrefabs; // decoy Prefabs
     public GameObject cluePrefab; // the prefab to spawn
     public int numberToSpawn; // the maximum number of instances to spawn
-    public float radius; // the radius of the prefab's collider
     public BoxCollider plane; 
-    private List<GameObject> instances; // a list to store the positions of the spawned instances
+    private List<GameObject> instances = new List<GameObject>(); // a list to store the positions of the spawned instances
 
     private bool upPressed, downPressed, leftPressed, rightPressed, zoomInPressed, zoomOutPressed = false;
     private float repeatInputDelay = 0.15f;
     private float repeatInputTimer = 0;
-    private float height;
-    private float width;
+    private Vector3[] boundsCorners = new Vector3[4];
+    private Camera mainCamera;
 
     void Start()
     {
-        height = plane.bounds.size.y;
-        width = plane.bounds.size.x;
-        instances = new List<GameObject>();
-        Spawn();
+        mainCamera = Camera.main;
     }
     // Spawn a single instance of the prefab within the spawn area
-    void SpawnDecoy()
+    void SpawnItem(GameObject prefab)
     {
         // Get the size of the spawn area
         Vector3 size = plane.size;
@@ -41,7 +40,7 @@ public class PanAndScanMinigame : MonoBehaviour
         );
 
         // Instantiate the prefab at the position with a random rotation
-        GameObject instance = Instantiate(decoyPrefabs[Random.Range(0, decoyPrefabs.Length)], position, Quaternion.identity);
+        GameObject instance = Instantiate(prefab, position, Quaternion.identity);
         instance.transform.SetParent(plane.transform);
         // Get the box collider of the instance
         BoxCollider collider = instance.GetComponent<BoxCollider>();
@@ -65,7 +64,7 @@ public class PanAndScanMinigame : MonoBehaviour
         if (overlaps)
         {
             Destroy(instance);
-            SpawnDecoy();
+            SpawnItem(decoyPrefabs[Random.Range(0, decoyPrefabs.Length)]);
         }
         else
         {
@@ -77,41 +76,9 @@ public class PanAndScanMinigame : MonoBehaviour
     {
         for (int i = 0; i < numberToSpawn - 1; i++)
         {
-            SpawnDecoy();
+            SpawnItem(decoyPrefabs[Random.Range(0, decoyPrefabs.Length)]);
         }
-       // spawn instances until we reach the maximum, they cannot overlap, and they are within the bounds of the plane
-
-
-
-
-
-        //for (int i = 0; i < maxCount; i++)
-        //{
-        //    // generate a random position on the plane
-        //    float x = Random.Range(width / 2, 10 / 2);
-        //    float y = Random.Range(height/ 2, 10 / 2);
-        //    var zStartPos = -0.23f;
-        //    var position = new Vector3(x, y, zStartPos);
-
-        //    // check if the position overlaps with any existing instance
-        //    bool overlap = false;
-        //    foreach (Vector3 p in positions)
-        //    {
-        //        if (Vector3.Distance(position, p) < radius * 2)
-        //        {
-        //            overlap = true;
-        //            break;
-        //        }
-        //    }
-
-        //    // if no overlap, spawn an instance and add the position to the list
-        //    if (!overlap)
-        //    {
-        //        GameObject obj = Instantiate(prefab, position, Quaternion.identity);
-        //        obj.transform.SetParent(plane.gameObject.transform);
-        //        positions.Add(position);
-        //    }
-        //}
+        SpawnItem(cluePrefab);
     }
 
     private void Update()
@@ -140,29 +107,84 @@ public class PanAndScanMinigame : MonoBehaviour
             }
         }   
     }
-  
+
     #region Movement functions
+
+    // A method that takes a bounds object and an array of vectors and fills the array with the eight corners of the bounds object
+    void GetCorners(Bounds b, Vector3[] c)
+    {
+        // Check if the array has enough space for eight vectors
+        if (c.Length < 4)
+        {
+            Debug.LogError("The array is too small to store the corners.");
+            return;
+        }
+
+        // Get the center and extents of the bounds object
+        Vector3 center = b.center;
+        Vector3 extents = b.extents;
+
+        // Calculate the eight corners by adding or subtracting the extents from the center along each axis
+        //c[0] = center + new Vector3(-extents.x, -extents.y, -extents.z); // Bottom-left-back corner
+        c[0] = center + new Vector3(-extents.x, -extents.y, extents.z); // Bottom-left-front corner
+        //c[2] = center + new Vector3(-extents.x, extents.y, -extents.z); // Top-left-back corner
+        c[1] = center + new Vector3(-extents.x, extents.y, extents.z); // Top-left-front corner
+        //c[4] = center + new Vector3(extents.x, -extents.y, -extents.z); // Bottom-right-back corner
+        c[2] = center + new Vector3(extents.x, -extents.y, extents.z); // Bottom-right-front corner
+      //  c[6] = center + new Vector3(extents.x, extents.y, -extents.z); // Top-right-back corner
+        c[3] = center + new Vector3(extents.x, extents.y, extents.z); // Top-right-front corner
+    }
+
+    // this doesn't quite work...
+    // corners won't help checking Y movement.
+    private void CheckBoundariesAfterMove(Vector3 oldPosition)
+    {
+        GetCorners(plane.bounds, boundsCorners);
+
+        // Check if any of the corners of the bounds are inside the camera view frustum
+        bool isInView = false;
+        foreach (Vector3 corner in boundsCorners)
+        {
+            Vector3 viewportPoint = mainCamera.WorldToViewportPoint(corner);
+
+            isInView = (viewportPoint.x >= 0 && viewportPoint.x <= 1) &&
+                   (viewportPoint.y >= 0 && viewportPoint.y <= 1) &&
+                   (viewportPoint.z > 0);
+        }
+
+        // If any corner is outside, move the position back to the right
+        if (isInView)
+        {
+            plane.transform.position = oldPosition;
+        }
+    }
+
     private void Zoom(bool isIn)
     {
         var direction = isIn ? 1 : -1;
         // move plane Z forward
-        var newPos = plane.transform.position += new Vector3(0, 0, moveIncrement) * direction;
+        var newPos = plane.transform.position + new Vector3(0, 0, moveIncrement) * direction;
 
         // limit the plane's position to the min and max
         if (newPos.z > min.z && newPos.z < max.z)
         {
+            // don't allow movement if it will move edges of plane past the camera's view frustrum
+            var oldPos = plane.transform.position;
             plane.transform.position = newPos;
+            //CheckBoundariesAfterMove(oldPos);
         }
     }
     private void PanHorizontal(bool moveRight)
     {
 
         var direction = moveRight ? 1 : -1;
-        var newPos = plane.transform.position += new Vector3(moveIncrement, 0, 0) * direction;
+        var newPos = plane.transform.position + new Vector3(moveIncrement, 0, 0) * direction;
         // limit the plane's position to the min and max
         if (newPos.x > min.x && newPos.x < max.x)
         {
+            var oldPos = plane.transform.position;
             plane.transform.position = newPos;
+            //CheckBoundariesAfterMove(oldPos);
         }
     }
     private void PanVertical(bool moveUp)
@@ -171,18 +193,17 @@ public class PanAndScanMinigame : MonoBehaviour
         var newPos = plane.transform.position + new Vector3(0, moveIncrement, 0) * direction;
         if(newPos.y > min.y && newPos.y < max.y)
         {
+            var oldPos = plane.transform.position;
             plane.transform.position = newPos;
+            //CheckBoundariesAfterMove(oldPos);
         }
     }
     #endregion
 
-    private void OnDisable()
-    {
-
-    }
     private void OnEnable()
     {
-
+        instances.Clear();
+        Spawn();
     }
 
 

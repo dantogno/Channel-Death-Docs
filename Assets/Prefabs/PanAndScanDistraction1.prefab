@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 7219081854890470689, guid: 8a830afff2820d5409fdd0185b1db851,
         type: 3}
       propertyPath: m_Name
-      value: PanAndScanClueIcon Variant
+      value: PanAndScanDistraction1
       objectReference: {fileID: 0}
     - target: {fileID: 8592915721825877702, guid: 8a830afff2820d5409fdd0185b1db851,
         type: 3}
@@ -67,7 +67,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 1443fedc35f6e8949adcd09c4de3283d,
+      objectReference: {fileID: 21300000, guid: 6c892a3f58de35d4bbcc5d4ffaa56a7c,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
