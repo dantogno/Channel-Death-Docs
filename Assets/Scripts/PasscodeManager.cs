@@ -14,6 +14,11 @@ public class PasscodeManager : Singleton<PasscodeManager>
     private bool validationInProgress = false;
     private string initialOutcomeTextMessage;
 
+    public int ClubsNumber => int.Parse(Passcode[0].ToString());
+    public int DiamondsNumber => int.Parse(Passcode[1].ToString());
+    public int HeartsNumber => int.Parse(Passcode[2].ToString());
+    public int SpadesNumber => int.Parse(Passcode[3].ToString());
+
     private string EnteredPasscode
     {
         get => enteredPasscode;
