@@ -7,7 +7,7 @@ using UnityEngine;
 public class PasscodeManager : Singleton<PasscodeManager>
 {
     public TMP_Text outcomeText;
-    public string Passcode { get; private set; }
+    public string Passcode { get; private set; } = 1234.ToString();
 
     private string enteredPasscode = string.Empty;
 
