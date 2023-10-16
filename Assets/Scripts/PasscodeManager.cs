@@ -6,13 +6,11 @@ using UnityEngine;
 
 public class PasscodeManager : Singleton<PasscodeManager>
 {
-    public TMP_Text outcomeText;
     public string Passcode { get; private set; } = 1234.ToString();
 
     private string enteredPasscode = string.Empty;
 
     private bool validationInProgress = false;
-    private string initialOutcomeTextMessage;
 
     public string ClubsNumber => Passcode[0].ToString();
     public string DiamondsNumber => Passcode[1].ToString();
@@ -37,12 +35,6 @@ public class PasscodeManager : Singleton<PasscodeManager>
     /// </summary>
     public static event Action<bool> ValidationCompleted;
 
-
-    private void Start()
-    {
-        initialOutcomeTextMessage = outcomeText.text;
-    }
-
     public void CreateNewPasscode()
     {
         //Passcode = "1234";
@@ -63,12 +55,10 @@ public class PasscodeManager : Singleton<PasscodeManager>
         Debug.Log("Validating");
         if (enteredPasscode == Passcode)
         {
-            outcomeText.text = $"But another head will be on the chopping block soon...";
             StartCoroutine(SetUpNextVictimAfterDelay());           
         }
         else
         {
-            outcomeText.text = $"Wrong! Poor {GameManager.Instance.CurrentVictim.Name} will pay for your carelessness!";
             GameManager.Instance.IncurPenalty();
         }
         ValidationCompleted?.Invoke(enteredPasscode == Passcode);
@@ -93,32 +83,21 @@ public class PasscodeManager : Singleton<PasscodeManager>
         enteredPasscode = string.Empty;
         validationInProgress = false;
     }
-    private void OnVictimDied(string obj)
-    {
-        outcomeText.text = "More blood on your hands...";
-    }
 
     private void OnNewVictimSpawned()
     {
         CreateNewPasscode();
-        ResetOutcomeMessage();
     }
 
-    private void ResetOutcomeMessage()
-    {
-        outcomeText.text = initialOutcomeTextMessage;
-    }
 
     private void OnEnable()
     {
         GameManager.NewVictimSpawned += OnNewVictimSpawned;
-        GameManager.VictimDied += OnVictimDied;
     }
 
 
     private void OnDisable()
     {
         GameManager.NewVictimSpawned -= OnNewVictimSpawned;
-        GameManager.VictimDied -= OnVictimDied;
     }
 }
