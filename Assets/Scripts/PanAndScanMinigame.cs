@@ -68,6 +68,7 @@ public class PanAndScanMinigame : MonoBehaviour
             if (isClue)
             {
                 clueText = instance.GetComponentInChildren<PanAndScanClueText>();
+                clueText.numberText.text = PasscodeManager.Instance.ClubsNumber;
             }
         }
     }
