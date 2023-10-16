@@ -6,6 +6,7 @@ using UnityEngine;
 public class PasscodeDigitEntry : MonoBehaviour
 {
     public bool isFirstDigit;
+    public GameObject wrongImage;
 
     private TMPro.TMP_InputField inputField;
 
@@ -40,6 +41,7 @@ public class PasscodeDigitEntry : MonoBehaviour
         // if successful, the victim spawned event will do it for us
         if (!isSuccessful)
         {
+            wrongImage.SetActive(true);
             StartCoroutine(ResetInputFieldAfterCooldown());
         }
 
@@ -47,7 +49,7 @@ public class PasscodeDigitEntry : MonoBehaviour
 
     private IEnumerator ResetInputFieldAfterCooldown()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(GameManager.Instance.timePenaltyDuration);
         ResetInputField();
     }
 
@@ -59,6 +61,7 @@ public class PasscodeDigitEntry : MonoBehaviour
     private void ResetInputField()
     {
         inputField.interactable = true;
+        wrongImage.SetActive(false);
         ClearInputField();
         if (isFirstDigit)
         {
