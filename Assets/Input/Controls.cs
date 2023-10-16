@@ -125,6 +125,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c4febfe-a338-493b-b431-6d1d15e35aa0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -292,6 +301,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""DownMinusL"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e387554-16d6-4b26-a0a7-2cd87abd3fc1"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -311,6 +331,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_Mute = m_Gameplay.FindAction("Mute", throwIfNotFound: true);
         m_Gameplay_UpPlusR = m_Gameplay.FindAction("UpPlusR", throwIfNotFound: true);
         m_Gameplay_DownMinusL = m_Gameplay.FindAction("DownMinusL", throwIfNotFound: true);
+        m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,6 +404,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Mute;
     private readonly InputAction m_Gameplay_UpPlusR;
     private readonly InputAction m_Gameplay_DownMinusL;
+    private readonly InputAction m_Gameplay_Jump;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -398,6 +420,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Mute => m_Wrapper.m_Gameplay_Mute;
         public InputAction @UpPlusR => m_Wrapper.m_Gameplay_UpPlusR;
         public InputAction @DownMinusL => m_Wrapper.m_Gameplay_DownMinusL;
+        public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,6 +463,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @DownMinusL.started += instance.OnDownMinusL;
             @DownMinusL.performed += instance.OnDownMinusL;
             @DownMinusL.canceled += instance.OnDownMinusL;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -477,6 +503,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @DownMinusL.started -= instance.OnDownMinusL;
             @DownMinusL.performed -= instance.OnDownMinusL;
             @DownMinusL.canceled -= instance.OnDownMinusL;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -507,5 +536,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnMute(InputAction.CallbackContext context);
         void OnUpPlusR(InputAction.CallbackContext context);
         void OnDownMinusL(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
