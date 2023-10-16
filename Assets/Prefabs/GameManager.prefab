@@ -46,7 +46,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   channelNumberText: {fileID: 4392192750692720688}
-  channelPrefabs: []
+  channelPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  killTimeInSeconds: 10
+  timePenaltyMultiplier: 4
+  timePenaltyDuration: 1
+  DelayInSecondsBetweenVictims: 5
+  beltUVAnimation: {fileID: 0}
+  victimSpawnPoint: {fileID: 0}
+  killPosition: {fileID: 0}
+  victimPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  victimLocalRotation: {x: 11, y: 279.76187, z: 0}
 --- !u!1 &4451704924996257151
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,10 +139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1024, y: 768}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -184,7 +202,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -15, y: -15}
-  m_SizeDelta: {x: 54.2375, y: 65.155}
+  m_SizeDelta: {x: 117.4658, y: 65.155}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &2213538409146996900
 CanvasRenderer:
