@@ -22,7 +22,7 @@ public class Channel : MonoBehaviour
 
     private void Start()
     {
-        renderers = new List<Renderer>(GetComponentsInChildren<Renderer>());
+        renderers = new List<Renderer>(GetComponentsInChildren<Renderer>(true));
     }
 
     public void EnableAllRenderers(bool shouldEnable)

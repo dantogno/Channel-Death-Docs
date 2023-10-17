@@ -11,6 +11,13 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : Singleton<GameManager>
 {
+    public int KillingFloorChannelIndex { get; private set; }
+    [Tooltip("Victim dies after this many seconds.")]
+    public float killTimeInSeconds = 180;
+
+    public float timePenaltyMultiplier = 5;
+    public float timePenaltyDuration = 2f;
+
     [SerializeField]
     private TMP_Text channelNumberText;
 
@@ -18,11 +25,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private GameObject[] channelPrefabs;
 
-    [Tooltip("Victim dies after this many seconds.")]
-    public float killTimeInSeconds = 180;
-
-    public float timePenaltyMultiplier = 5;
-    public float timePenaltyDuration = 2f;
+    
 
     [Tooltip("How long to wait before spawning a new victim after the previous one dies or is rescued.")]
     public float DelayInSecondsBetweenVictims = 5;
@@ -43,13 +46,17 @@ public class GameManager : Singleton<GameManager>
     public static event Action NewVictimSpawned;
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
-    public int KillingFloorChannelIndex { get; private set; }
+  
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
 
     public bool BlockChannelInput { get; private set; } = false;
     public bool BlockPasscodeInput { get; private set; } = false;
     public Victim CurrentVictim { get; private set; }
+
+    public int KillCount { get; private set; } = 0;
+    public int SaveCount { get; private set; } = 0;
+
 
     private float conveyorBeltDefaultSpeed;
     private bool currentVictimIsDead;
@@ -70,11 +77,12 @@ public class GameManager : Singleton<GameManager>
         bloodVideo.SetActive(false);
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
-        KillingFloorChannelIndex = 0;
         InitializeChannelArray();
         channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
         UpdateChannelText();
+        // randomize the victimPrefabs
+        victimPrefabs = victimPrefabs.OrderBy(x => Guid.NewGuid()).ToArray();
         InitializeVictimsOutOfViewPosition();
         ResetKillTimer();
         SetNewVictimName();
@@ -245,6 +253,7 @@ public class GameManager : Singleton<GameManager>
     private void KillVictim()
     {
         currentVictimIsDead = true;
+        KillCount++;
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
         VictimDied?.Invoke(CurrentVictim.Name);
@@ -261,6 +270,10 @@ public class GameManager : Singleton<GameManager>
         for (int i = 0; i < channelPrefabs.Length; i++)
         {
             channels[i] = channelPrefabs[i].GetComponent<Channel>();
+            if (channels[i].name == "KillingFloorChannel")
+            {
+                KillingFloorChannelIndex = i;
+            }
         }
         // Not sure this is a good idea. Need to preserve index 0, which is channel 13.
         // almost seemed to not work anyway.
@@ -304,11 +317,11 @@ public class GameManager : Singleton<GameManager>
         BlockChannelInput = true;
         channelChangeEffects.RampUpChannelChangeEffect();
         yield return new WaitForSeconds(channelChangeEffects.rampUpTime);
-        UpdateChannelText();
         channels[ChannelIndex].ChannelExited?.Invoke();
         ChannelIndex = newIndex;
+        UpdateChannelText();
         channels[newIndex].ChannelEntered?.Invoke();
-        if (ChannelIndex == 0)
+        if (ChannelIndex == KillingFloorChannelIndex)
             ChangedToKillingChannel?.Invoke();
         channelChangeEffects.RampDownChannelChangeEffect();
         if (!waitingToKillVictim)
@@ -360,6 +373,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (isSuccessful)
         {
+            SaveCount++;
             victimIsBeingRescued = true;
             victimSpawnPoint.transform.position = outOfViewPosition;
         }        

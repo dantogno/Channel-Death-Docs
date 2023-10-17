@@ -48,7 +48,7 @@ public class PasscodeDigitEntry : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.BlockPasscodeInput || GameManager.Instance.ChannelIndex != 0)
+        if (GameManager.Instance.BlockPasscodeInput || GameManager.Instance.ChannelIndex != GameManager.Instance.KillingFloorChannelIndex)
         {
             inputField.interactable = false;
         }
