@@ -200,6 +200,7 @@ public class EndlessJumperController : MonoBehaviour
     public void Win()
     {
         win = true;
+        textDisplayGroup.GetComponentInChildren<TMPro.TMP_Text>().text = PasscodeManager.Instance.DiamondsNumber;
         textDisplayGroup.SetActive(true);
     }
 

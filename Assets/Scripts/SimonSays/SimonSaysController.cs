@@ -192,6 +192,7 @@ public class SimonSaysController : MonoBehaviour
         foreach (GameObject go in objectHolders) {
             go.SetActive(true);
         }
+        displayScreens[3].GetComponent<TMPro.TMP_Text>().text = PasscodeManager.Instance.HeartsNumber;
         displayScreens[3].SetActive(true);
         won = true;
     }
