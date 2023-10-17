@@ -33,6 +33,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private VisualEffect bloodStream, bloodBurst;
 
+    public GameObject bloodVideo;
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
     public GameObject killPosition;
@@ -66,6 +67,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        bloodVideo.SetActive(false);
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
         KillingFloorChannelIndex = 0;
@@ -150,6 +152,7 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitForSeconds(DelayInSecondsBetweenVictims - 1);
         bloodStream.Stop();
+        bloodVideo.SetActive(false);
     }
 
     private float GetMultiplierBasedOnPenaltyStatus()
@@ -247,6 +250,7 @@ public class GameManager : Singleton<GameManager>
         VictimDied?.Invoke(CurrentVictim.Name);
         bloodBurst.Play();
         bloodStream.Play();
+        bloodVideo.SetActive(true);
         StartCoroutine(DisableBloodAfterDelay());
         StartCoroutine(SpawnNewVictimAfterDelay());
     }

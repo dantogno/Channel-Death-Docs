@@ -196,6 +196,9 @@ MonoBehaviour:
   timePenaltyDuration: 1
   DelayInSecondsBetweenVictims: 10
   breakingNewsUI: {fileID: 5948043151081247356}
+  bloodStream: {fileID: 0}
+  bloodBurst: {fileID: 0}
+  bloodVideo: {fileID: 0}
   beltUVAnimation: {fileID: 0}
   victimSpawnPoint: {fileID: 0}
   killPosition: {fileID: 0}
