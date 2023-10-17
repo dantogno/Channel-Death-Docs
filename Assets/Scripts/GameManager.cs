@@ -42,7 +42,8 @@ public class GameManager : Singleton<GameManager>
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
 
-    public bool BlockInput { get; private set; } = false;
+    public bool BlockChannelInput { get; private set; } = false;
+    public bool BlockPasscodeInput { get; private set; } = false;
     public Victim CurrentVictim { get; private set; }
 
     private float conveyorBeltDefaultSpeed;
@@ -55,10 +56,13 @@ public class GameManager : Singleton<GameManager>
     private float timePenaltyTimer = 0;
     private bool victimIsBeingRescued = false;
     private bool waitingToChangeToKillingFloor = false;
+    private bool waitingToKillVictim = false;
+    private ChannelChangeEffects channelChangeEffects;
    
 
     private void Start()
     {
+        channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
         KillingFloorChannelIndex = 0;
         InitializeChannelArray();
@@ -98,9 +102,16 @@ public class GameManager : Singleton<GameManager>
             UpdateVictimPosition(0);
         }
 
+        if (!currentVictimIsDead && TimeUntilNextKill <= channelChangeEffects.rampUpTime + channelChangeEffects.rampDownTime && !waitingToChangeToKillingFloor)
+        {
+            BlockChannelInput = true;
+        }
+
         if (!currentVictimIsDead && TimeUntilNextKill <= 0 && !waitingToChangeToKillingFloor)
         {
-            BlockInput = true;
+            BlockChannelInput = true;
+            waitingToKillVictim = true;
+            BlockPasscodeInput = true;
             if (ChannelIndex != KillingFloorChannelIndex)
             {
                 waitingToChangeToKillingFloor = true;
@@ -110,6 +121,7 @@ public class GameManager : Singleton<GameManager>
             }
             else if (ChannelIndex == KillingFloorChannelIndex)
             {
+                BlockPasscodeInput = true;
                 KillVictim();
             }            
         }
@@ -118,7 +130,7 @@ public class GameManager : Singleton<GameManager>
     private IEnumerator SwitchToKillingFloorAfterDelay()
     {
         yield return new WaitForSeconds(2);
-        ChangeChannel(KillingFloorChannelIndex);
+        StartCoroutine(ChangeChannel(KillingFloorChannelIndex));
         waitingToChangeToKillingFloor = false;
         breakingNewsUI.SetActive(false);
     }
@@ -127,6 +139,7 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitForSeconds(DelayInSecondsBetweenVictims);
         SetUpNextVictim();
+        waitingToKillVictim = false;
     }
 
     private float GetMultiplierBasedOnPenaltyStatus()
@@ -179,7 +192,8 @@ public class GameManager : Singleton<GameManager>
         currentVictimIsDead = false;
         victimIsBeingRescued = false;
         NewVictimSpawned?.Invoke();
-        BlockInput = false;
+        BlockChannelInput = false;
+        BlockPasscodeInput = false;
     }
 
     private void SetNewVictimName()
@@ -238,48 +252,54 @@ public class GameManager : Singleton<GameManager>
 
     public void ChannelUp()
     {
-        if (BlockInput)
+        if (BlockChannelInput)
             return;
 
         if (ChannelIndex == channels.Length - 1)
         {
-            ChangeChannel(0);
+            StartCoroutine(ChangeChannel(0));
         }
         else
         {
-            ChangeChannel(ChannelIndex + 1);
+            StartCoroutine(ChangeChannel(ChannelIndex + 1));
         }
     }
 
     public void ChannelDown()
     { 
-        if (BlockInput)
+        if (BlockChannelInput)
             return;
 
         if (ChannelIndex == 0)
         {
-            ChangeChannel(channels.Length - 1);
+            StartCoroutine(ChangeChannel(channels.Length - 1));
         }
         else
         {
-            ChangeChannel(ChannelIndex - 1);
+            StartCoroutine(ChangeChannel(ChannelIndex - 1));
         }
     }
 
-    private void ChangeChannel(int newIndex)
+    private IEnumerator ChangeChannel(int newIndex)
     {
-            channels[ChannelIndex].ChannelExited?.Invoke();
-            ChannelIndex = newIndex;
-            channels[newIndex].ChannelEntered?.Invoke();
-            UpdateChannelText();
-            if (ChannelIndex == 0)
-                ChangedToKillingChannel?.Invoke();
+        BlockChannelInput = true;
+        channelChangeEffects.RampUpChannelChangeEffect();
+        yield return new WaitForSeconds(channelChangeEffects.rampUpTime);
+        UpdateChannelText();
+        channels[ChannelIndex].ChannelExited?.Invoke();
+        ChannelIndex = newIndex;
+        channels[newIndex].ChannelEntered?.Invoke();
+        if (ChannelIndex == 0)
+            ChangedToKillingChannel?.Invoke();
+        channelChangeEffects.RampDownChannelChangeEffect();
+        if (!waitingToKillVictim)
+            BlockChannelInput = false;
     }
 
     public void GoToRandomChannel()
     {
         var randomIndex = UnityEngine.Random.Range(0, channels.Length);
-        ChangeChannel(randomIndex);
+        StartCoroutine(ChangeChannel(randomIndex));
     }
 
     private void UpdateChannelText()
