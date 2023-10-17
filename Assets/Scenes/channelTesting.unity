@@ -2251,16 +2251,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PanAndScanMinigameChannel
       objectReference: {fileID: 0}
-    - target: {fileID: 3148588308708858778, guid: 69d82f5d3d71f87429400d60074a9b5f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5440580426081835319, guid: 69d82f5d3d71f87429400d60074a9b5f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5476701418553065780, guid: 69d82f5d3d71f87429400d60074a9b5f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2421,6 +2411,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: IntroNews
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015343717820124607, guid: eb76fd023eca1914b84d862b18b11541,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
