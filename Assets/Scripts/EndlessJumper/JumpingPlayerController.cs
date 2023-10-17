@@ -40,7 +40,7 @@ public class JumpingPlayerController : MonoBehaviour
             rigid.AddForce(Vector3.up * jumpStrength);
             jump.Play();
             inJump = true;
-            jumpInputDelay = .5f;
+            jumpInputDelay = 1f;
         }
     }
 
@@ -58,13 +58,17 @@ public class JumpingPlayerController : MonoBehaviour
         }
         else {
             if (jumpInputDelay <= 0) {
+
                 if (inJump) {
                     land.Play();
                 }
                 if (waitForJump) {
+                    inJump = false;
                     Jump(new InputAction.CallbackContext());
                 }
-                inJump = false;
+                else {
+                    inJump = false;
+                }
             }
         }
 
