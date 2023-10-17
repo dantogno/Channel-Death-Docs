@@ -1429,6 +1429,91 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1473234899}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1586249283
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2071890596}
+    m_Modifications:
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5093238869315637445, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: ChannelNumber
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7842979448520099289, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+        type: 3}
+      propertyPath: m_Name
+      value: NewsStatusReportChannel
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e2fa53d90018b784d89e0aba7a0e1bac, type: 3}
+--- !u!4 &1586249284 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4466487730134135512, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1586249283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1586249285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7842979448520099289, guid: e2fa53d90018b784d89e0aba7a0e1bac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1586249283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1597253158
 GameObject:
   m_ObjectHideFlags: 0
@@ -2064,6 +2149,7 @@ Transform:
   - {fileID: 1473234900}
   - {fileID: 1846106499}
   - {fileID: 1980442549}
+  - {fileID: 1586249284}
   - {fileID: 1869423086}
   - {fileID: 2066552066}
   - {fileID: 2042889887}
@@ -2201,34 +2287,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
+      propertyPath: channelPrefabs.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
+        type: 3}
       propertyPath: victimPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 47741892}
+      objectReference: {fileID: 1278560112}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: victimPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 1092685688}
+      objectReference: {fileID: 47741892}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: victimPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 1175630760}
+      objectReference: {fileID: 1092685688}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: victimPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 511296803}
+      objectReference: {fileID: 1175630760}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: victimPrefabs.Array.data[4]
       value: 
-      objectReference: {fileID: 1189781573}
+      objectReference: {fileID: 511296803}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: victimPrefabs.Array.data[5]
       value: 
-      objectReference: {fileID: 1278560112}
+      objectReference: {fileID: 1189781573}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[0]
@@ -2248,15 +2339,20 @@ PrefabInstance:
         type: 3}
       propertyPath: channelPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 1869423087}
+      objectReference: {fileID: 1586249285}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[4]
       value: 
-      objectReference: {fileID: 2066552065}
+      objectReference: {fileID: 1869423087}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 2066552065}
+    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
+        type: 3}
+      propertyPath: channelPrefabs.Array.data[6]
       value: 
       objectReference: {fileID: 2042889886}
     - target: {fileID: 6938403463326837663, guid: 531fa3e76924f5e4195f57ca9d1159ed,

@@ -11,7 +11,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int KillingFloorChannelIndex = 5;
+    public int KillingFloorChannelIndex { get; private set; }
     [Tooltip("Victim dies after this many seconds.")]
     public float killTimeInSeconds = 180;
 
@@ -54,6 +54,10 @@ public class GameManager : Singleton<GameManager>
     public bool BlockPasscodeInput { get; private set; } = false;
     public Victim CurrentVictim { get; private set; }
 
+    public int KillCount { get; private set; } = 0;
+    public int SaveCount { get; private set; } = 0;
+
+
     private float conveyorBeltDefaultSpeed;
     private bool currentVictimIsDead;
     private Channel[] channels;
@@ -77,6 +81,8 @@ public class GameManager : Singleton<GameManager>
         channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
         UpdateChannelText();
+        // randomize the victimPrefabs
+        victimPrefabs = victimPrefabs.OrderBy(x => Guid.NewGuid()).ToArray();
         InitializeVictimsOutOfViewPosition();
         ResetKillTimer();
         SetNewVictimName();
@@ -247,6 +253,7 @@ public class GameManager : Singleton<GameManager>
     private void KillVictim()
     {
         currentVictimIsDead = true;
+        KillCount++;
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
         VictimDied?.Invoke(CurrentVictim.Name);
@@ -263,6 +270,10 @@ public class GameManager : Singleton<GameManager>
         for (int i = 0; i < channelPrefabs.Length; i++)
         {
             channels[i] = channelPrefabs[i].GetComponent<Channel>();
+            if (channels[i].name == "KillingFloorChannel")
+            {
+                KillingFloorChannelIndex = i;
+            }
         }
         // Not sure this is a good idea. Need to preserve index 0, which is channel 13.
         // almost seemed to not work anyway.
@@ -362,6 +373,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (isSuccessful)
         {
+            SaveCount++;
             victimIsBeingRescued = true;
             victimSpawnPoint.transform.position = outOfViewPosition;
         }        
