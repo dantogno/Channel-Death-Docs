@@ -282,6 +282,8 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator ChangeChannel(int newIndex)
     {
+        if (newIndex == ChannelIndex)
+            yield break;
         BlockChannelInput = true;
         channelChangeEffects.RampUpChannelChangeEffect();
         yield return new WaitForSeconds(channelChangeEffects.rampUpTime);
