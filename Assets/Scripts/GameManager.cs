@@ -43,7 +43,8 @@ public class GameManager : Singleton<GameManager>
     public static event Action NewVictimSpawned;
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
-    public int KillingFloorChannelIndex { get; private set; }
+    [SerializeField]
+    private int KillingFloorChannelIndex = 5;
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
 
@@ -70,7 +71,6 @@ public class GameManager : Singleton<GameManager>
         bloodVideo.SetActive(false);
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
-        KillingFloorChannelIndex = 0;
         InitializeChannelArray();
         channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
@@ -304,11 +304,11 @@ public class GameManager : Singleton<GameManager>
         BlockChannelInput = true;
         channelChangeEffects.RampUpChannelChangeEffect();
         yield return new WaitForSeconds(channelChangeEffects.rampUpTime);
-        UpdateChannelText();
         channels[ChannelIndex].ChannelExited?.Invoke();
         ChannelIndex = newIndex;
+        UpdateChannelText();
         channels[newIndex].ChannelEntered?.Invoke();
-        if (ChannelIndex == 0)
+        if (ChannelIndex == KillingFloorChannelIndex)
             ChangedToKillingChannel?.Invoke();
         channelChangeEffects.RampDownChannelChangeEffect();
         if (!waitingToKillVictim)

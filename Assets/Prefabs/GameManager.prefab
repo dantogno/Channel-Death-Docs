@@ -189,11 +189,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  killTimeInSeconds: 5
-  timePenaltyMultiplier: 4
-  timePenaltyDuration: 1
+  killTimeInSeconds: 300
+  timePenaltyMultiplier: 10
+  timePenaltyDuration: 2
   DelayInSecondsBetweenVictims: 10
   breakingNewsUI: {fileID: 5948043151081247356}
   bloodStream: {fileID: 0}
@@ -210,6 +208,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   victimLocalRotation: {x: 11, y: 279.76187, z: 0}
+  KillingFloorChannelIndex: 4
 --- !u!114 &8791959693069228541
 MonoBehaviour:
   m_ObjectHideFlags: 0
