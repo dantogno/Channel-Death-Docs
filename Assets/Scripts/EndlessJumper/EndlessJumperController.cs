@@ -22,7 +22,10 @@ public class EndlessJumperController : MonoBehaviour
     private int pitCount;
     private float progress = 0f;
     private bool win = false;
-    private Vector3 playerFreeze = new Vector3();
+    public AudioSource[] sources;
+    public AudioSource musicSource;
+    private float startVolume;
+    bool indeath = false;
 
     private void FixedUpdate()
     {
@@ -39,9 +42,13 @@ public class EndlessJumperController : MonoBehaviour
         //foreach (GameObject go in trackedSections) {
         //    go.transform.position += Vector3.left * Time.deltaTime * activeSpeed;
         //}
-        progress += Time.deltaTime;
+        if (progress < gameLength) {
+            progress += Time.deltaTime;
+        }
         activeSpeed = Mathf.Lerp(groundSpeed.x, groundSpeed.y, progress / gameLength);
-        if (progress >= gameLength) {
+        musicSource.pitch = Mathf.Lerp(.75f, 2f, progress / gameLength);
+        musicSource.volume = Mathf.Lerp(startVolume, startVolume * 2f, progress / gameLength);
+        if (progress >= gameLength && !win) {
             Win();
         }
     }
@@ -66,6 +73,7 @@ public class EndlessJumperController : MonoBehaviour
         }
         playerStartPos = player.transform.position;
         GameManager.NewVictimSpawned += NewVictomSpawn;
+        startVolume = musicSource.volume;
     }
 
     private void OnEnable()
@@ -154,15 +162,20 @@ public class EndlessJumperController : MonoBehaviour
     private void OnDisable()
     {
         inGame = false;
+        indeath = false;
     }
 
     public void Die(Vector3 playerPos)
     {
-        StartCoroutine(DeathAnim(playerPos));
+        if (!indeath) {
+            StartCoroutine(DeathAnim(playerPos));
+            sources[0].Play();
+        }
     }
 
     IEnumerator DeathAnim(Vector3 playerPos)
     {
+        indeath = true;
         inGame = false;
         blood.SetActive(true);
         float elaspedTime = 0f;
@@ -172,6 +185,7 @@ public class EndlessJumperController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         Reset();
+        indeath = false;
     }
 
     void NewVictomSpawn()
@@ -202,6 +216,7 @@ public class EndlessJumperController : MonoBehaviour
         win = true;
         textDisplayGroup.GetComponentInChildren<TMPro.TMP_Text>().text = PasscodeManager.Instance.DiamondsNumber;
         textDisplayGroup.SetActive(true);
+        sources[1].Play();
     }
 
     private void OnDestroy()

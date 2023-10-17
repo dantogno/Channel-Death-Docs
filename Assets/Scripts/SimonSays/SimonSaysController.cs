@@ -200,6 +200,7 @@ public class SimonSaysController : MonoBehaviour
         }
         displayScreens[3].GetComponent<TMPro.TMP_Text>().text = PasscodeManager.Instance.HeartsNumber;
         displayScreens[3].SetActive(true);
+        inputClips[5].Play();
         won = true;
     }
 

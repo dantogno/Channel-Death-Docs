@@ -11,6 +11,8 @@ public class JumpingPlayerController : MonoBehaviour
     private bool waitForJump;
     private EndlessJumperController ejc;
     private float jumpInputDelay = 0f;
+    public AudioSource jump;
+    public AudioSource land;
 
     private void Awake()
     {
@@ -36,8 +38,9 @@ public class JumpingPlayerController : MonoBehaviour
         waitForJump = true;
         if (!inJump) {
             rigid.AddForce(Vector3.up * jumpStrength);
+            jump.Play();
             inJump = true;
-            jumpInputDelay = .5f;
+            jumpInputDelay = 1f;
         }
     }
 
@@ -55,10 +58,17 @@ public class JumpingPlayerController : MonoBehaviour
         }
         else {
             if (jumpInputDelay <= 0) {
+
+                if (inJump) {
+                    land.Play();
+                }
                 if (waitForJump) {
+                    inJump = false;
                     Jump(new InputAction.CallbackContext());
                 }
-                inJump = false;
+                else {
+                    inJump = false;
+                }
             }
         }
 
