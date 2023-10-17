@@ -26,18 +26,26 @@ public class GameManager : Singleton<GameManager>
     [Tooltip("How long to wait before spawning a new victim after the previous one dies or is rescued.")]
     public float DelayInSecondsBetweenVictims = 5;
 
+    [SerializeField]
+    private GameObject conveyorBelt;
+
+    [SerializeField]
+    private GameObject breakingNewsUI;
+
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
     public GameObject killPosition;
     public GameObject[] victimPrefabs;
     public Vector3 victimLocalRotation = new Vector3(0, 279.761871f, 0);
-
     public static event Action<string> VictimDied;
     public static event Action NewVictimSpawned;
 
+   
+    public int KillingFloorChannelIndex { get; private set; }
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
 
+    public bool BlockChangingChannels { get; private set; } = false;
     public Victim CurrentVictim { get; private set; }
 
     private float conveyorBeltDefaultSpeed;
@@ -49,10 +57,13 @@ public class GameManager : Singleton<GameManager>
     private Coroutine channelTextCoroutine;
     private float timePenaltyTimer = 0;
     private bool victimIsBeingRescued = false;
+    private bool waitingToChangeToKillingFloor = false;
+   
 
     private void Start()
     {
         ChannelIndex = 0;
+        KillingFloorChannelIndex = 0;
         InitializeChannelArray();
         channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
@@ -83,15 +94,36 @@ public class GameManager : Singleton<GameManager>
 
         if (!currentVictimIsDead && TimeUntilNextKill <= 0)
         {
-            KillVictim();
-            StartCoroutine(SpawnNewVictimAfterDelay());
+            BlockChangingChannels = true;
+            if (ChannelIndex != KillingFloorChannelIndex && !waitingToChangeToKillingFloor)
+            {
+                waitingToChangeToKillingFloor = true;
+                breakingNewsUI.SetActive(true);
+                StartCoroutine(SwitchToKillingFloorAfterDelay());
+            }
+            else if (ChannelIndex == KillingFloorChannelIndex)
+            {
+                KillVictim();
+            }            
         }
+    }
+
+    private IEnumerator SwitchToKillingFloorAfterDelay()
+    {
+        yield return new WaitForSeconds(2);
+        ChangeChannel(KillingFloorChannelIndex);
+        waitingToChangeToKillingFloor = false;
+        // delay before kill to let viewer get their bearings.
+        yield return new WaitForSeconds(1.5f);
+        KillVictim();
+
     }
 
     private IEnumerator SpawnNewVictimAfterDelay()
     {
         yield return new WaitForSeconds(DelayInSecondsBetweenVictims);
         SetUpNextVictim();
+        BlockChangingChannels = false;
     }
 
     private float GetMultiplierBasedOnPenaltyStatus()
@@ -185,6 +217,7 @@ public class GameManager : Singleton<GameManager>
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
         VictimDied?.Invoke(CurrentVictim.Name);
+        StartCoroutine(SpawnNewVictimAfterDelay());
     }
 
     private void InitializeChannelArray()
@@ -194,7 +227,9 @@ public class GameManager : Singleton<GameManager>
         {
             channels[i] = channelPrefabs[i].GetComponent<Channel>();
         }
-        channels.OrderBy(c => c.ChannelNumber);
+        // Not sure this is a good idea. Need to preserve index 0, which is channel 13.
+        // almost seemed to not work anyway.
+        // channels.OrderBy(c => c.ChannelNumber);
     }
 
     public void ChannelUp()
@@ -210,7 +245,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void ChannelDown()
-    {
+    { 
         if (ChannelIndex == 0)
         {
             ChangeChannel(channels.Length - 1);
@@ -223,10 +258,13 @@ public class GameManager : Singleton<GameManager>
 
     private void ChangeChannel(int newIndex)
     {
-        channels[ChannelIndex].ChannelExited?.Invoke();
-        ChannelIndex = newIndex;
-        channels[newIndex].ChannelEntered?.Invoke();
-        UpdateChannelText();
+        if (!BlockChangingChannels)
+        {
+            channels[ChannelIndex].ChannelExited?.Invoke();
+            ChannelIndex = newIndex;
+            channels[newIndex].ChannelEntered?.Invoke();
+            UpdateChannelText();        
+        }
     }
 
     public void GoToRandomChannel()
