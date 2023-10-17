@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8349109398164184256}
   - component: {fileID: 2879505925456467143}
   - component: {fileID: 1963808085702464312}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Death
   m_TagString: JumpObstacle
   m_Icon: {fileID: 0}

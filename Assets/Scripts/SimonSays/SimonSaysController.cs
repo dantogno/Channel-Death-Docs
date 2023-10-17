@@ -22,6 +22,9 @@ public class SimonSaysController : MonoBehaviour
     private bool waitingToRun = false;
     private bool won = false;
 
+    public AudioSource[] inputClips;
+
+    public AudioSource source;
 
     private void Awake()
     {
@@ -87,6 +90,7 @@ public class SimonSaysController : MonoBehaviour
             objectHolders[3].SetActive(true);
             sequenceInput = 3;
         }
+        inputClips[sequenceInput].Play();
         if (sequence[playerSequenceCount] == sequenceInput) {
             playerSequenceCount++;
             inputTimer = inputWindowDuration;
@@ -148,6 +152,7 @@ public class SimonSaysController : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         while (sequenceCount < sequence.Count) {
             objectHolders[sequence[sequenceCount]].SetActive(true);
+            inputClips[sequence[sequenceCount]].Play();
             float elapsedTime = 0f;
             while (elapsedTime < activeSpeed) {
                 elapsedTime += Time.deltaTime;
@@ -176,6 +181,7 @@ public class SimonSaysController : MonoBehaviour
         displayScreens[0].SetActive(false);
         displayScreens[1].SetActive(false);
         playerSequenceCount = 0;
+        inputClips[4].Play();
         yield return new WaitForSeconds(3f);
         foreach (GameObject go in objectHolders) {
             go.SetActive(false);

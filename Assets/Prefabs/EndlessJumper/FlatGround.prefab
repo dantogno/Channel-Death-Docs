@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3365466127266038625}
   - component: {fileID: 7918915896935459898}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: JumpDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,9 +65,9 @@ GameObject:
   - component: {fileID: 8349109398164184256}
   - component: {fileID: 2879505925456467143}
   - component: {fileID: 1963808085702464312}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: GroundVisual
-  m_TagString: Untagged
+  m_TagString: JumpGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
