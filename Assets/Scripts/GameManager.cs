@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.VFX;
 using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : Singleton<GameManager>
@@ -28,6 +29,9 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private GameObject breakingNewsUI;
+
+    [SerializeField]
+    private VisualEffect bloodStream, bloodBurst;
 
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
@@ -142,6 +146,12 @@ public class GameManager : Singleton<GameManager>
         waitingToKillVictim = false;
     }
 
+    private IEnumerator DisableBloodAfterDelay()
+    {
+        yield return new WaitForSeconds(DelayInSecondsBetweenVictims - 1);
+        bloodStream.Stop();
+    }
+
     private float GetMultiplierBasedOnPenaltyStatus()
     {
         float timeMultiplier = 1;
@@ -235,6 +245,9 @@ public class GameManager : Singleton<GameManager>
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
         VictimDied?.Invoke(CurrentVictim.Name);
+        bloodBurst.Play();
+        bloodStream.Play();
+        StartCoroutine(DisableBloodAfterDelay());
         StartCoroutine(SpawnNewVictimAfterDelay());
     }
 
