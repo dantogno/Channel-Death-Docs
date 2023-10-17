@@ -381,7 +381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8401856059452119379}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LookTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 7724893746242436963}
   - component: {fileID: 8817663993117648874}
   - component: {fileID: 4851802281387568854}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 2324953349575941350}
   - component: {fileID: 5750591402960145161}
   - component: {fileID: 144218088954085916}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: BackupObstacle
   m_TagString: JumpObstacle
   m_Icon: {fileID: 0}
@@ -871,7 +871,7 @@ GameObject:
   - component: {fileID: 7202358134121272504}
   - component: {fileID: 1115819902771764790}
   - component: {fileID: 6223506896166833323}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: ObjectReturn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -964,9 +964,9 @@ GameObject:
   - component: {fileID: 1058081068024937277}
   - component: {fileID: 1714085800009888684}
   - component: {fileID: 7962832017697775545}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1984,6 +1984,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: craneo
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6991cb3c1cf0c174490c39bf31b3f071,
+        type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588623127559862446, guid: 6991cb3c1cf0c174490c39bf31b3f071,
+        type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2212,6 +2222,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4221529218078809883, guid: d700168fb844dcc479a696ecdf47f74c,
         type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221529218078809883, guid: d700168fb844dcc479a696ecdf47f74c,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2274,6 +2289,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -104.547
+      objectReference: {fileID: 0}
+    - target: {fileID: 6471027027826971950, guid: d700168fb844dcc479a696ecdf47f74c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
