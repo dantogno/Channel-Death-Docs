@@ -191,7 +191,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  killTimeInSeconds: 10
+  killTimeInSeconds: 5
   timePenaltyMultiplier: 4
   timePenaltyDuration: 1
   DelayInSecondsBetweenVictims: 10
@@ -203,6 +203,10 @@ MonoBehaviour:
   victimSpawnPoint: {fileID: 0}
   killPosition: {fileID: 0}
   victimPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   victimLocalRotation: {x: 11, y: 279.76187, z: 0}
