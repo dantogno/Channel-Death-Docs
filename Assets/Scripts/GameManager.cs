@@ -26,18 +26,23 @@ public class GameManager : Singleton<GameManager>
     [Tooltip("How long to wait before spawning a new victim after the previous one dies or is rescued.")]
     public float DelayInSecondsBetweenVictims = 5;
 
+    [SerializeField]
+    private GameObject breakingNewsUI;
+
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
     public GameObject killPosition;
     public GameObject[] victimPrefabs;
     public Vector3 victimLocalRotation = new Vector3(0, 279.761871f, 0);
-
     public static event Action<string> VictimDied;
     public static event Action NewVictimSpawned;
-
+    public static event Action WillInterruptBroadcastToChangeToKillingChannel;
+    public static event Action ChangedToKillingChannel;
+    public int KillingFloorChannelIndex { get; private set; }
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
 
+    public bool BlockInput { get; private set; } = false;
     public Victim CurrentVictim { get; private set; }
 
     private float conveyorBeltDefaultSpeed;
@@ -49,10 +54,13 @@ public class GameManager : Singleton<GameManager>
     private Coroutine channelTextCoroutine;
     private float timePenaltyTimer = 0;
     private bool victimIsBeingRescued = false;
+    private bool waitingToChangeToKillingFloor = false;
+   
 
     private void Start()
     {
         ChannelIndex = 0;
+        KillingFloorChannelIndex = 0;
         InitializeChannelArray();
         channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
@@ -76,16 +84,43 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {   
-        float timeMultiplier = GetMultiplierBasedOnPenaltyStatus();
-        UpdateKillTimer(timeMultiplier);
-        UpdateBeltSpeed(timeMultiplier);
-        UpdateVictimPosition(timeMultiplier);
-
-        if (!currentVictimIsDead && TimeUntilNextKill <= 0)
+        if (!waitingToChangeToKillingFloor)
         {
-            KillVictim();
-            StartCoroutine(SpawnNewVictimAfterDelay());
+            float timeMultiplier = GetMultiplierBasedOnPenaltyStatus();
+            UpdateKillTimer(timeMultiplier);
+            UpdateBeltSpeed(timeMultiplier);
+            UpdateVictimPosition(timeMultiplier);
         }
+        else
+        {
+            UpdateKillTimer(0);
+            UpdateBeltSpeed(0);
+            UpdateVictimPosition(0);
+        }
+
+        if (!currentVictimIsDead && TimeUntilNextKill <= 0 && !waitingToChangeToKillingFloor)
+        {
+            BlockInput = true;
+            if (ChannelIndex != KillingFloorChannelIndex)
+            {
+                waitingToChangeToKillingFloor = true;
+                breakingNewsUI.SetActive(true);
+                WillInterruptBroadcastToChangeToKillingChannel?.Invoke();
+                StartCoroutine(SwitchToKillingFloorAfterDelay());
+            }
+            else if (ChannelIndex == KillingFloorChannelIndex)
+            {
+                KillVictim();
+            }            
+        }
+    }
+
+    private IEnumerator SwitchToKillingFloorAfterDelay()
+    {
+        yield return new WaitForSeconds(2);
+        ChangeChannel(KillingFloorChannelIndex);
+        waitingToChangeToKillingFloor = false;
+        breakingNewsUI.SetActive(false);
     }
 
     private IEnumerator SpawnNewVictimAfterDelay()
@@ -144,8 +179,9 @@ public class GameManager : Singleton<GameManager>
         currentVictimIsDead = false;
         victimIsBeingRescued = false;
         NewVictimSpawned?.Invoke();
+        BlockInput = false;
     }
-    
+
     private void SetNewVictimName()
     {
         var victim = victimPrefabs[victimIndex].GetComponent<Victim>();
@@ -185,6 +221,7 @@ public class GameManager : Singleton<GameManager>
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
         VictimDied?.Invoke(CurrentVictim.Name);
+        StartCoroutine(SpawnNewVictimAfterDelay());
     }
 
     private void InitializeChannelArray()
@@ -194,11 +231,16 @@ public class GameManager : Singleton<GameManager>
         {
             channels[i] = channelPrefabs[i].GetComponent<Channel>();
         }
-        channels.OrderBy(c => c.ChannelNumber);
+        // Not sure this is a good idea. Need to preserve index 0, which is channel 13.
+        // almost seemed to not work anyway.
+        // channels.OrderBy(c => c.ChannelNumber);
     }
 
     public void ChannelUp()
     {
+        if (BlockInput)
+            return;
+
         if (ChannelIndex == channels.Length - 1)
         {
             ChangeChannel(0);
@@ -210,7 +252,10 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void ChannelDown()
-    {
+    { 
+        if (BlockInput)
+            return;
+
         if (ChannelIndex == 0)
         {
             ChangeChannel(channels.Length - 1);
@@ -223,10 +268,12 @@ public class GameManager : Singleton<GameManager>
 
     private void ChangeChannel(int newIndex)
     {
-        channels[ChannelIndex].ChannelExited?.Invoke();
-        ChannelIndex = newIndex;
-        channels[newIndex].ChannelEntered?.Invoke();
-        UpdateChannelText();
+            channels[ChannelIndex].ChannelExited?.Invoke();
+            ChannelIndex = newIndex;
+            channels[newIndex].ChannelEntered?.Invoke();
+            UpdateChannelText();
+            if (ChannelIndex == 0)
+                ChangedToKillingChannel?.Invoke();
     }
 
     public void GoToRandomChannel()

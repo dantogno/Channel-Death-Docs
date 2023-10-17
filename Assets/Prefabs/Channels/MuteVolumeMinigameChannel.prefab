@@ -1624,7 +1624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8040286545800602428
 Transform:
   m_ObjectHideFlags: 0
@@ -1665,6 +1665,7 @@ MonoBehaviour:
   testSpeedScale: 1
   commercialViewTimeThreshold: 25
   musicMutedTimeThreshold: 15
+  volumeCanvas: {fileID: 7118306517152028611}
   jumpScare: {fileID: 5025396349105540086}
   volumeSymbolText: {fileID: 3099040053684868039}
   muteText: {fileID: 1224176652540117691}

@@ -44,7 +44,14 @@ public class PasscodeDigitEntry : MonoBehaviour
             wrongImage.SetActive(true);
             StartCoroutine(ResetInputFieldAfterCooldown());
         }
+    }
 
+    private void Update()
+    {
+        if (GameManager.Instance.BlockInput || GameManager.Instance.ChannelIndex != 0)
+        {
+            inputField.interactable = false;
+        }
     }
 
     private IEnumerator ResetInputFieldAfterCooldown()
@@ -82,13 +89,27 @@ public class PasscodeDigitEntry : MonoBehaviour
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
         GameManager.NewVictimSpawned += OnNewVictimSpawed;
         GameManager.VictimDied += OnVictimDied;
+        GameManager.ChangedToKillingChannel += OnChangedToKillingChannel;
     }
 
+    private void OnChangedToKillingChannel()
+    {
+        if (!GameManager.Instance.BlockInput)
+        {
+            inputField.interactable = true;
+        }
+        ClearInputField();
+        if (isFirstDigit)
+        {
+            ActivateInputField();
+        }
+    }
 
     private void OnDisable()
     {
         PasscodeManager.ValidationCompleted -= OnValidationCompleted;
         GameManager.NewVictimSpawned -= OnNewVictimSpawed;
         GameManager.VictimDied -= OnVictimDied;
+        GameManager.ChangedToKillingChannel -= OnChangedToKillingChannel;
     }
 }
