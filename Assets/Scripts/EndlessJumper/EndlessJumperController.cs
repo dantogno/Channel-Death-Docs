@@ -22,7 +22,7 @@ public class EndlessJumperController : MonoBehaviour
     private int pitCount;
     private float progress = 0f;
     private bool win = false;
-    private Vector3 playerFreeze = new Vector3();
+    public AudioSource[] sources;
 
     private void FixedUpdate()
     {
@@ -41,7 +41,7 @@ public class EndlessJumperController : MonoBehaviour
         //}
         progress += Time.deltaTime;
         activeSpeed = Mathf.Lerp(groundSpeed.x, groundSpeed.y, progress / gameLength);
-        if (progress >= gameLength) {
+        if (progress >= gameLength && !win) {
             Win();
         }
     }
@@ -159,6 +159,7 @@ public class EndlessJumperController : MonoBehaviour
     public void Die(Vector3 playerPos)
     {
         StartCoroutine(DeathAnim(playerPos));
+        sources[0].Play();
     }
 
     IEnumerator DeathAnim(Vector3 playerPos)
@@ -202,6 +203,7 @@ public class EndlessJumperController : MonoBehaviour
         win = true;
         textDisplayGroup.GetComponentInChildren<TMPro.TMP_Text>().text = PasscodeManager.Instance.DiamondsNumber;
         textDisplayGroup.SetActive(true);
+        sources[1].Play();
     }
 
     private void OnDestroy()
