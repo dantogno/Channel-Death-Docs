@@ -11,12 +11,18 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int KillingFloorChannelIndex { get; private set; }
     [Tooltip("Victim dies after this many seconds.")]
     public float killTimeInSeconds = 180;
 
+    public string KillerName = "The Broadcast Killer";
+
+    public int numberOfSavesToSpawnBoss = 2;
     public float timePenaltyMultiplier = 5;
     public float timePenaltyDuration = 2f;
+    public float distanceToClearBelt = 3f;
+
+    [SerializeField]
+    private Victim killer;
 
     [SerializeField]
     private TMP_Text channelNumberText;
@@ -47,6 +53,7 @@ public class GameManager : Singleton<GameManager>
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
   
+    public int KillingFloorChannelIndex { get; private set; }
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
 
@@ -70,6 +77,7 @@ public class GameManager : Singleton<GameManager>
     private bool waitingToChangeToKillingFloor = false;
     private bool waitingToKillVictim = false;
     private ChannelChangeEffects channelChangeEffects;
+    private bool IsReadyForEnding => SaveCount >= numberOfSavesToSpawnBoss;
    
 
     private void Start()
@@ -102,7 +110,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {   
-        if (!waitingToChangeToKillingFloor)
+        // if the victim is dead we speed up the belt to make it look cooler.
+        if (!waitingToChangeToKillingFloor && !currentVictimIsDead)
         {
             float timeMultiplier = GetMultiplierBasedOnPenaltyStatus();
             UpdateKillTimer(timeMultiplier);
@@ -206,6 +215,7 @@ public class GameManager : Singleton<GameManager>
         // Move old victim out of view
         victimPrefabs[victimIndex].transform.SetParent(null);
         victimPrefabs[victimIndex].transform.position = outOfViewPosition;
+        
         UpdateVictimIndex();
         SetNewVictimName();
         MoveVictimToPosition();
@@ -219,9 +229,17 @@ public class GameManager : Singleton<GameManager>
 
     private void SetNewVictimName()
     {
-        var victim = victimPrefabs[victimIndex].GetComponent<Victim>();
-        CurrentVictim = victim;
-        victim.SetRandomName();
+        if (IsReadyForEnding)
+        {
+            CurrentVictim = killer;
+            CurrentVictim.Name = KillerName;
+        }
+        else
+        {
+            var victim = victimPrefabs[victimIndex].GetComponent<Victim>();
+            CurrentVictim = victim;
+            victim.SetRandomName();
+        }
     }
 
     private void ResetKillTimer()
@@ -245,9 +263,18 @@ public class GameManager : Singleton<GameManager>
     private void MoveVictimToPosition()
     {
         victimSpawnPoint.transform.position = originalSpawnPosition;
-        victimPrefabs[victimIndex].transform.SetParent(victimSpawnPoint.transform, false);
-        victimPrefabs[victimIndex].transform.localPosition = Vector3.zero;
-        victimPrefabs[victimIndex].transform.rotation = Quaternion.Euler(victimLocalRotation);
+        if (IsReadyForEnding)
+        {
+            killer.transform.SetParent(victimSpawnPoint.transform, false);
+            killer.transform.localPosition = Vector3.zero;
+            killer.transform.rotation = Quaternion.Euler(victimLocalRotation);
+        }
+        else 
+        { 
+            victimPrefabs[victimIndex].transform.SetParent(victimSpawnPoint.transform, false);
+            victimPrefabs[victimIndex].transform.localPosition = Vector3.zero;
+            victimPrefabs[victimIndex].transform.rotation = Quaternion.Euler(victimLocalRotation);
+        }
     }
 
     private void KillVictim()
@@ -260,8 +287,19 @@ public class GameManager : Singleton<GameManager>
         bloodBurst.Play();
         bloodStream.Play();
         bloodVideo.SetActive(true);
+
+        var speedNeeded = distanceToClearBelt / DelayInSecondsBetweenVictims;
+        UpdateBeltSpeed(speedNeeded);
         StartCoroutine(DisableBloodAfterDelay());
-        StartCoroutine(SpawnNewVictimAfterDelay());
+        if (IsReadyForEnding)
+        {
+            // do ending
+            // go to credits
+        }
+        else
+        {
+            StartCoroutine(SpawnNewVictimAfterDelay());
+        }
     }
 
     private void InitializeChannelArray()

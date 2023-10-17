@@ -8,7 +8,7 @@ public class Victim : MonoBehaviour
     public static Action<string> VictimNameUpdated;
     public bool isFemale;
 
-    public string Name { get; private set; }
+    public string Name { get;  set; }
   
     private static string[] maleNames = { "Chad", "Brad", "Troy", "Brock", "Drake", "Blade", "Rex", "Ace", "Jace", "Zane", "Seth", "Cole", "Shane", "Brett", "Bryce", "Cody", "Drew", "Duke", "Gage", "Jett", "Kane", "Lance", "Max", "Nash", "Trent" };
     private static string[] femaleNames = { "Tiffany", "Brittany", "Ashley", "Courtney", "Heather", "Amber", "Crystal", "Misty", "Kelly", "Lacey", "Stacey", "Tracy", "Brandy", "Candy", "Mandy", "Jenny", "Lily", "Ruby", "Chloe", "Zoe", "Lexi", "Kylie", "Hailey", "Bailey", "Kayla" };
