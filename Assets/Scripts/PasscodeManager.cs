@@ -87,17 +87,20 @@ public class PasscodeManager : Singleton<PasscodeManager>
     private void OnNewVictimSpawned()
     {
         CreateNewPasscode();
+        ClearEnteredCode() ;
     }
 
 
     private void OnEnable()
     {
         GameManager.NewVictimSpawned += OnNewVictimSpawned;
+        GameManager.ChangedToKillingChannel += ClearEnteredCode;
     }
 
 
     private void OnDisable()
     {
         GameManager.NewVictimSpawned -= OnNewVictimSpawned;
+        GameManager.ChangedToKillingChannel -= ClearEnteredCode;
     }
 }

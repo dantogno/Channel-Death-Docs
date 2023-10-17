@@ -13,6 +13,7 @@ public class VolumeMinigame : MonoBehaviour
     public float testSpeedScale = 1;
     public float commercialViewTimeThreshold = 8;
     public float musicMutedTimeThreshold = 5;
+    public Canvas volumeCanvas;
     public GameObject jumpScare;
     public TMP_Text volumeSymbolText;
     public TMP_Text muteText;
@@ -244,6 +245,7 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
+        volumeCanvas.gameObject.SetActive(true);
         SetHalfVolume();
         muteText.gameObject.SetActive(false);
         musicMutedTimer = 0;
@@ -255,11 +257,18 @@ public class VolumeMinigame : MonoBehaviour
         commercialVideo.Stop();
         StopAllCoroutines();
         StartCoroutine(PlayMinigameSequence());
+        GameManager.WillInterruptBroadcastToChangeToKillingChannel += OnWillChangeToKillingFloor;
         InputManager.InputActions.Gameplay.VolumeUp.performed += OnVolumeUpPressed;
         InputManager.InputActions.Gameplay.VolumeDown.performed += OnVolumeDownPressed;
         InputManager.InputActions.Gameplay.VolumeUp.canceled += OnVolumeUpReleased;
         InputManager.InputActions.Gameplay.VolumeDown.canceled += OnVolumeDownReleased;
         InputManager.InputActions.Gameplay.Mute.performed += OnMutePressed;
+    }
+
+
+    private void OnWillChangeToKillingFloor()
+    {
+        volumeCanvas.gameObject.SetActive(false );
     }
 
     private void OnMutePressed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -277,6 +286,7 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnDisable()
     {
+        volumeCanvas.gameObject.SetActive(false);
         musicMutedTimer = 0;
         commercialViewTimer = 0;
         playingJumpScare = false;
@@ -289,5 +299,6 @@ public class VolumeMinigame : MonoBehaviour
         InputManager.InputActions.Gameplay.VolumeDown.performed -= OnVolumeDownPressed;
         InputManager.InputActions.Gameplay.VolumeUp.canceled -= OnVolumeUpReleased;
         InputManager.InputActions.Gameplay.VolumeDown.canceled -= OnVolumeDownReleased;
+        GameManager.WillInterruptBroadcastToChangeToKillingChannel -= OnWillChangeToKillingFloor;
     }
 }

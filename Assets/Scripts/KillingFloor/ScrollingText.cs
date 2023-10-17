@@ -20,7 +20,7 @@ public class ScrollingText : MonoBehaviour
     private TMP_Text text;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         text = GetComponent<TMP_Text>();
