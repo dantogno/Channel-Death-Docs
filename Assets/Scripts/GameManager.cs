@@ -11,6 +11,13 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : Singleton<GameManager>
 {
+    public int KillingFloorChannelIndex = 5;
+    [Tooltip("Victim dies after this many seconds.")]
+    public float killTimeInSeconds = 180;
+
+    public float timePenaltyMultiplier = 5;
+    public float timePenaltyDuration = 2f;
+
     [SerializeField]
     private TMP_Text channelNumberText;
 
@@ -18,11 +25,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private GameObject[] channelPrefabs;
 
-    [Tooltip("Victim dies after this many seconds.")]
-    public float killTimeInSeconds = 180;
-
-    public float timePenaltyMultiplier = 5;
-    public float timePenaltyDuration = 2f;
+    
 
     [Tooltip("How long to wait before spawning a new victim after the previous one dies or is rescued.")]
     public float DelayInSecondsBetweenVictims = 5;
@@ -43,8 +46,7 @@ public class GameManager : Singleton<GameManager>
     public static event Action NewVictimSpawned;
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
-    [SerializeField]
-    private int KillingFloorChannelIndex = 5;
+  
     public float TimeUntilNextKill { get; private set; } = 0;
     public int ChannelIndex { get; private set; } = 0;  
 

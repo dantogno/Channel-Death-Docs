@@ -2196,6 +2196,11 @@ PrefabInstance:
       objectReference: {fileID: 1898758985}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
+      propertyPath: killTimeInSeconds
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
+        type: 3}
       propertyPath: victimPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 47741892}
