@@ -216,9 +216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rampUpTime: 0.25
-  rampDownTime: 0.25
+  rampDownTime: 0.5
   channelChangeVolume: {fileID: 0}
-  easeType: 16
+  easeType: 25
 --- !u!1 &4451704924996257151
 GameObject:
   m_ObjectHideFlags: 0
