@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PasscodeManager : Singleton<PasscodeManager>
 {
@@ -37,7 +38,7 @@ public class PasscodeManager : Singleton<PasscodeManager>
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        //CreateNewPasscode();
+        CreateNewPasscode();
     }
 
     /// <summary>
@@ -88,11 +89,13 @@ public class PasscodeManager : Singleton<PasscodeManager>
     {
         for (int i = 0; i < DigitEntryFields.Length; i++)
         {
-            DigitEntryFields[i].inputField.interactable = true;
+            if (!GameManager.Instance.BlockPasscodeInput)
+                DigitEntryFields[i].inputField.interactable = true;
             DigitEntryFields[i].ClearInputField();
             DigitEntryFields[i].wrongImage.SetActive(false);
         }
-        DigitEntryFields[0].ActivateInputField();
+        if (!GameManager.Instance.BlockPasscodeInput)
+            DigitEntryFields[0].ActivateInputField();
     }
 
     private IEnumerator SetUpNextVictimAfterDelay()
@@ -119,11 +122,16 @@ public class PasscodeManager : Singleton<PasscodeManager>
         ResetInputFields();
     }
 
+    private void OnChangedToKillingChannel()
+    {
+        ResetInputFields();
+    }
 
     private void OnEnable()
     {
         GameManager.NewVictimSpawned += OnNewVictimSpawned;
         GameManager.ChangedToKillingChannel += ClearEnteredCode;
+        GameManager.ChangedToKillingChannel += OnChangedToKillingChannel;
     }
 
 
@@ -131,5 +139,6 @@ public class PasscodeManager : Singleton<PasscodeManager>
     {
         GameManager.NewVictimSpawned -= OnNewVictimSpawned;
         GameManager.ChangedToKillingChannel -= ClearEnteredCode;
+        GameManager.ChangedToKillingChannel -= OnChangedToKillingChannel;
     }
 }
