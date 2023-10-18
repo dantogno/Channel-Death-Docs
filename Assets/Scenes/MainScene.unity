@@ -204,6 +204,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreditsChannel
       objectReference: {fileID: 0}
+    - target: {fileID: 7259030752124579892, guid: 58ee16dc6a933d04ca3a70174d40d4b1,
+        type: 3}
+      propertyPath: restartDelay
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8399836317698115099, guid: 58ee16dc6a933d04ca3a70174d40d4b1,
         type: 3}
       propertyPath: m_IsActive
@@ -1748,6 +1753,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1995509931 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8807209469872233781, guid: 58ee16dc6a933d04ca3a70174d40d4b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 138401532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998362ae4181990499a833885cafa0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2033794809
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,6 +2033,11 @@ PrefabInstance:
       objectReference: {fileID: 984225591}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
+      propertyPath: creditsChannel
+      value: 
+      objectReference: {fileID: 1995509931}
+    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
+        type: 3}
       propertyPath: beltUVAnimation
       value: 
       objectReference: {fileID: 1600061589}
@@ -2024,21 +2046,6 @@ PrefabInstance:
       propertyPath: victimSpawnPoint
       value: 
       objectReference: {fileID: 1898758985}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: killTimeInSeconds
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: deathBeltSpeedMultiplier
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: numberOVictimsToSpawnBoss
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: victimPrefabs.Array.data[0]
@@ -2296,7 +2303,7 @@ PrefabInstance:
     - target: {fileID: 50557994054220617, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1262456281563072855, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
@@ -2381,7 +2388,7 @@ PrefabInstance:
     - target: {fileID: 8112868305935550479, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8962676697853516306, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}

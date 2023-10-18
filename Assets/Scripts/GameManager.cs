@@ -86,6 +86,7 @@ public class GameManager : Singleton<GameManager>
     private bool waitingToKillVictim = false;
     private bool isKilling = false;
     private ChannelChangeEffects channelChangeEffects;
+    private bool neverChangedChannel = true;
     public bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
    
 
@@ -119,22 +120,23 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (!BeginGameplay)
-            return;
+        if (!BeginGameplay) { return; }
 
         // if the victim is dead we speed up the belt to make it look cooler.
         if (!waitingToChangeToKillingFloor && !currentVictimIsDead)
         {
-            float timeMultiplier = isKilling ? deathBeltSpeedMultiplier : GetMultiplierBasedOnPenaltyStatus();
+            float timeMultiplier =  GetMultiplierBasedOnPenaltyStatus();
             UpdateKillTimer(timeMultiplier);
             UpdateBeltSpeed(timeMultiplier);
             UpdateVictimPosition(timeMultiplier);
         }
         else
         {
-            UpdateKillTimer(0);
-            UpdateBeltSpeed(0);
-            UpdateVictimPosition(0);
+            var speed = distanceToClearBelt / DelayInSecondsBetweenVictims;
+            float timeMultiplier = isKilling ? speed : 0;
+            UpdateKillTimer(timeMultiplier);
+            UpdateBeltSpeed(timeMultiplier);
+            UpdateVictimPosition(timeMultiplier);
         }
 
         if (!currentVictimIsDead && TimeUntilNextKill <= channelChangeEffects.rampUpTime + channelChangeEffects.rampDownTime && !waitingToChangeToKillingFloor)
@@ -307,7 +309,7 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(DisableBloodAfterDelay());
         if (shouldGoToCredits)
         {
-            ChangeToCreditsChannel();
+            StartCoroutine(ChangeToCreditsChannel());
         }
         else
         {
@@ -317,6 +319,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator ChangeToCreditsChannel()
     {
+        yield return new WaitForSeconds(DelayInSecondsBetweenVictims);
         BlockChannelInput = true;
         channelChangeEffects.RampUpChannelChangeEffect();
         yield return new WaitForSeconds(channelChangeEffects.rampUpTime);
@@ -372,6 +375,12 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator ChangeChannel(int newIndex)
     {
+        if (neverChangedChannel)
+        {
+            neverChangedChannel = false;
+            newIndex = KillingFloorChannelIndex;
+        }
+
         if (newIndex == ChannelIndex)
             yield break;
         BlockChannelInput = true;
