@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.VFX;
 using static UnityEngine.InputSystem.InputAction;
@@ -16,10 +17,11 @@ public class GameManager : Singleton<GameManager>
 
     public string KillerName = "The Broadcast Killer";
 
-    public int numberOfSavesToSpawnBoss = 2;
+    public int numberOVictimsToSpawnBoss = 3;
     public float timePenaltyMultiplier = 5;
     public float timePenaltyDuration = 2f;
     public float distanceToClearBelt = 3f;
+    public float deathBeltSpeedMultiplier;
 
     [SerializeField]
     private Victim killer;
@@ -42,6 +44,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private VisualEffect bloodStream, bloodBurst;
 
+    public Channel creditsChannel;
     public GameObject bloodVideo;
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
@@ -77,7 +80,7 @@ public class GameManager : Singleton<GameManager>
     private bool waitingToChangeToKillingFloor = false;
     private bool waitingToKillVictim = false;
     private ChannelChangeEffects channelChangeEffects;
-    private bool IsReadyForEnding => SaveCount >= numberOfSavesToSpawnBoss;
+    private bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
    
 
     private void Start()
@@ -293,13 +296,24 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(DisableBloodAfterDelay());
         if (IsReadyForEnding)
         {
-            // do ending
-            // go to credits
+            ChangeToCreditsChannel();
         }
         else
         {
             StartCoroutine(SpawnNewVictimAfterDelay());
         }
+    }
+
+    private IEnumerator ChangeToCreditsChannel()
+    {
+        BlockChannelInput = true;
+        channelChangeEffects.RampUpChannelChangeEffect();
+        yield return new WaitForSeconds(channelChangeEffects.rampUpTime);
+        channels[ChannelIndex].ChannelExited?.Invoke();
+        StartCoroutine(ShowTextForFixedDuration());
+        channelNumberText.text = creditsChannel.ChannelNumber.ToString();
+        creditsChannel.ChannelEntered?.Invoke();
+        channelChangeEffects.RampDownChannelChangeEffect();
     }
 
     private void InitializeChannelArray()
@@ -313,9 +327,6 @@ public class GameManager : Singleton<GameManager>
                 KillingFloorChannelIndex = i;
             }
         }
-        // Not sure this is a good idea. Need to preserve index 0, which is channel 13.
-        // almost seemed to not work anyway.
-        // channels.OrderBy(c => c.ChannelNumber);
     }
 
     public void ChannelUp()
@@ -378,13 +389,13 @@ public class GameManager : Singleton<GameManager>
         {
             StopCoroutine(channelTextCoroutine);
         }
+        channelNumberText.text = channels[ChannelIndex].ChannelNumber.ToString();
         channelTextCoroutine = StartCoroutine(ShowTextForFixedDuration());
     }
 
     private IEnumerator ShowTextForFixedDuration()
     {
         var duration = 3.0f;
-        channelNumberText.text = channels[ChannelIndex].ChannelNumber.ToString();
         channelNumberText.gameObject.SetActive(true);
         yield return new WaitForSeconds(duration);
         channelNumberText.gameObject.SetActive(false);
