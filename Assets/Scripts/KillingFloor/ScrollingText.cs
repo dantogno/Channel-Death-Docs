@@ -62,7 +62,7 @@ public class ScrollingText : MonoBehaviour
             }
         }
     }
-    private void OnVictimDied(string obj)
+    private void OnVictimDied(Victim obj)
     {
         if (GameManager.Instance.CurrentVictimIsKiller)
         {

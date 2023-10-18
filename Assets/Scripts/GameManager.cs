@@ -12,12 +12,12 @@ public class GameManager : Singleton<GameManager>
     public float killTimeInSeconds = 180;
 
     public string KillerName = "The Broadcast Killer";
-
+    public AudioSource channelChangeAudio;
     public int numberOVictimsToSpawnBoss = 3;
     public float timePenaltyMultiplier = 5;
     public float timePenaltyDuration = 2f;
     public float distanceToClearBelt = 3f;
-    public float deathBeltSpeedMultiplier;
+    public float deathBeltSpeedMultiplier = 5;
     public bool waitForIntroBeforeBeginningGameplay = true;
 
     [SerializeField]
@@ -48,7 +48,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject killPosition;
     public GameObject[] victimPrefabs;
     public Vector3 victimLocalRotation = new Vector3(0, 279.761871f, 0);
-    public static event Action<string> VictimDied;
+    public static event Action<Victim> VictimDied;
     public static event Action NewVictimSpawned;
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
@@ -127,9 +127,8 @@ public class GameManager : Singleton<GameManager>
             UpdateVictimPosition(timeMultiplier);
         }
         else
-        {
-            var speed = distanceToClearBelt / DelayInSecondsBetweenVictims;
-            float timeMultiplier = isKilling ? speed : 0;
+        {    
+            float timeMultiplier = isKilling ? deathBeltSpeedMultiplier : 0;
             UpdateKillTimer(timeMultiplier);
             UpdateBeltSpeed(timeMultiplier);
             UpdateVictimPosition(timeMultiplier);
@@ -297,7 +296,7 @@ public class GameManager : Singleton<GameManager>
         KillCount++;
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
-        VictimDied?.Invoke(CurrentVictim.Name);
+        VictimDied?.Invoke(CurrentVictim);
         bloodBurst.Play();
         bloodStream.Play();
         bloodVideo.SetActive(true);
@@ -381,6 +380,7 @@ public class GameManager : Singleton<GameManager>
             yield break;
         BlockChannelInput = true;
         channelChangeEffects.RampUpChannelChangeEffect();
+        channelChangeAudio.Play();
         yield return new WaitForSeconds(channelChangeEffects.rampUpTime);
         channels[ChannelIndex].ChannelExited?.Invoke();
         ChannelIndex = newIndex;

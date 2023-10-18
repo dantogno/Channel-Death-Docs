@@ -8,7 +8,7 @@ public class PasscodeDigitEntry : MonoBehaviour
     public bool isFirstDigit;
     public GameObject wrongImage;
 
-    private TMPro.TMP_InputField inputField;
+    public TMPro.TMP_InputField inputField;
 
     void Awake()
     {
@@ -42,7 +42,7 @@ public class PasscodeDigitEntry : MonoBehaviour
         if (!isSuccessful)
         {
             wrongImage.SetActive(true);
-            StartCoroutine(ResetInputFieldAfterCooldown());
+            //StartCoroutine(ResetInputFieldAfterCooldown());
         }
     }
 
@@ -54,29 +54,35 @@ public class PasscodeDigitEntry : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetInputFieldAfterCooldown()
-    {
-        yield return new WaitForSeconds(GameManager.Instance.timePenaltyDuration);
-        ResetInputField();
-    }
+    //private IEnumerator ResetInputFieldAfterCooldown()
+    //{
+    //    yield return new WaitForSeconds(GameManager.Instance.timePenaltyDuration);
+    //    ResetInputField();
+    //}
 
-    private void OnNewVictimSpawed()
-    {
-        ResetInputField();
-    }
+    //private void OnNewVictimSpawed()
+    //{
+    //    ResetInputField();
+    //}
 
-    private void ResetInputField()
-    {
-        inputField.interactable = true;
-        wrongImage.SetActive(false);
-        ClearInputField();
-        if (isFirstDigit)
-        {
-            ActivateInputField();
-        }
-    }
+    //private void ResetInputField()
+    //{
+    //    wrongImage.SetActive(false);
+    //    ClearInputField();
+    //    inputField.interactable = true;
+    //    if (isFirstDigit)
+    //    {
+    //        inputField.Select();
+    //        ActivateInputField();
+    //    }
+    //    else
+    //    {
+    //        inputField.DeactivateInputField();
+    //    }
+        
+    //}
 
-    private void OnVictimDied(string obj)
+    private void OnVictimDied(Victim obj)
     {
         inputField.interactable = false;
         ClearInputField();
@@ -87,7 +93,7 @@ public class PasscodeDigitEntry : MonoBehaviour
         ClearInputField();
         if (isFirstDigit) { StartCoroutine(DelayBeforeActivating()); }
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
-        GameManager.NewVictimSpawned += OnNewVictimSpawed;
+        //GameManager.NewVictimSpawned += OnNewVictimSpawed;
         GameManager.VictimDied += OnVictimDied;
         GameManager.ChangedToKillingChannel += OnChangedToKillingChannel;
     }
@@ -108,7 +114,7 @@ public class PasscodeDigitEntry : MonoBehaviour
     private void OnDisable()
     {
         PasscodeManager.ValidationCompleted -= OnValidationCompleted;
-        GameManager.NewVictimSpawned -= OnNewVictimSpawed;
+        //GameManager.NewVictimSpawned -= OnNewVictimSpawed;
         GameManager.VictimDied -= OnVictimDied;
         GameManager.ChangedToKillingChannel -= OnChangedToKillingChannel;
     }
