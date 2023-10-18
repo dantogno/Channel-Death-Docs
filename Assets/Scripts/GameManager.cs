@@ -232,9 +232,9 @@ public class GameManager : Singleton<GameManager>
         ResetKillTimer();
         currentVictimIsDead = false;
         victimIsBeingRescued = false;
-        NewVictimSpawned?.Invoke();
         BlockChannelInput = false;
         BlockPasscodeInput = false;
+        NewVictimSpawned?.Invoke();
     }
 
     private void SetNewVictimName()
