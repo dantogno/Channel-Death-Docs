@@ -33,6 +33,7 @@ public class VolumeMinigame : MonoBehaviour
     private float commercialViewTimer = 0;
     private float musicMutedTimer = 0;
     private bool playingJumpScare = false;
+    private bool isFirstTime = true;
 
     /// <summary>
     /// Must set this for each new victim!
@@ -171,8 +172,19 @@ public class VolumeMinigame : MonoBehaviour
         Time.timeScale = testSpeedScale;
         commercialVideo.playbackSpeed = testSpeedScale;
 #endif
+        if (isFirstTime)
+        {
+            isFirstTime = false;
+            StartCoroutine(SkipFistTime());
+        }
     }
 
+    // music doesn't work, I think it's a loading issue.
+    private IEnumerator SkipFistTime()
+    {
+        yield return new WaitForSeconds(1);
+        GameManager.Instance.GoToRandomChannel();
+    }
     private void Update()
     {
         repeatInputTimer += Time.deltaTime;
