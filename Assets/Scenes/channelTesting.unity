@@ -2519,7 +2519,7 @@ PrefabInstance:
     - target: {fileID: 50557994054220617, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1262456281563072855, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
@@ -2626,6 +2626,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1173894691}
+    - target: {fileID: 4339614848070747312, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5200301761612402574, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2669,72 +2674,12 @@ PrefabInstance:
     - target: {fileID: 5553602068216270684, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 655.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 5691910356902708428, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6146929
-      objectReference: {fileID: 0}
-    - target: {fileID: 5691910356902708428, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6146929
-      objectReference: {fileID: 0}
-    - target: {fileID: 5691910356902708428, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.6146929
-      objectReference: {fileID: 0}
-    - target: {fileID: 5691910356902708428, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -40.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5691910356902708428, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -9.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5691910356902708428, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -14.057
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8112868305935550479, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878480772077538984, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.007529601
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878480772077538984, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.007529601
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878480772077538984, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.007529601
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878480772077538984, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878480772077538984, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.037523
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878480772077538984, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.0031037
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8962676697853516306, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
@@ -2749,7 +2694,7 @@ PrefabInstance:
     - target: {fileID: 9200354233711706960, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2840,6 +2785,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CreditsChannel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081101416612988254, guid: 58ee16dc6a933d04ca3a70174d40d4b1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
