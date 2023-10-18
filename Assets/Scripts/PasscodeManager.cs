@@ -45,8 +45,9 @@ public class PasscodeManager : Singleton<PasscodeManager>
     /// true if the passcode was correct, false otherwise
     /// </summary>
     public static event Action<bool> ValidationCompleted;
+    public static event Action<string> NewPasscodeSet;
 
-    public void CreateNewPasscode()
+    private void CreateNewPasscode()
     {
         // create a random 4 digit passcode
         Passcode = string.Empty;
@@ -55,6 +56,7 @@ public class PasscodeManager : Singleton<PasscodeManager>
             Passcode += UnityEngine.Random.Range(0, 10);
         }
         Debug.Log($"Passcode is {Passcode}");
+        NewPasscodeSet?.Invoke(Passcode);
     }
 
     public void Validate()
@@ -67,6 +69,7 @@ public class PasscodeManager : Singleton<PasscodeManager>
             StartCoroutine(SetUpNextVictimAfterDelay());
             audioSource.clip = correct;
             StartCoroutine(ResetInputFieldsAfterCooldown());
+            CreateNewPasscode();
         }
         else
         {
@@ -117,7 +120,8 @@ public class PasscodeManager : Singleton<PasscodeManager>
 
     private void OnNewVictimSpawned()
     {
-        CreateNewPasscode();
+        // Going to try only doing this when the passcode is correctly entered to reduce difficulty
+        //CreateNewPasscode();
         ClearEnteredCode() ;
         ResetInputFields();
     }
