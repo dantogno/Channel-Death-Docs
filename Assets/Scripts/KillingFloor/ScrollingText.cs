@@ -25,7 +25,10 @@ public class ScrollingText : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         text = GetComponent<TMP_Text>();
     }
-
+    private void Start()
+    {
+        ShowRescueInstructions(GameManager.Instance.CurrentVictim.Name);
+    }
     private void Update()
     {
         //Debug.Log($"transform.positon.x: {transform.position.x}");
@@ -61,7 +64,14 @@ public class ScrollingText : MonoBehaviour
     }
     private void OnVictimDied(string obj)
     {
-        text.text = $"Oh no! {GameManager.Instance.CurrentVictim.Name} has died! More blood on your hands...";
+        if (GameManager.Instance.CurrentVictimIsKiller)
+        {
+            text.text = "I see you have chosen death. So be it... AAAAAAAAARRRGHHHHRRGH!";
+        }
+        else
+        {
+            text.text = $"Oh no! {GameManager.Instance.CurrentVictim.Name} has died! More blood on your hands...";
+        }
         RefreshTextNow();
     }
 
@@ -69,18 +79,35 @@ public class ScrollingText : MonoBehaviour
     {
         if (isSuccessful)
         {
-            text.text = $"Correct! {GameManager.Instance.CurrentVictim.Name} has been set free. But another head will be on the chopping block soon...";
+            if (GameManager.Instance.CurrentVictimIsKiller)
+            {
+                text.text = $"You have done well. I am free. I will not forget your kindness.";
+            }
+            else
+                text.text = $"Correct! {GameManager.Instance.CurrentVictim.Name} has been set free. But another head will be on the chopping block soon...";
         }
         else 
         {
-            text.text = $"Wrong! Poor {GameManager.Instance.CurrentVictim.Name} will pay for your carelessness!";
+            if (GameManager.Instance.CurrentVictimIsKiller)
+            {
+                text.text = "Is it blood you're after? Or perhaps you're simply a fool...";
+            }
+            else
+                text.text = $"Wrong! Poor {GameManager.Instance.CurrentVictim.Name} will pay for your carelessness!";
         }
         RefreshTextNow();
     }
 
     private void ShowRescueInstructions(string name)
     {
-        text.text = $"Enter the passcode to save {name}. Beware, there are consequences for wrong answers.";
+        if (GameManager.Instance.CurrentVictimIsKiller)
+        {
+            text.text = $"It all comes down to this. I will put my own life in your hands. Do what you will.";
+        }
+        else
+        {
+            text.text = $"Enter the passcode to save {name}. Beware, there are consequences for wrong answers.";
+        }
         RefreshTextNow();
     }
 

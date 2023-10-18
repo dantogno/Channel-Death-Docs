@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
     public float timePenaltyDuration = 2f;
     public float distanceToClearBelt = 3f;
     public float deathBeltSpeedMultiplier;
+    public bool waitForIntroBeforeBeginningGameplay = true;
 
     [SerializeField]
     private Victim killer;
@@ -55,6 +56,10 @@ public class GameManager : Singleton<GameManager>
     public static event Action NewVictimSpawned;
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
+
+
+    public bool CurrentVictimIsKiller => CurrentVictim == killer;
+    public bool BeginGameplay { get;  set; } = false;
   
     public int KillingFloorChannelIndex { get; private set; }
     public float TimeUntilNextKill { get; private set; } = 0;
@@ -79,8 +84,9 @@ public class GameManager : Singleton<GameManager>
     private bool victimIsBeingRescued = false;
     private bool waitingToChangeToKillingFloor = false;
     private bool waitingToKillVictim = false;
+    private bool isKilling = false;
     private ChannelChangeEffects channelChangeEffects;
-    private bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
+    public bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
    
 
     private void Start()
@@ -95,8 +101,8 @@ public class GameManager : Singleton<GameManager>
         // randomize the victimPrefabs
         victimPrefabs = victimPrefabs.OrderBy(x => Guid.NewGuid()).ToArray();
         InitializeVictimsOutOfViewPosition();
-        ResetKillTimer();
         SetNewVictimName();
+        ResetKillTimer();
         MoveVictimToPosition();
         conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
     }
@@ -112,11 +118,14 @@ public class GameManager : Singleton<GameManager>
     }
 
     private void Update()
-    {   
+    {
+        if (!BeginGameplay)
+            return;
+
         // if the victim is dead we speed up the belt to make it look cooler.
         if (!waitingToChangeToKillingFloor && !currentVictimIsDead)
         {
-            float timeMultiplier = GetMultiplierBasedOnPenaltyStatus();
+            float timeMultiplier = isKilling ? deathBeltSpeedMultiplier : GetMultiplierBasedOnPenaltyStatus();
             UpdateKillTimer(timeMultiplier);
             UpdateBeltSpeed(timeMultiplier);
             UpdateVictimPosition(timeMultiplier);
@@ -215,6 +224,7 @@ public class GameManager : Singleton<GameManager>
 
     public void SetUpNextVictim()
     {
+        isKilling = false;
         // Move old victim out of view
         victimPrefabs[victimIndex].transform.SetParent(null);
         victimPrefabs[victimIndex].transform.position = outOfViewPosition;
@@ -268,9 +278,11 @@ public class GameManager : Singleton<GameManager>
         victimSpawnPoint.transform.position = originalSpawnPosition;
         if (IsReadyForEnding)
         {
-            killer.transform.SetParent(victimSpawnPoint.transform, false);
-            killer.transform.localPosition = Vector3.zero;
-            killer.transform.rotation = Quaternion.Euler(victimLocalRotation);
+            // Killer is manually positioned.
+            killer.gameObject.SetActive(true); 
+            //killer.transform.SetParent(victimSpawnPoint.transform, false);
+            //killer.transform.localPosition = Vector3.zero;
+            //killer.transform.rotation = Quaternion.Euler(victimLocalRotation);
         }
         else 
         { 
@@ -282,6 +294,7 @@ public class GameManager : Singleton<GameManager>
 
     private void KillVictim()
     {
+        var shouldGoToCredits = CurrentVictimIsKiller;
         currentVictimIsDead = true;
         KillCount++;
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
@@ -290,11 +303,9 @@ public class GameManager : Singleton<GameManager>
         bloodBurst.Play();
         bloodStream.Play();
         bloodVideo.SetActive(true);
-
-        var speedNeeded = distanceToClearBelt / DelayInSecondsBetweenVictims;
-        UpdateBeltSpeed(speedNeeded);
+        isKilling = true;
         StartCoroutine(DisableBloodAfterDelay());
-        if (IsReadyForEnding)
+        if (shouldGoToCredits)
         {
             ChangeToCreditsChannel();
         }
@@ -425,6 +436,8 @@ public class GameManager : Singleton<GameManager>
             SaveCount++;
             victimIsBeingRescued = true;
             victimSpawnPoint.transform.position = outOfViewPosition;
+            if (CurrentVictimIsKiller)
+                ChangeToCreditsChannel();
         }        
     }
 }
