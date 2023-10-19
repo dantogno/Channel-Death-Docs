@@ -19,16 +19,20 @@ public class PanAndScanMinigame : MonoBehaviour
     private Vector3[] boundsCorners = new Vector3[4];
     private Camera mainCamera;
     private PanAndScanClueText clueText;
+    private string clue = string.Empty;
+    private string oldClue = string.Empty;
+    private Vector3 startPosition;
+      
 
-    void Start()
+    void Awake()
     {
         mainCamera = Camera.main;
         Spawn();
+        startPosition = plane.transform.position;
     }
     // Spawn a single instance of the prefab within the spawn area
     void SpawnItem(GameObject prefab, bool isClue)
     {
-        GameObject toReturn = null;
         Vector3 position = GetRandomPositionInBounds();
 
         // Instantiate the prefab at the position with a random rotation
@@ -215,9 +219,18 @@ public class PanAndScanMinigame : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach (var item in instances)
+        clueText.numberText.text = PasscodeManager.Instance.ClubsNumber;
+        clue = PasscodeManager.Instance.ClubsNumber;
+        bool clueHasChanged = clue != oldClue;
+        oldClue = clue;
+        // todo: see if the camera is looking at the clue. If so, don't reset the position unless clue has changed.
+        plane.transform.position = startPosition;
+        if (clueHasChanged)
         {
-            item.transform.position = GetRandomPositionInBounds();
+            foreach (var item in instances)
+            {
+                item.transform.position = GetRandomPositionInBounds();
+            }
         }
     }
 }

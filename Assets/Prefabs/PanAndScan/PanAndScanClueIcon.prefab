@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberText: {fileID: 7943593570539768335}
+  isClue: 1
 --- !u!1 &7219081854890470689
 GameObject:
   m_ObjectHideFlags: 0
