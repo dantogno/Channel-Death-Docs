@@ -18,6 +18,7 @@ public class ScrollingText : MonoBehaviour
     private bool isWaitingToReset = false;
     private bool isWaitingToScroll = true;
     private TMP_Text text;
+    private int resetCounter = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -64,6 +65,8 @@ public class ScrollingText : MonoBehaviour
     }
     private void OnVictimDied(Victim obj)
     {
+        resetCounter = 0;
+
         if (GameManager.Instance.CurrentVictimIsKiller)
         {
             text.text = "I see you have chosen death. So be it... AAAAAAAAARRRGHHHHRRGH!";
@@ -77,6 +80,8 @@ public class ScrollingText : MonoBehaviour
 
     private void OnValidationComplete(bool isSuccessful)
     {
+        resetCounter = 0;
+
         if (isSuccessful)
         {
             if (GameManager.Instance.CurrentVictimIsKiller)
@@ -100,6 +105,7 @@ public class ScrollingText : MonoBehaviour
 
     private void ShowRescueInstructions(string name)
     {
+        resetCounter = 0;
         if (GameManager.Instance.CurrentVictimIsKiller)
         {
             text.text = $"It all comes down to this. I will put my own life in your hands. Do what you will.";
@@ -113,12 +119,18 @@ public class ScrollingText : MonoBehaviour
 
     private void RefreshTextNow()
     {
+        resetCounter++;
         isWaitingToReset = false;
         delayBeforeResettingTimer = 0;
         delayBeforeScrollingTimer = 0;
         isWaitingToScroll = true;
         rectTransform.anchoredPosition3D = 
             new Vector3(0, rectTransform.anchoredPosition3D.y, rectTransform.anchoredPosition3D.z);
+
+        if (resetCounter > 2)
+        {
+            ShowRescueInstructions(GameManager.Instance.CurrentVictim.Name);
+        }
     }
 
 
