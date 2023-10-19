@@ -64,7 +64,8 @@ public class PasscodeManager : Singleton<PasscodeManager>
         if (validationInProgress) { return; }
         validationInProgress = true;
         Debug.Log("Validating");
-        if (enteredPasscode == Passcode)
+        var isCorrectCode = enteredPasscode == Passcode;
+        if (isCorrectCode)
         {
             StartCoroutine(SetUpNextVictimAfterDelay());
             audioSource.clip = correct;
@@ -77,9 +78,9 @@ public class PasscodeManager : Singleton<PasscodeManager>
             StartCoroutine(ResetInputFieldsAfterCooldown());
             audioSource.clip = wrong;
         }
-        ValidationCompleted?.Invoke(enteredPasscode == Passcode);
         ClearEnteredCode();
         audioSource.Play();
+        ValidationCompleted?.Invoke(isCorrectCode);
     }
 
     private IEnumerator ResetInputFieldsAfterCooldown()

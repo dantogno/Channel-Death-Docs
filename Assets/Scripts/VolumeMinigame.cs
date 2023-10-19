@@ -34,11 +34,10 @@ public class VolumeMinigame : MonoBehaviour
     private float musicMutedTimer = 0;
     private bool playingJumpScare = false;
     private bool isFirstTime = true;
+    private bool shouldSkipToClue = false;
 
-    /// <summary>
-    /// Must set this for each new victim!
-    /// </summary>
-    private int Clue { get; set; } = 3;
+    private int clue = -1;
+    private int oldClue = -1;
 
 
     /// <summary>
@@ -56,7 +55,15 @@ public class VolumeMinigame : MonoBehaviour
         }
     }
 
-    private AudioClip GetClueClip() => clueClips[Clue];
+    private AudioClip GetClueClip() => clueClips[clue];
+
+    private void SkipToClue()
+    {
+        // resume feature with clue
+        PlayMainFeature();
+        clueAudioSource.clip = GetClueClip();
+        clueAudioSource.Play();
+    }
 
     private IEnumerator PlayMinigameSequence()
     {
@@ -99,6 +106,7 @@ public class VolumeMinigame : MonoBehaviour
         PlayMainFeature();
         clueAudioSource.clip = GetClueClip();
         clueAudioSource.Play();
+        shouldSkipToClue = true;
     }
 
 
@@ -257,6 +265,12 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
+        clue = int.Parse(PasscodeManager.Instance.SpadesNumber);
+        bool clueHasChanged = clue != oldClue;
+        oldClue = clue;
+        if (clueHasChanged)
+            shouldSkipToClue = false;
+
         volumeCanvas.gameObject.SetActive(true);
         SetHalfVolume();
         muteText.gameObject.SetActive(false);
@@ -268,14 +282,19 @@ public class VolumeMinigame : MonoBehaviour
         commercialRenderTexture.SetActive(false);
         commercialVideo.Stop();
         StopAllCoroutines();
-        StartCoroutine(PlayMinigameSequence());
+
+        if (shouldSkipToClue)
+            SkipToClue();
+        else
+            StartCoroutine(PlayMinigameSequence());
+
         GameManager.WillInterruptBroadcastToChangeToKillingChannel += OnWillChangeToKillingFloor;
         InputManager.InputActions.Gameplay.VolumeUp.performed += OnVolumeUpPressed;
         InputManager.InputActions.Gameplay.VolumeDown.performed += OnVolumeDownPressed;
         InputManager.InputActions.Gameplay.VolumeUp.canceled += OnVolumeUpReleased;
         InputManager.InputActions.Gameplay.VolumeDown.canceled += OnVolumeDownReleased;
         InputManager.InputActions.Gameplay.Mute.performed += OnMutePressed;
-    }
+        }
 
 
     private void OnWillChangeToKillingFloor()
