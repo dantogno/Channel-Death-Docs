@@ -18,6 +18,7 @@ public class MessageListener : OnScreenControl
     private string m_ControlPath;
     private float timeSinceLast = 0f;
     private bool waitingRelease = false;
+    public float waitTimeSinceLast = .15f;
 
     protected override string controlPathInternal {
         get => m_ControlPath;
@@ -28,7 +29,7 @@ public class MessageListener : OnScreenControl
     {
         if (waitingRelease) {
             timeSinceLast += Time.deltaTime;
-            if (timeSinceLast > .15f) {
+            if (timeSinceLast > waitTimeSinceLast) {
                 ReleaseInput();
             }
         }
