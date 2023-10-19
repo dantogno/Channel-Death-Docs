@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f72b1205fa9e44a82e43c8a02dcbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundSpeed: {x: 1, y: 2}
+  groundSpeed: {x: 1, y: 1.75}
   sections:
   - {fileID: 6366143297222266522, guid: d740775d90f5ac642851f698886a8945, type: 3}
   - {fileID: 6366143297222266522, guid: 43b2f6c4a868ca943b356998e42fe976, type: 3}
@@ -374,7 +374,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 2853973315186105175}
   player: {fileID: 8804197818541515008}
   blood: {fileID: 9119153955932490322}
-  gameLength: 60
+  gameLength: 55
   sources:
   - {fileID: 2268157249669738706}
   - {fileID: 938411073195093821}

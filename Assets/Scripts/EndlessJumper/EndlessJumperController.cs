@@ -72,7 +72,7 @@ public class EndlessJumperController : MonoBehaviour
             }
         }
         playerStartPos = player.transform.position;
-        GameManager.NewVictimSpawned += NewVictomSpawn;
+        PasscodeManager.NewPasscodeSet += NewPasscodeSet;
         startVolume = musicSource.volume;
     }
 
@@ -188,7 +188,7 @@ public class EndlessJumperController : MonoBehaviour
         indeath = false;
     }
 
-    void NewVictomSpawn()
+    void NewPasscodeSet(string str)
     {
         win = false;
     }
@@ -221,6 +221,6 @@ public class EndlessJumperController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.NewVictimSpawned -= NewVictomSpawn;
+        PasscodeManager.NewPasscodeSet -= NewPasscodeSet;
     }
 }

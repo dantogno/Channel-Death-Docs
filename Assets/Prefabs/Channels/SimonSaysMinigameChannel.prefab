@@ -735,8 +735,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sequenceLengthToWin: 7
-  inputWindowDuration: 2
-  speedRange: {x: 1, y: 0.33}
+  inputWindowDuration: 2.5
+  speedRange: {x: 1, y: 0.44}
   displayScreens:
   - {fileID: 9051253219772863059}
   - {fileID: 355361206491722787}

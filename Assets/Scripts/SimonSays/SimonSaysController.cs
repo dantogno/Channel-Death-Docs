@@ -28,7 +28,7 @@ public class SimonSaysController : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.NewVictimSpawned += NewVictomSpawn;
+        PasscodeManager.NewPasscodeSet += NewPasscodeSet;
     }
 
     private void OnEnable()
@@ -228,13 +228,13 @@ public class SimonSaysController : MonoBehaviour
         InputManager.InputActions.Gameplay.Input8.canceled -= InputReleased;
     }
 
-    void NewVictomSpawn()
+    void NewPasscodeSet(string str)
     {
         won = false;
     }
 
     private void OnDestroy()
     {
-        GameManager.NewVictimSpawned -= NewVictomSpawn;
+        PasscodeManager.NewPasscodeSet -= NewPasscodeSet;
     }
 }
