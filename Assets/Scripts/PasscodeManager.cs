@@ -69,13 +69,12 @@ public class PasscodeManager : Singleton<PasscodeManager>
         {
             StartCoroutine(SetUpNextVictimAfterDelay());
             audioSource.clip = correct;
-            StartCoroutine(ResetInputFieldsAfterCooldown());
             CreateNewPasscode();
         }
         else
         {
             GameManager.Instance.IncurPenalty();
-            StartCoroutine(ResetInputFieldsAfterCooldown());
+            StartCoroutine(ResetInputFieldsAfterPenaltyCooldown());
             audioSource.clip = wrong;
         }
         ClearEnteredCode();
@@ -83,7 +82,8 @@ public class PasscodeManager : Singleton<PasscodeManager>
         ValidationCompleted?.Invoke(isCorrectCode);
     }
 
-    private IEnumerator ResetInputFieldsAfterCooldown()
+
+    private IEnumerator ResetInputFieldsAfterPenaltyCooldown()
     {
         yield return new WaitForSeconds(GameManager.Instance.timePenaltyDuration);
         ResetInputFields();
