@@ -27,7 +27,7 @@ public class VolumeMinigame : MonoBehaviour
     private const char noVolumeSymbol = '.';
     private const char volumeSymbol = '|';
     private bool volumeUpPressed, volumeDownPressed= false;
-    private float repeatInputDelay = 0.15f;
+    private float repeatInputDelay = 0.3f;
     private float repeatInputTimer = 0;
     private bool isCommercialPlaying = false;
     private float commercialViewTimer = 0;
