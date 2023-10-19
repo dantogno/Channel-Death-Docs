@@ -46,9 +46,36 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Input0"",
+                    ""type"": ""Button"",
+                    ""id"": ""01f197ac-ae9e-4015-baa5-7937113dafa6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input1"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1d765bd-0acf-4afa-9d6e-736493f8f72f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""SlowTap"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Input2"",
                     ""type"": ""Button"",
                     ""id"": ""85c213f6-9e1e-4d70-9a1b-59a446ba43ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input3"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc84774d-9e71-4249-9009-60d25d5c4627"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -60,6 +87,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""0e507b4f-2b4f-4fea-ae73-32b6985a7bb8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
+                    ""interactions"": ""SlowTap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input5"",
+                    ""type"": ""Button"",
+                    ""id"": ""f5a2c77e-5da3-43ff-b9cd-d09022451427"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -69,6 +105,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""c4739fed-ec73-4942-9690-52eb182ba1d5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
+                    ""interactions"": ""SlowTap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input7"",
+                    ""type"": ""Button"",
+                    ""id"": ""a76484f1-de6a-42c1-9826-1ec15f1d23cb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -76,6 +121,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""Input8"",
                     ""type"": ""Button"",
                     ""id"": ""bc5dae79-434b-41ba-84e5-ccd7097f0a4e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Input9"",
+                    ""type"": ""Button"",
+                    ""id"": ""be55ae93-dc02-41a7-a6ed-a6791fc774ad"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -183,72 +237,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""81b383b7-8fad-40a5-9749-74f4ae43d2fe"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Input4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3ce6b96e-b0ba-44d9-849a-880ac733101d"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Input4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0118218d-6531-42e6-8e94-f5165132ece2"",
-                    ""path"": ""<Keyboard>/6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Input6"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6b3b7915-ac41-439e-9301-e62560f1aeec"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Input6"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""457c1aba-c6e7-4c06-bee3-839129ee355d"",
-                    ""path"": ""<Keyboard>/8"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Input8"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""88c8c8ca-9a0a-48ae-9692-3516e958b7c2"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Input8"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a548703b-caf3-4440-a3b9-3f8c6f12c133"",
                     ""path"": ""<Keyboard>/minus"",
                     ""interactions"": """",
@@ -312,6 +300,138 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78143271-ccb3-47fa-a296-65e2a996529a"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""983bcf30-3425-4a1b-88f2-ed6f52761b06"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5319f66-2b5e-44dd-95c0-f6f0af457db0"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69bb12bc-f25e-41ce-8486-a89936d447f1"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input9"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""433836a0-0bf0-4144-82e5-08d00c2b037b"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""082d0927-5e1b-4bb3-ac2d-4d61a80dfa92"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81b383b7-8fad-40a5-9749-74f4ae43d2fe"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ce6b96e-b0ba-44d9-849a-880ac733101d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0118218d-6531-42e6-8e94-f5165132ece2"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b3b7915-ac41-439e-9301-e62560f1aeec"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""457c1aba-c6e7-4c06-bee3-839129ee355d"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88c8c8ca-9a0a-48ae-9692-3516e958b7c2"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Input8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -322,10 +442,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_ChannelUp = m_Gameplay.FindAction("ChannelUp", throwIfNotFound: true);
         m_Gameplay_ChannelDown = m_Gameplay.FindAction("ChannelDown", throwIfNotFound: true);
+        m_Gameplay_Input0 = m_Gameplay.FindAction("Input0", throwIfNotFound: true);
+        m_Gameplay_Input1 = m_Gameplay.FindAction("Input1", throwIfNotFound: true);
         m_Gameplay_Input2 = m_Gameplay.FindAction("Input2", throwIfNotFound: true);
+        m_Gameplay_Input3 = m_Gameplay.FindAction("Input3", throwIfNotFound: true);
         m_Gameplay_Input4 = m_Gameplay.FindAction("Input4", throwIfNotFound: true);
+        m_Gameplay_Input5 = m_Gameplay.FindAction("Input5", throwIfNotFound: true);
         m_Gameplay_Input6 = m_Gameplay.FindAction("Input6", throwIfNotFound: true);
+        m_Gameplay_Input7 = m_Gameplay.FindAction("Input7", throwIfNotFound: true);
         m_Gameplay_Input8 = m_Gameplay.FindAction("Input8", throwIfNotFound: true);
+        m_Gameplay_Input9 = m_Gameplay.FindAction("Input9", throwIfNotFound: true);
         m_Gameplay_VolumeDown = m_Gameplay.FindAction("VolumeDown", throwIfNotFound: true);
         m_Gameplay_VolumeUp = m_Gameplay.FindAction("VolumeUp", throwIfNotFound: true);
         m_Gameplay_Mute = m_Gameplay.FindAction("Mute", throwIfNotFound: true);
@@ -395,10 +521,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_ChannelUp;
     private readonly InputAction m_Gameplay_ChannelDown;
+    private readonly InputAction m_Gameplay_Input0;
+    private readonly InputAction m_Gameplay_Input1;
     private readonly InputAction m_Gameplay_Input2;
+    private readonly InputAction m_Gameplay_Input3;
     private readonly InputAction m_Gameplay_Input4;
+    private readonly InputAction m_Gameplay_Input5;
     private readonly InputAction m_Gameplay_Input6;
+    private readonly InputAction m_Gameplay_Input7;
     private readonly InputAction m_Gameplay_Input8;
+    private readonly InputAction m_Gameplay_Input9;
     private readonly InputAction m_Gameplay_VolumeDown;
     private readonly InputAction m_Gameplay_VolumeUp;
     private readonly InputAction m_Gameplay_Mute;
@@ -411,10 +543,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public GameplayActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChannelUp => m_Wrapper.m_Gameplay_ChannelUp;
         public InputAction @ChannelDown => m_Wrapper.m_Gameplay_ChannelDown;
+        public InputAction @Input0 => m_Wrapper.m_Gameplay_Input0;
+        public InputAction @Input1 => m_Wrapper.m_Gameplay_Input1;
         public InputAction @Input2 => m_Wrapper.m_Gameplay_Input2;
+        public InputAction @Input3 => m_Wrapper.m_Gameplay_Input3;
         public InputAction @Input4 => m_Wrapper.m_Gameplay_Input4;
+        public InputAction @Input5 => m_Wrapper.m_Gameplay_Input5;
         public InputAction @Input6 => m_Wrapper.m_Gameplay_Input6;
+        public InputAction @Input7 => m_Wrapper.m_Gameplay_Input7;
         public InputAction @Input8 => m_Wrapper.m_Gameplay_Input8;
+        public InputAction @Input9 => m_Wrapper.m_Gameplay_Input9;
         public InputAction @VolumeDown => m_Wrapper.m_Gameplay_VolumeDown;
         public InputAction @VolumeUp => m_Wrapper.m_Gameplay_VolumeUp;
         public InputAction @Mute => m_Wrapper.m_Gameplay_Mute;
@@ -436,18 +574,36 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ChannelDown.started += instance.OnChannelDown;
             @ChannelDown.performed += instance.OnChannelDown;
             @ChannelDown.canceled += instance.OnChannelDown;
+            @Input0.started += instance.OnInput0;
+            @Input0.performed += instance.OnInput0;
+            @Input0.canceled += instance.OnInput0;
+            @Input1.started += instance.OnInput1;
+            @Input1.performed += instance.OnInput1;
+            @Input1.canceled += instance.OnInput1;
             @Input2.started += instance.OnInput2;
             @Input2.performed += instance.OnInput2;
             @Input2.canceled += instance.OnInput2;
+            @Input3.started += instance.OnInput3;
+            @Input3.performed += instance.OnInput3;
+            @Input3.canceled += instance.OnInput3;
             @Input4.started += instance.OnInput4;
             @Input4.performed += instance.OnInput4;
             @Input4.canceled += instance.OnInput4;
+            @Input5.started += instance.OnInput5;
+            @Input5.performed += instance.OnInput5;
+            @Input5.canceled += instance.OnInput5;
             @Input6.started += instance.OnInput6;
             @Input6.performed += instance.OnInput6;
             @Input6.canceled += instance.OnInput6;
+            @Input7.started += instance.OnInput7;
+            @Input7.performed += instance.OnInput7;
+            @Input7.canceled += instance.OnInput7;
             @Input8.started += instance.OnInput8;
             @Input8.performed += instance.OnInput8;
             @Input8.canceled += instance.OnInput8;
+            @Input9.started += instance.OnInput9;
+            @Input9.performed += instance.OnInput9;
+            @Input9.canceled += instance.OnInput9;
             @VolumeDown.started += instance.OnVolumeDown;
             @VolumeDown.performed += instance.OnVolumeDown;
             @VolumeDown.canceled += instance.OnVolumeDown;
@@ -476,18 +632,36 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ChannelDown.started -= instance.OnChannelDown;
             @ChannelDown.performed -= instance.OnChannelDown;
             @ChannelDown.canceled -= instance.OnChannelDown;
+            @Input0.started -= instance.OnInput0;
+            @Input0.performed -= instance.OnInput0;
+            @Input0.canceled -= instance.OnInput0;
+            @Input1.started -= instance.OnInput1;
+            @Input1.performed -= instance.OnInput1;
+            @Input1.canceled -= instance.OnInput1;
             @Input2.started -= instance.OnInput2;
             @Input2.performed -= instance.OnInput2;
             @Input2.canceled -= instance.OnInput2;
+            @Input3.started -= instance.OnInput3;
+            @Input3.performed -= instance.OnInput3;
+            @Input3.canceled -= instance.OnInput3;
             @Input4.started -= instance.OnInput4;
             @Input4.performed -= instance.OnInput4;
             @Input4.canceled -= instance.OnInput4;
+            @Input5.started -= instance.OnInput5;
+            @Input5.performed -= instance.OnInput5;
+            @Input5.canceled -= instance.OnInput5;
             @Input6.started -= instance.OnInput6;
             @Input6.performed -= instance.OnInput6;
             @Input6.canceled -= instance.OnInput6;
+            @Input7.started -= instance.OnInput7;
+            @Input7.performed -= instance.OnInput7;
+            @Input7.canceled -= instance.OnInput7;
             @Input8.started -= instance.OnInput8;
             @Input8.performed -= instance.OnInput8;
             @Input8.canceled -= instance.OnInput8;
+            @Input9.started -= instance.OnInput9;
+            @Input9.performed -= instance.OnInput9;
+            @Input9.canceled -= instance.OnInput9;
             @VolumeDown.started -= instance.OnVolumeDown;
             @VolumeDown.performed -= instance.OnVolumeDown;
             @VolumeDown.canceled -= instance.OnVolumeDown;
@@ -527,10 +701,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnChannelUp(InputAction.CallbackContext context);
         void OnChannelDown(InputAction.CallbackContext context);
+        void OnInput0(InputAction.CallbackContext context);
+        void OnInput1(InputAction.CallbackContext context);
         void OnInput2(InputAction.CallbackContext context);
+        void OnInput3(InputAction.CallbackContext context);
         void OnInput4(InputAction.CallbackContext context);
+        void OnInput5(InputAction.CallbackContext context);
         void OnInput6(InputAction.CallbackContext context);
+        void OnInput7(InputAction.CallbackContext context);
         void OnInput8(InputAction.CallbackContext context);
+        void OnInput9(InputAction.CallbackContext context);
         void OnVolumeDown(InputAction.CallbackContext context);
         void OnVolumeUp(InputAction.CallbackContext context);
         void OnMute(InputAction.CallbackContext context);

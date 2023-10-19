@@ -54,3 +54,11 @@ MonoBehaviour:
   - name: Gameplay/DownMinusL
     input: {fileID: 2488600912136438187, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
     remoteCommand: 0x75
+  - name: Gameplay/Input0
+    input: {fileID: -2144272983329297885, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x9
+  - name: Gameplay/Input1
+    input: {fileID: -8504602510952492406, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x0
