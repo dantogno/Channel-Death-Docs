@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Rendering.UI;
 
 public class PasscodeDigitEntry : MonoBehaviour
 {
@@ -51,6 +53,53 @@ public class PasscodeDigitEntry : MonoBehaviour
         if (GameManager.Instance.BlockPasscodeInput || GameManager.Instance.ChannelIndex != GameManager.Instance.KillingFloorChannelIndex)
         {
             inputField.interactable = false;
+        }
+
+        
+
+        Debug.Log($"current selected obj: {EventSystem.current.currentSelectedGameObject}");
+        if ( EventSystem.current.currentSelectedGameObject == inputField.gameObject) 
+        { 
+            if (InputManager.InputActions.Gameplay.Input0.WasReleasedThisFrame())
+            {
+                inputField.text += "0";
+            }
+            if (InputManager.InputActions.Gameplay.Input1.WasReleasedThisFrame())
+            {
+                inputField.text += "1";
+            }
+            if (InputManager.InputActions.Gameplay.Input2.WasReleasedThisFrame())
+            {
+                inputField.text += "2";
+            }
+            if (InputManager.InputActions.Gameplay.Input3.WasReleasedThisFrame())
+            {
+                inputField.text += "3";
+            }
+            if (InputManager.InputActions.Gameplay.Input4.WasReleasedThisFrame())
+            {
+                inputField.text += "4";
+            }
+            if (InputManager.InputActions.Gameplay.Input5.WasReleasedThisFrame())
+            {
+                inputField.text += "5";
+            }
+            if (InputManager.InputActions.Gameplay.Input6.WasReleasedThisFrame())
+            {
+                inputField.text += "6";
+            }
+            if (InputManager.InputActions.Gameplay.Input7.WasReleasedThisFrame())
+            {
+                inputField.text += "7";
+            }
+            if (InputManager.InputActions.Gameplay.Input8.WasReleasedThisFrame())
+            {
+                inputField.text += "8";
+            }
+            if (InputManager.InputActions.Gameplay.Input9.WasReleasedThisFrame())
+            {
+                inputField.text += "9";
+            }
         }
     }
 
