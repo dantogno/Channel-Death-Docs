@@ -60,7 +60,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""f1d765bd-0acf-4afa-9d6e-736493f8f72f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""SlowTap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -87,7 +87,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""0e507b4f-2b4f-4fea-ae73-32b6985a7bb8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""SlowTap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -105,7 +105,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""c4739fed-ec73-4942-9690-52eb182ba1d5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""SlowTap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -123,7 +123,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""bc5dae79-434b-41ba-84e5-ccd7097f0a4e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -159,7 +159,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""3a820c2f-f6ef-4aa6-b9bd-29e5dd6b1812"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {

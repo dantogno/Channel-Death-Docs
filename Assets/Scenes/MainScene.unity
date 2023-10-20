@@ -2397,11 +2397,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8574074718283961784, guid: ccb2032ac29089648984c45b674faa09,
         type: 3}
-      propertyPath: waitTimeSinceLast
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8574074718283961784, guid: ccb2032ac29089648984c45b674faa09,
-        type: 3}
       propertyPath: currentRemoteSettings
       value: 
       objectReference: {fileID: 11400000, guid: 8885325ff1a74584f991e0dfc870dfa4,
