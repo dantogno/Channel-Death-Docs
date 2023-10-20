@@ -62,3 +62,17 @@ MonoBehaviour:
     input: {fileID: -8504602510952492406, guid: 68438f16997d1db4abde6089abad50b0,
       type: 3}
     remoteCommand: 0x0
+  - name: Gameplay/Input3
+    input: {fileID: 3761661221570054715, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+    remoteCommand: 0x2
+  - name: Gameplay/Input5
+    input: {fileID: 4041901362600312396, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+    remoteCommand: 0x4
+  - name: Gameplay/Input7
+    input: {fileID: -5198216996415395006, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x6
+  - name: Gameplay/Input9
+    input: {fileID: -9042186066024948950, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x8
