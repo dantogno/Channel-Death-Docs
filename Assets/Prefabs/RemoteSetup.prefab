@@ -44,9 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e43ec77ea4e3543b18f75a96add296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRemoteSettings: {fileID: 11400000, guid: 8867559dfffc9e341901138dd5cd25af,
+  currentRemoteSettings: {fileID: 11400000, guid: 8885325ff1a74584f991e0dfc870dfa4,
     type: 2}
   inputs: {fileID: -944628639613478452, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+  commandDebug: 0
+  lastCommand: 
+  waitTimeSinceLast: 0.06
 --- !u!1 &3733405180143587526
 GameObject:
   m_ObjectHideFlags: 0

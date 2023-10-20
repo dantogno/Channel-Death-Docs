@@ -37,7 +37,8 @@ public class MessageListener : OnScreenControl
 
     public void OnMessageArrived(string msg)
     {
-        if (msg.Contains("Repeat")) {
+
+        if (waitingRelease && timeSinceLast < waitTimeSinceLast) {
             timeSinceLast = 0f;
             return;
         } 
