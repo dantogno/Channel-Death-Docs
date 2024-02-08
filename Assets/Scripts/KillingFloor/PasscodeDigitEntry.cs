@@ -57,7 +57,7 @@ public class PasscodeDigitEntry : MonoBehaviour
 
         
 
-        Debug.Log($"current selected obj: {EventSystem.current.currentSelectedGameObject}");
+        //Debug.Log($"current selected obj: {EventSystem.current.currentSelectedGameObject}");
         if ( EventSystem.current.currentSelectedGameObject == inputField.gameObject) 
         { 
             if (InputManager.InputActions.Gameplay.Input0.WasReleasedThisFrame())
