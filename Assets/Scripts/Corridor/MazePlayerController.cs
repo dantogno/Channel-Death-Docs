@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class MazePlayerController : MonoBehaviour
 {
+    public static MazePlayerController Instance { get; private set; }
     enum PlayerState { idle, walking, turning}
 
     PlayerState playerState;
@@ -35,14 +36,23 @@ public class MazePlayerController : MonoBehaviour
 
     bool HoldingWalkInput;
 
+    private void Awake()
+    {
+        Instance = this;
+        playerCamera.backgroundColor = Color.black;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         currentFov = baseFov;
         armVisuals = arms.GetComponent<ArmVisuals>();
+    }
+
+    public void InitializePlayerLocation()
+    {
         Vector3 startPos = MazeGenerator.Instance.MazeGrid[0, 0].transform.position;
         transform.position.Set(startPos.x, transform.position.y, startPos.z);
-
         currentCell = new Vector2(0, 0);
     }
 

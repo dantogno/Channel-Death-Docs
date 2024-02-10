@@ -833,7 +833,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -963,7 +963,7 @@ Transform:
   m_GameObject: {fileID: 1173894687}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.9301686}
+  m_LocalPosition: {x: 0, y: 0, z: -3.9301682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2721,6 +2721,6 @@ SceneRoots:
   - {fileID: 794774036361719974}
   - {fileID: 2071890596}
   - {fileID: 897273211}
-  - {fileID: 1173894692}
   - {fileID: 2053802354}
   - {fileID: 1978709470}
+  - {fileID: 1173894692}

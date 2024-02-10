@@ -10,6 +10,11 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     private MazeCell mazeChunkPrefab;
 
+    [SerializeField]
+    private GameObject endPoint;
+    [SerializeField]
+    private GameObject midPoint;
+
     public int mazeWidth;
 
     public int mazeDepth;
@@ -31,10 +36,10 @@ public class MazeGenerator : MonoBehaviour
         {
             for(int z = 0; z < mazeDepth; z++)
             {
-                MazeGrid[x,z] = Instantiate(mazeChunkPrefab, new Vector3(x * cellScale,0,z * cellScale), Quaternion.identity);
+                MazeGrid[x,z] = Instantiate(mazeChunkPrefab, new Vector3(x * cellScale,0,z * cellScale), Quaternion.identity, transform);
             }
         }
-
+        
         yield return GenerateMaze(null, MazeGrid[0, 0]);
     }
 
@@ -54,6 +59,10 @@ public class MazeGenerator : MonoBehaviour
                 yield return GenerateMaze(currentCell, nextCell);
             }
         }while(nextCell != null);
+        endPoint.transform.position = MazeGrid[mazeWidth - 1, mazeDepth - 1].transform.position;
+        Vector3 mp = MazeGrid[(int)((mazeWidth-1)/2), (int)((mazeDepth - 1) / 2)].transform.position;
+        midPoint.transform.position = mp + new Vector3(0,0.1f,0);
+        MazePlayerController.Instance.InitializePlayerLocation();
     }
 
     private MazeCell GetUnvisitedNeighbor(MazeCell currentCell)
