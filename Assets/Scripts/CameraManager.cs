@@ -23,7 +23,7 @@ public class CameraManager : MonoBehaviour
     {
         if(MainChannelCamera == null)
         {
-            Debug.LogError("No GameObject Assigned to MainChannelCamera in Camera Manager");
+            //Debug.LogError("No GameObject Assigned to MainChannelCamera in Camera Manager");
             return;
         }
         if(MainChannelCamera.activeSelf)

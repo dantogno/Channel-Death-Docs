@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class ArmVisuals : MonoBehaviour
 {
@@ -15,12 +17,16 @@ public class ArmVisuals : MonoBehaviour
     float bobScale = 0.1f;
     float bobSpeed = 7f;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
         origin = transform.localPosition;
+        
     }
 
+    float prevVal;
     public void bobArms()
     {
 
@@ -28,7 +34,7 @@ public class ArmVisuals : MonoBehaviour
         transform.localPosition = new Vector3(
             transform.localPosition.x + bobScale * (scale * Mathf.Cos(Time.time * bobSpeed) * Time.deltaTime),
             transform.localPosition.y + bobScale * (scale * Mathf.Sin(2 * Time.time * bobSpeed) / 2 * Time.deltaTime),
-            transform.localPosition.z);
+        transform.localPosition.z);
     }
 
 

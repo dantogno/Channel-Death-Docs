@@ -36,6 +36,14 @@ public class MazePlayerController : MonoBehaviour
 
     bool HoldingWalkInput;
 
+    AudioSource footstepSource;
+
+    [SerializeField]
+    private AudioClip[] stepSounds;
+
+    [SerializeField]
+    private float footstepPlayRate;
+
     private void Awake()
     {
         Instance = this;
@@ -47,6 +55,7 @@ public class MazePlayerController : MonoBehaviour
     {
         currentFov = baseFov;
         armVisuals = arms.GetComponent<ArmVisuals>();
+        footstepSource = GetComponent<AudioSource>();
     }
 
     public void InitializePlayerLocation()
@@ -126,6 +135,11 @@ public class MazePlayerController : MonoBehaviour
             case PlayerState.idle:
                 break;
             case PlayerState.walking:
+                if (!waitingForPlay)
+                {
+                    footstepSource.PlayOneShot(getRandomFootstepSound());
+                    StartCoroutine(PlayFootstep());
+                }
                 elapsedTime += Time.deltaTime;
                 float percentComplete = elapsedTime / Speed;
                 transform.position = Vector3.Lerp(startPosition, targetPosition, percentComplete);
@@ -243,4 +257,21 @@ public class MazePlayerController : MonoBehaviour
         playerState = PlayerState.turning;
     }
 
+    bool waitingForPlay;
+    IEnumerator PlayFootstep()
+    {
+        waitingForPlay = true;
+        yield return new WaitForSeconds(footstepPlayRate);
+        if(playerState == PlayerState.walking)
+        {
+            footstepSource.PlayOneShot(getRandomFootstepSound());
+        }
+        waitingForPlay = false;
+    }
+
+    AudioClip getRandomFootstepSound()
+    {
+        int i = Random.Range(0, stepSounds.Length);
+        return stepSounds[i];
+    }
 }
