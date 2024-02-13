@@ -274,4 +274,6 @@ public class MazePlayerController : MonoBehaviour
         int i = Random.Range(0, stepSounds.Length);
         return stepSounds[i];
     }
+
+
 }

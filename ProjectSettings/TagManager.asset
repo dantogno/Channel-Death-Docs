@@ -6,6 +6,7 @@ TagManager:
   tags:
   - JumpObstacle
   - JumpGround
+  - Goal
   layers:
   - Default
   - TransparentFX
