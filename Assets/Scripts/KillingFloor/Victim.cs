@@ -18,6 +18,8 @@ public class Victim : MonoBehaviour
         }
     }
 
+    public VictimState State { get; set; } = VictimState.None;
+
     private string displayName;
   
     private static string[] maleNames = { "Chad", "Brad", "Troy", "Brock", "Drake", "Blade", "Rex", "Ace", "Jace", "Zane", "Seth", "Cole", "Shane", "Brett", "Bryce", "Cody", "Drew", "Duke", "Gage", "Jett", "Kane", "Lance", "Max", "Nash", "Trent" };
@@ -55,6 +57,13 @@ public class Victim : MonoBehaviour
             availableMaleNames.RemoveAt(index);
         }
        Name = name;
+    }
+
+    public enum VictimState
+    {
+        None,
+        Rescued,
+        Dead
     }
 
 }

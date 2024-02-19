@@ -8,10 +8,14 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : Singleton<GameManager>
 {
+    [Tooltip("Game ends after this many minutes.")]
+    public float TotalGameTimeLimitInMinutes = 180;
+
     [Tooltip("Victim dies after this many seconds.")]
-    public float killTimeInSeconds = 180;
+    public float KillTimeInSeconds = 180;
 
     public string KillerName = "The Broadcast Killer";
+
     public AudioSource channelChangeAudio;
     public int numberOVictimsToSpawnBoss = 3;
     public float timePenaltyMultiplier = 5;
@@ -46,7 +50,13 @@ public class GameManager : Singleton<GameManager>
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
     public GameObject killPosition;
-    public GameObject[] victimPrefabs;
+
+    /// <summary>
+    /// Models used for victims. They have a Victim component to mark if they are male or female, 
+    /// which is used to determine the name.
+    /// </summary>
+    [Tooltip("Models used for victims. Should be in the scene. They have a Victim component to mark if they are male or female for name gen")]
+    public GameObject[] victimModels;
     public Vector3 victimLocalRotation = new Vector3(0, 279.761871f, 0);
     public static event Action<Victim> VictimDied;
     public static event Action NewVictimSpawned;
@@ -73,7 +83,10 @@ public class GameManager : Singleton<GameManager>
     private bool currentVictimIsDead;
     private Channel[] channels;
     private Vector3 originalSpawnPosition;
-    private int victimIndex = 0;
+    /// <summary>
+    /// index for victimModels array
+    /// </summary>
+    private int victimModelIndex = 0;
     private Vector3 outOfViewPosition;
     private Coroutine channelTextCoroutine;
     private float timePenaltyTimer = 0;
@@ -96,18 +109,18 @@ public class GameManager : Singleton<GameManager>
         channelNumberText.gameObject.SetActive(false);
         UpdateChannelText();
         // randomize the victimPrefabs
-        victimPrefabs = victimPrefabs.OrderBy(x => Guid.NewGuid()).ToArray();
+        victimModels = victimModels.OrderBy(x => Guid.NewGuid()).ToArray();
         InitializeVictimsOutOfViewPosition();
         SetNewVictimName();
         ResetKillTimer();
         MoveVictimToPosition();
-        conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / killTimeInSeconds;
+        conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / KillTimeInSeconds;
     }
 
     private void InitializeVictimsOutOfViewPosition()
     {
         outOfViewPosition = killPosition.transform.position + Vector3.down * 100;
-        foreach (var victim in victimPrefabs)
+        foreach (var victim in victimModels)
         {
             victim.transform.position = outOfViewPosition;
         }
@@ -221,10 +234,15 @@ public class GameManager : Singleton<GameManager>
 
     public void SetUpNextVictim()
     {
+        // Save the old victim to history
+        if (CurrentVictim != null)
+        {
+            SaveSystem.CurrentGameData.VictimHistory.Add(CurrentVictim);
+        }
         isKilling = false;
         // Move old victim out of view
-        victimPrefabs[victimIndex].transform.SetParent(null);
-        victimPrefabs[victimIndex].transform.position = outOfViewPosition;
+        victimModels[victimModelIndex].transform.SetParent(null);
+        victimModels[victimModelIndex].transform.position = outOfViewPosition;
         
         UpdateVictimIndex();
         SetNewVictimName();
@@ -246,7 +264,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            var victim = victimPrefabs[victimIndex].GetComponent<Victim>();
+            var victim = victimModels[victimModelIndex].GetComponent<Victim>();
             CurrentVictim = victim;
             victim.SetRandomName();
         }
@@ -254,7 +272,7 @@ public class GameManager : Singleton<GameManager>
 
     private void ResetKillTimer()
     {
-        TimeUntilNextKill = killTimeInSeconds;
+        TimeUntilNextKill = KillTimeInSeconds;
         timePenaltyTimer = 0;
     }
 
@@ -263,7 +281,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void UpdateVictimIndex()
     {
-        victimIndex = victimIndex == victimPrefabs.Length - 1 ? 0 : victimIndex + 1;
+        victimModelIndex = victimModelIndex == victimModels.Length - 1 ? 0 : victimModelIndex + 1;
     }
 
     /// <summary>
@@ -283,9 +301,9 @@ public class GameManager : Singleton<GameManager>
         }
         else 
         { 
-            victimPrefabs[victimIndex].transform.SetParent(victimSpawnPoint.transform, false);
-            victimPrefabs[victimIndex].transform.localPosition = Vector3.zero;
-            victimPrefabs[victimIndex].transform.rotation = Quaternion.Euler(victimLocalRotation);
+            victimModels[victimModelIndex].transform.SetParent(victimSpawnPoint.transform, false);
+            victimModels[victimModelIndex].transform.localPosition = Vector3.zero;
+            victimModels[victimModelIndex].transform.rotation = Quaternion.Euler(victimLocalRotation);
         }
     }
 
@@ -293,6 +311,7 @@ public class GameManager : Singleton<GameManager>
     {
         var shouldGoToCredits = CurrentVictimIsKiller;
         currentVictimIsDead = true;
+        CurrentVictim.State = Victim.VictimState.Dead;
         KillCount++;
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
@@ -438,11 +457,17 @@ public class GameManager : Singleton<GameManager>
     {
         if (isSuccessful)
         {
-            SaveCount++;
-            victimIsBeingRescued = true;
+            RescueVictim();
             victimSpawnPoint.transform.position = outOfViewPosition;
             if (CurrentVictimIsKiller)
                 ChangeToCreditsChannel();
-        }        
+        }
+    }
+
+    private void RescueVictim()
+    {
+        SaveCount++;
+        victimIsBeingRescued = true;
+        CurrentVictim.State = Victim.VictimState.Rescued;
     }
 }

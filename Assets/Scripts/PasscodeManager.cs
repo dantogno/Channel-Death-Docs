@@ -65,12 +65,15 @@ public class PasscodeManager : Singleton<PasscodeManager>
         validationInProgress = true;
         Debug.Log("Validating");
         var isCorrectCode = enteredPasscode == Passcode;
+
+        // correct code... victim rescued
         if (isCorrectCode)
         {
             StartCoroutine(SetUpNextVictimAfterDelay());
             audioSource.clip = correct;
             CreateNewPasscode();
         }
+        // incorrect code...
         else
         {
             GameManager.Instance.IncurPenalty();
