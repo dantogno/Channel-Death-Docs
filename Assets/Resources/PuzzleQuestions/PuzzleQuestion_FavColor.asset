@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PuzzleQuestion_FavColor
   m_EditorClassIdentifier: 
   Type: 0
-  QuestionText: 
+  QuestionText: What is my favorite color?
   AnswerBank:
   - Red
   - Rose
