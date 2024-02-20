@@ -36,6 +36,24 @@ public static class SaveSystem
     private static void CreateNewGame()
     {
         currentGameData = new SaveData();
+
+        InitializePuzzleQuestions();
+    }
+
+    private static void InitializePuzzleQuestions()
+    {
+        // initialize the question list by loading all questions from the resources folder and choosing a random subset of ten uniuqe questions
+        List<PuzzleQuestion> allQuestions = new List<PuzzleQuestion>(Resources.LoadAll<PuzzleQuestion>("PuzzleQuestions"));
+        List<PuzzleQuestion> chosenQuestions = new List<PuzzleQuestion>();
+
+        // todo: change to OverarchingPuzzleController.NumberOfQuestions
+        for (int i = 0; i < 1; i++)
+        {
+            PuzzleQuestion question = allQuestions[UnityEngine.Random.Range(0, allQuestions.Count)];
+            allQuestions.Remove(question);
+            chosenQuestions.Add(question);
+        }
+        currentGameData.QuestionList = chosenQuestions;
     }
 
     private static SaveData currentGameData = null;
@@ -44,7 +62,7 @@ public static class SaveSystem
     /// <summary>
     /// Save the game to json file on disk
     /// </summary>
-    public static void SaveGame()
+    public static void SaveGameToFile()
     {
         string fileLocation = Application.persistentDataPath + SaveFileName;
         string jsonFileData = JsonConvert.SerializeObject(CurrentGameData);
@@ -56,13 +74,13 @@ public static class SaveSystem
 public class SaveData
 {
     public float TimeLimitRemainingInMinutes;
-    public List<GameObject> QuestionList;
+    public List<PuzzleQuestion> QuestionList;
     public List<Victim> VictimHistory;
 
     public SaveData()
     {
         TimeLimitRemainingInMinutes = GameManager.Instance.TotalGameTimeLimitInMinutes;
-        QuestionList = new List<GameObject>();
+        QuestionList = new List<PuzzleQuestion>();
         VictimHistory = new List<Victim>();
     }
 }
