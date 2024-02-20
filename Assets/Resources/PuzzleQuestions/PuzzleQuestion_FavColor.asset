@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f65e5409d425874984cb8b0c8c3ac2b, type: 3}
+  m_Name: PuzzleQuestion_FavColor
+  m_EditorClassIdentifier: 
+  Type: 0
+  QuestionText: 
+  AnswerBank:
+  - Red
+  - Rose
+  - Scarlet
+  - Crimson
+  - Ruby
+  - Sanguine
+  - Cherry
+  - Carmine
+  CorrectAnswer: 
+  ClueBank:
+  - They kept saying something about 'red' being the first color of the rainbow.
+  - I woke up in a room full of roses.
+  - They kept muttering about someone named Scarlet.
+  - They wouldn't stop playing some weird music they called "King Crimson."
+  - They kept talking about Pokemon Ruby?
+  - I found a note that says "Sanguine, or red chalk, is a chalk of reddish-browrn
+    color, so called because it resembles the color of dried blood."
+  - When I woke up, I found a drawing of three cherries in my pocket.
+  - They said the only way to produce the color carmine was by crushing insects.
+    So gross!
+  HasClueBeenGiven: 0

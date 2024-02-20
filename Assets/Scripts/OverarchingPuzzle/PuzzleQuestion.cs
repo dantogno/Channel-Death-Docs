@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class PuzzleQuestion
+[CreateAssetMenu(fileName = "PuzzleQuestion", menuName = "Scriptable Objects/Create PuzzleQuestion")]
+public class PuzzleQuestion: ScriptableObject
 {
     public enum QuestionType
     {
@@ -25,19 +25,20 @@ public class PuzzleQuestion
     public string QuestionText;
 
     /// <summary>
-    /// Seven wrong answers to be used in the puzzle
+    /// Eight (or more) possible answers to be used in the puzzle. Correct answer will be chosen from this list.
     /// </summary>
-    public string[] WrongAnswerBank;
+    public string[] AnswerBank = new string[8];
 
     /// <summary>
-    /// Single correct answer to be used in the puzzle
+    /// Single correct answer to be used in the puzzle, chosen from the AnswerBank
     /// </summary>
     public string CorrectAnswer;
 
     /// <summary>
-    /// Clue revealed when victim is saved.
+    /// Clue revealed when victim is saved. Clue index should correspond with the correct answer index.
+    /// E.g. ClueBank[0] should be the clue for AnswerBank[0]
     /// </summary>
-    public string ClueText;
+    public string[] ClueBank =new string[8];
 
     /// <summary>
     /// Use to decide which clue to show when a victim is saved.
