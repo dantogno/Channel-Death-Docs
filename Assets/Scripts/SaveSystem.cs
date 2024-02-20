@@ -37,7 +37,15 @@ public static class SaveSystem
     {
         currentGameData = new SaveData();
 
-        InitializePuzzleQuestions();
+        // InitializePuzzleQuestions();
+
+        LoadTestPuzzleQuestion();
+    }
+
+    private static void LoadTestPuzzleQuestion()
+    {
+        PuzzleQuestion question = Resources.Load<PuzzleQuestion>("PuzzleQuestions/PuzzleQuestion_FavColor");
+        currentGameData.QuestionList.Add(question);
     }
 
     private static void InitializePuzzleQuestions()
