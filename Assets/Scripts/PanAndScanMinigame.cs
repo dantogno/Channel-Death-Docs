@@ -13,7 +13,6 @@ public class PanAndScanMinigame : MonoBehaviour
     public BoxCollider plane; 
     private List<GameObject> instances = new List<GameObject>(); // a list to store the positions of the spawned instances
 
-    private bool upPressed, downPressed, leftPressed, rightPressed, zoomInPressed, zoomOutPressed = false;
     private float repeatInputDelay = 0.15f;
     private float repeatInputTimer = 0;
     private Vector3[] boundsCorners = new Vector3[4];
@@ -103,12 +102,12 @@ public class PanAndScanMinigame : MonoBehaviour
         repeatInputTimer += Time.deltaTime;
         if (repeatInputTimer >= repeatInputDelay)
         {
-            zoomInPressed = InputManager.InputActions.Gameplay.UpPlusR.IsInProgress();
-            zoomOutPressed = InputManager.InputActions.Gameplay.DownMinusL.IsInProgress();
-            upPressed = InputManager.InputActions.Gameplay.Input2.IsInProgress();
-            downPressed = InputManager.InputActions.Gameplay.Input8.IsInProgress();
-            leftPressed = InputManager.InputActions.Gameplay.Input4.IsInProgress();
-            rightPressed = InputManager.InputActions.Gameplay.Input6.IsInProgress();
+            var zoomInPressed = InputManager.InputActions.Gameplay.UpPlusR.IsInProgress();
+            var zoomOutPressed = InputManager.InputActions.Gameplay.DownMinusL.IsInProgress();
+            var upPressed = InputManager.InputActions.Gameplay.Input2.IsInProgress();
+            var downPressed = InputManager.InputActions.Gameplay.Input8.IsInProgress();
+            var leftPressed = InputManager.InputActions.Gameplay.Input4.IsInProgress();
+            var rightPressed = InputManager.InputActions.Gameplay.Input6.IsInProgress();
 
             if (zoomInPressed) { Zoom(true); }
             if (zoomOutPressed) { Zoom(false); }

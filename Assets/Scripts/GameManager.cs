@@ -65,7 +65,7 @@ public class GameManager : Singleton<GameManager>
 
 
     public bool CurrentVictimIsKiller => CurrentVictim == killer;
-    public bool BeginGameplay { get;  set; } = false;
+    //public bool BeginGameplay { get;  set; } = false;
   
     public int KillingFloorChannelIndex { get; private set; }
     public float TimeUntilNextKill { get; private set; } = 0;
@@ -73,7 +73,18 @@ public class GameManager : Singleton<GameManager>
 
     public bool BlockChannelInput { get; private set; } = false;
     public bool BlockPasscodeInput { get; private set; } = false;
-    public Victim CurrentVictim { get; private set; }
+    public Victim CurrentVictim
+    {
+        get
+        {
+            if (currentVictim_useProprety == null)
+            {
+                SetUpNextVictim();
+            }   
+            return currentVictim_useProprety;
+        }
+        private set => currentVictim_useProprety = value;
+    }
 
     public int KillCount { get; private set; } = 0;
     public int SaveCount { get; private set; } = 0;
@@ -94,26 +105,32 @@ public class GameManager : Singleton<GameManager>
     private bool waitingToChangeToKillingFloor = false;
     private bool waitingToKillVictim = false;
     private bool isKilling = false;
+    private Victim currentVictim_useProprety = null;
     private ChannelChangeEffects channelChangeEffects;
     private bool neverChangedChannel = true;
     public bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
    
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+        InitializeVictimsOutOfViewPosition();
         bloodVideo.SetActive(false);
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
         InitializeChannelArray();
-        channels[ChannelIndex].ChannelEntered?.Invoke();
         channelNumberText.gameObject.SetActive(false);
         UpdateChannelText();
         // randomize the victimPrefabs
         victimModels = victimModels.OrderBy(x => Guid.NewGuid()).ToArray();
-        InitializeVictimsOutOfViewPosition();
         SetNewVictimName();
         ResetKillTimer();
         MoveVictimToPosition();
+    }
+
+    private void Start()
+    {
+        channels[ChannelIndex].ChannelEntered?.Invoke();
         conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / KillTimeInSeconds;
     }
 
@@ -129,7 +146,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (!BeginGameplay) { return; }
+        //if (!BeginGameplay) { return; }
 
         // if the victim is dead we speed up the belt to make it look cooler.
         if (!waitingToChangeToKillingFloor && !currentVictimIsDead)
@@ -180,7 +197,12 @@ public class GameManager : Singleton<GameManager>
         breakingNewsUI.SetActive(false);
     }
 
-    private IEnumerator SpawnNewVictimAfterDelay()
+    public void SpawnNewVictimAfterDelay()
+    {
+        StartCoroutine(SetUpNewVictimAfterDelayCoroutine());
+    }
+
+    private IEnumerator SetUpNewVictimAfterDelayCoroutine()
     {
         yield return new WaitForSeconds(DelayInSecondsBetweenVictims);
         SetUpNextVictim();
@@ -234,8 +256,8 @@ public class GameManager : Singleton<GameManager>
 
     public void SetUpNextVictim()
     {
-        // Save the old victim to history
-        if (CurrentVictim != null)
+        // Save the previous victim to history, if there is one
+        if (currentVictim_useProprety != null)
         {
             SaveSystem.CurrentGameData.VictimHistory.Add(CurrentVictim);
         }
@@ -327,7 +349,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            StartCoroutine(SpawnNewVictimAfterDelay());
+            SpawnNewVictimAfterDelay();
         }
     }
 

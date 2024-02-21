@@ -2,12 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.Rendering.DebugUI;
 
 public class PasscodeManager : Singleton<PasscodeManager>
 {
+    /// <summary>
+    /// true if the passcode was correct, false otherwise
+    /// </summary>
+    public static event Action<bool> ValidationCompleted;
+    public static event Action<string> NewPasscodeSet;
+
     public AudioClip correct, wrong;
     private AudioSource audioSource;
     public string Passcode { get; private set; } = 1234.ToString();
@@ -21,31 +29,76 @@ public class PasscodeManager : Singleton<PasscodeManager>
     public string HeartsNumber => Passcode[2].ToString();
     public string SpadesNumber => Passcode[3].ToString();
 
+    [Tooltip("Must be in order from left to right")]
     public PasscodeDigitEntry[] DigitEntryFields;
 
-    private string EnteredPasscode
-    {
-        get => enteredPasscode;
-        set
-        {
-            enteredPasscode = value;
-            if (enteredPasscode.Length == 4)
-            {
-                Validate();
-            }
-        }
-    }
+    private int passcodeEntryIndex = 0;
+
+    //private string EnteredPasscode
+    //{
+    //    get => enteredPasscode;
+    //    set
+    //    {
+    //        enteredPasscode = value;
+    //        if (enteredPasscode.Length == 4)
+    //        {
+    //            Validate();
+    //        }
+    //    }
+    //}
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         CreateNewPasscode();
+        ResetInputFields();
     }
 
-    /// <summary>
-    /// true if the passcode was correct, false otherwise
-    /// </summary>
-    public static event Action<bool> ValidationCompleted;
-    public static event Action<string> NewPasscodeSet;
+    private void Update()
+    {
+        if (!GameManager.Instance.BlockPasscodeInput && GameManager.Instance.ChannelIndex == GameManager.Instance.KillingFloorChannelIndex)
+        {
+            if (InputManager.InputActions.Gameplay.Input0.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "0");
+            }
+            if (InputManager.InputActions.Gameplay.Input1.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "1");
+            }
+            if (InputManager.InputActions.Gameplay.Input2.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "2");
+            }
+            if (InputManager.InputActions.Gameplay.Input3.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "3");
+            }
+            if (InputManager.InputActions.Gameplay.Input4.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "4");
+            }
+            if (InputManager.InputActions.Gameplay.Input5.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "5");
+            }
+            if (InputManager.InputActions.Gameplay.Input6.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "6");
+            }
+            if (InputManager.InputActions.Gameplay.Input7.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "7");
+            }
+            if (InputManager.InputActions.Gameplay.Input8.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "8");
+            }
+            if (InputManager.InputActions.Gameplay.Input9.WasPressedThisFrame())
+            {
+                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "9");
+            }
+        }
+    }
 
     private void CreateNewPasscode()
     {
@@ -69,7 +122,7 @@ public class PasscodeManager : Singleton<PasscodeManager>
         // correct code... victim rescued
         if (isCorrectCode)
         {
-            StartCoroutine(SetUpNextVictimAfterDelay());
+            GameManager.Instance.SpawnNewVictimAfterDelay();
             audioSource.clip = correct;
             CreateNewPasscode();
         }
@@ -92,40 +145,47 @@ public class PasscodeManager : Singleton<PasscodeManager>
         ResetInputFields();
     }
 
-    private void ResetInputFields()
+    public void ResetInputFields()
     {
         for (int i = 0; i < DigitEntryFields.Length; i++)
         {
-            if (!GameManager.Instance.BlockPasscodeInput)
-                DigitEntryFields[i].inputField.interactable = true;
+            //if (!GameManager.Instance.BlockPasscodeInput)
+            //    DigitEntryFields[i].inputField.interactable = true;
             DigitEntryFields[i].ClearInputField();
             DigitEntryFields[i].wrongImage.SetActive(false);
         }
+        passcodeEntryIndex = 0;
+
         if (!GameManager.Instance.BlockPasscodeInput)
-            DigitEntryFields[0].ActivateInputField();
+            DigitEntryFields[0].SetSelectedInputField(true);
     }
 
-    private IEnumerator SetUpNextVictimAfterDelay()
+    private void AddInputToDigitEntryField(PasscodeDigitEntry digitEntryField, string input)
     {
-        yield return new WaitForSeconds(GameManager.Instance.DelayInSecondsBetweenVictims);
-        GameManager.Instance.SetUpNextVictim();
-    }
+        digitEntryField.SetInputFieldText(input);
+        enteredPasscode += input;
+        DigitEntryFields[passcodeEntryIndex].SetSelectedInputField(false);
 
-    public void EnterDigit(string entry)
-    {
-        EnteredPasscode += entry;
+        if (passcodeEntryIndex == DigitEntryFields.Length - 1)
+        {
+            passcodeEntryIndex = 0;
+            Validate();
+        }
+        else
+        {
+            passcodeEntryIndex++;
+            DigitEntryFields[passcodeEntryIndex].SetSelectedInputField(true);
+        }
     }
 
     private void ClearEnteredCode()
     {
         enteredPasscode = string.Empty;
         validationInProgress = false;
-    }
+    }  
 
     private void OnNewVictimSpawned()
     {
-        // Going to try only doing this when the passcode is correctly entered to reduce difficulty
-        //CreateNewPasscode();
         ClearEnteredCode() ;
         ResetInputFields();
     }

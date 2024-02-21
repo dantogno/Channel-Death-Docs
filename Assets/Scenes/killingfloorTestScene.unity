@@ -2740,6 +2740,46 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[5].m_Target
+      value: 
+      objectReference: {fileID: 897273210}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[5].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      value: ResetInputFields
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
+      value: PasscodeManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5553602068216270684, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_SizeDelta.x
