@@ -55,12 +55,12 @@ public class PasscodeDigitEntry : MonoBehaviour
             inputField.interactable = false;
         }
 
-        
-
+        // TODO: move input from this to manager. manager will need to know about which input fields and fill them in
+        Debug.Log($"pressedthisframe: {InputManager.InputActions.Gameplay.Input0.WasPressedThisFrame()}");
         //Debug.Log($"current selected obj: {EventSystem.current.currentSelectedGameObject}");
         if ( EventSystem.current.currentSelectedGameObject == inputField.gameObject) 
         { 
-            if (InputManager.InputActions.Gameplay.Input0.WasReleasedThisFrame())
+            if (InputManager.InputActions.Gameplay.Input0.WasPressedThisFrame())
             {
                 inputField.text += "0";
             }
