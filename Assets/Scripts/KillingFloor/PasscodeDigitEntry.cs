@@ -28,7 +28,10 @@ public class PasscodeDigitEntry : MonoBehaviour
 
     public void ClearInputField()
     {
-        inputField.text = string.Empty;
+        if (inputField != null)
+        {
+            inputField.text = string.Empty;
+        }
     }
 
     public void SetInputFieldText(string text)

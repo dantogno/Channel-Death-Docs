@@ -111,10 +111,14 @@ public class GameManager : Singleton<GameManager>
     public bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
    
 
-    protected override void Awake()
+    //protected override void Awake()
+    //{
+    //    //base.Awake();
+
+    //}
+
+    private void Start()
     {
-        base.Awake();
-        InitializeVictimsOutOfViewPosition();
         bloodVideo.SetActive(false);
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
@@ -123,13 +127,10 @@ public class GameManager : Singleton<GameManager>
         UpdateChannelText();
         // randomize the victimPrefabs
         victimModels = victimModels.OrderBy(x => Guid.NewGuid()).ToArray();
+        InitializeVictimsOutOfViewPosition();
         SetNewVictimName();
         ResetKillTimer();
         MoveVictimToPosition();
-    }
-
-    private void Start()
-    {
         channels[ChannelIndex].ChannelEntered?.Invoke();
         conveyorBeltDefaultSpeed = Vector3.Distance(victimSpawnPoint.transform.position, killPosition.transform.position) / KillTimeInSeconds;
     }

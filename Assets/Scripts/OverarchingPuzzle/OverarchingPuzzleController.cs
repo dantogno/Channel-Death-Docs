@@ -26,6 +26,11 @@ public class OverarchingPuzzleController : MonoBehaviour
         InitializeAnswerBank();
     }
 
+    private void Update()
+    {
+        
+    }
+
     private void InitializeQuestionText()
     {
         questionText.text = SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex].QuestionText;

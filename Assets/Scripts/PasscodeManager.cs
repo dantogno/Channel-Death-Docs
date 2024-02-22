@@ -16,6 +16,19 @@ public class PasscodeManager : Singleton<PasscodeManager>
     public static event Action<bool> ValidationCompleted;
     public static event Action<string> NewPasscodeSet;
 
+    public string EnteredPasscode
+    {
+        get => enteredPasscode;
+        set
+        {
+            enteredPasscode = value;
+            if (enteredPasscode.Length == 4)
+            {
+                Validate();
+            }
+        }
+    }
+
     public AudioClip correct, wrong;
     private AudioSource audioSource;
     public string Passcode { get; private set; } = 1234.ToString();
@@ -29,75 +42,11 @@ public class PasscodeManager : Singleton<PasscodeManager>
     public string HeartsNumber => Passcode[2].ToString();
     public string SpadesNumber => Passcode[3].ToString();
 
-    [Tooltip("Must be in order from left to right")]
-    public PasscodeDigitEntry[] DigitEntryFields;
 
-    private int passcodeEntryIndex = 0;
-
-    //private string EnteredPasscode
-    //{
-    //    get => enteredPasscode;
-    //    set
-    //    {
-    //        enteredPasscode = value;
-    //        if (enteredPasscode.Length == 4)
-    //        {
-    //            Validate();
-    //        }
-    //    }
-    //}
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         CreateNewPasscode();
-        ResetInputFields();
-    }
-
-    private void Update()
-    {
-        if (!GameManager.Instance.BlockPasscodeInput && GameManager.Instance.ChannelIndex == GameManager.Instance.KillingFloorChannelIndex)
-        {
-            if (InputManager.InputActions.Gameplay.Input0.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "0");
-            }
-            if (InputManager.InputActions.Gameplay.Input1.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "1");
-            }
-            if (InputManager.InputActions.Gameplay.Input2.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "2");
-            }
-            if (InputManager.InputActions.Gameplay.Input3.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "3");
-            }
-            if (InputManager.InputActions.Gameplay.Input4.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "4");
-            }
-            if (InputManager.InputActions.Gameplay.Input5.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "5");
-            }
-            if (InputManager.InputActions.Gameplay.Input6.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "6");
-            }
-            if (InputManager.InputActions.Gameplay.Input7.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "7");
-            }
-            if (InputManager.InputActions.Gameplay.Input8.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "8");
-            }
-            if (InputManager.InputActions.Gameplay.Input9.WasPressedThisFrame())
-            {
-                AddInputToDigitEntryField(DigitEntryFields[passcodeEntryIndex], "9");
-            }
-        }
     }
 
     private void CreateNewPasscode()
@@ -130,7 +79,6 @@ public class PasscodeManager : Singleton<PasscodeManager>
         else
         {
             GameManager.Instance.IncurPenalty();
-            StartCoroutine(ResetInputFieldsAfterPenaltyCooldown());
             audioSource.clip = wrong;
         }
         ClearEnteredCode();
@@ -138,45 +86,6 @@ public class PasscodeManager : Singleton<PasscodeManager>
         ValidationCompleted?.Invoke(isCorrectCode);
     }
 
-
-    private IEnumerator ResetInputFieldsAfterPenaltyCooldown()
-    {
-        yield return new WaitForSeconds(GameManager.Instance.timePenaltyDuration);
-        ResetInputFields();
-    }
-
-    public void ResetInputFields()
-    {
-        for (int i = 0; i < DigitEntryFields.Length; i++)
-        {
-            //if (!GameManager.Instance.BlockPasscodeInput)
-            //    DigitEntryFields[i].inputField.interactable = true;
-            DigitEntryFields[i].ClearInputField();
-            DigitEntryFields[i].wrongImage.SetActive(false);
-        }
-        passcodeEntryIndex = 0;
-
-        if (!GameManager.Instance.BlockPasscodeInput)
-            DigitEntryFields[0].SetSelectedInputField(true);
-    }
-
-    private void AddInputToDigitEntryField(PasscodeDigitEntry digitEntryField, string input)
-    {
-        digitEntryField.SetInputFieldText(input);
-        enteredPasscode += input;
-        DigitEntryFields[passcodeEntryIndex].SetSelectedInputField(false);
-
-        if (passcodeEntryIndex == DigitEntryFields.Length - 1)
-        {
-            passcodeEntryIndex = 0;
-            Validate();
-        }
-        else
-        {
-            passcodeEntryIndex++;
-            DigitEntryFields[passcodeEntryIndex].SetSelectedInputField(true);
-        }
-    }
 
     private void ClearEnteredCode()
     {
@@ -187,19 +96,12 @@ public class PasscodeManager : Singleton<PasscodeManager>
     private void OnNewVictimSpawned()
     {
         ClearEnteredCode() ;
-        ResetInputFields();
-    }
-
-    private void OnChangedToKillingChannel()
-    {
-        ResetInputFields();
     }
 
     private void OnEnable()
     {
         GameManager.NewVictimSpawned += OnNewVictimSpawned;
         GameManager.ChangedToKillingChannel += ClearEnteredCode;
-        GameManager.ChangedToKillingChannel += OnChangedToKillingChannel;
     }
 
 
@@ -207,6 +109,5 @@ public class PasscodeManager : Singleton<PasscodeManager>
     {
         GameManager.NewVictimSpawned -= OnNewVictimSpawned;
         GameManager.ChangedToKillingChannel -= ClearEnteredCode;
-        GameManager.ChangedToKillingChannel -= OnChangedToKillingChannel;
     }
 }
