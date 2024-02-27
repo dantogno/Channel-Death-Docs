@@ -23,7 +23,7 @@ public class OverarchingPuzzleController : MonoBehaviour
     private GameObject questionAndAnswerPanel;
 
     [SerializeField]
-    private GameObject correctAnswerLabel, wrongAnswerLabel;
+    private GameObject correctAnswerLabel, wrongAnswerLabel, lockedText;
 
     [SerializeField]
     private AudioClip correctAnswerAudioClip, wrongAnwerAudioClip;
@@ -41,6 +41,8 @@ public class OverarchingPuzzleController : MonoBehaviour
         InitializeAnswerBank();
         audioSource = GetComponent<AudioSource>();
         normalColor = answerBankUiTexts[0].color;
+        // move the lockedText up and down looping with LeanTween
+        LeanTween.moveLocalY(lockedText, lockedText.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
     }
 
     private void ChooseAnswerAtIndex(int index)
