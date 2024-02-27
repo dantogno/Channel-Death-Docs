@@ -1948,6 +1948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 0
+  suitImage: {fileID: 2640765914561002978}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -1978,6 +1979,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!1 &7036168984506793454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2822,6 +2824,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4f2255061b56ab4ba1cc298fb935d39, type: 3}
+--- !u!114 &2640765914561002978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5775647089728878730, guid: c4f2255061b56ab4ba1cc298fb935d39,
+    type: 3}
+  m_PrefabInstance: {fileID: 8395513408875709800}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8036375707065913988 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,

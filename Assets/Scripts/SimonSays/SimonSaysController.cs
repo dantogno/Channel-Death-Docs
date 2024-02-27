@@ -21,6 +21,7 @@ public class SimonSaysController : MonoBehaviour
     private bool infail = false;
     private bool waitingToRun = false;
     private bool won = false;
+    private Channel parentChannel;
 
     public AudioSource[] inputClips;
 
@@ -29,6 +30,7 @@ public class SimonSaysController : MonoBehaviour
     private void Awake()
     {
         PasscodeManager.NewPasscodeSet += NewPasscodeSet;
+        parentChannel = GetComponentInParent<Channel>();
     }
 
     private void OnEnable()
@@ -198,7 +200,7 @@ public class SimonSaysController : MonoBehaviour
         foreach (GameObject go in objectHolders) {
             go.SetActive(true);
         }
-        displayScreens[3].GetComponent<TMPro.TMP_Text>().text = PasscodeManager.Instance.HeartsNumber;
+        displayScreens[3].GetComponent<TMPro.TMP_Text>().text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
         displayScreens[3].SetActive(true);
         inputClips[5].Play();
         won = true;

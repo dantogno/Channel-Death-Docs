@@ -228,6 +228,7 @@ public class PlayerCarController : MonoBehaviour
             CanMove = false;
             EngineSource.PlayOneShot(CarStopSound);
             CompletedMiniGame = true;
+            ScaryDeathManager.instance.ActivateNumberDisplay();
         }
     }
 

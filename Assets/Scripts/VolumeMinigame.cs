@@ -38,7 +38,7 @@ public class VolumeMinigame : MonoBehaviour
 
     private int clue = -1;
     private int oldClue = -1;
-
+    private Channel parentChannel;
 
     /// <summary>
     /// The number of volume symbols in the volume symbol string divided by the max volume
@@ -174,6 +174,11 @@ public class VolumeMinigame : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        parentChannel = GetComponentInParent<Channel>();
+    }
+
     private void Start()
     {
 #if UNITY_EDITOR
@@ -265,7 +270,7 @@ public class VolumeMinigame : MonoBehaviour
 
     private void OnEnable()
     {
-        clue = int.Parse(PasscodeManager.Instance.SpadesNumber);
+        clue = int.Parse(PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString());
         bool clueHasChanged = clue != oldClue;
         oldClue = clue;
         if (clueHasChanged)

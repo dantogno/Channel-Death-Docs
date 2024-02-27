@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScaryDeathManager : MonoBehaviour
 {
@@ -34,9 +35,13 @@ public class ScaryDeathManager : MonoBehaviour
 
     AudioSource scareAS;
 
+    public List<TMP_Text> displayTexts;
+    private Channel parentChannel;
+
     private void Awake()
     {
         instance = this;
+        parentChannel = GetComponentInParent<Channel>();
     }
     // Start is called before the first frame update
     void Start()
@@ -76,9 +81,17 @@ public class ScaryDeathManager : MonoBehaviour
         PlayerCarController.Instance.StartMessage();
     }
 
+    public void ActivateNumberDisplay()
+    {
+        string number = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
+        foreach (TMP_Text text in displayTexts) {
+            text.text = number;
+        }
+    }
+
     public void ResetChannel()
     {
-        if(PlayerCarController.Instance.CompletedMiniGame)
+        if(PlayerCarController.Instance == null || PlayerCarController.Instance.CompletedMiniGame)
         {
             return;
         }
@@ -89,5 +102,8 @@ public class ScaryDeathManager : MonoBehaviour
         BlackScreen.SetActive(false);
         gathering.SetActive(false);
         EnemySpawner.Instance.SetupEnemies();
+        foreach (TMP_Text text in displayTexts) {
+            text.enabled = false;
+        }
     }
 }
