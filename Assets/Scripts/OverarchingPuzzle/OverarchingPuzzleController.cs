@@ -20,18 +20,37 @@ public class OverarchingPuzzleController : MonoBehaviour
     private TMP_Text questionText;
 
     [SerializeField]
-    private GameObject QuestionAndAnswerMask;
+    private GameObject questionAndAnswerPanel;
 
+    [SerializeField]
+    private GameObject correctAnswerLabel, wrongAnswerLabel;
+
+    [SerializeField]
+    private AudioClip correctAnswerAudioClip, wrongAnwerAudioClip;
+
+
+    private Color selectedColor = Color.white;
+    private Color normalColor;
     private int currentQuestionIndex = 0;
-    private Button[] answerButtons;
     private bool blockInput = false;
+    private AudioSource audioSource;
 
     private void Start()
     {
         InitializeQuestionText();
         InitializeAnswerBank();
-        InitializeAnswerButtons();
-        answerButtons[0].onClick.AddListener(() => StartCoroutine(ProcessAnswerCoroutine()));
+        audioSource = GetComponent<AudioSource>();
+        normalColor = answerBankUiTexts[0].color;
+    }
+
+    private void ChooseAnswerAtIndex(int index)
+    {
+        if (!blockInput)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ProcessAnswerCoroutine(index));
+            blockInput = true;
+        }
     }
 
     private void Update()
@@ -40,50 +59,80 @@ public class OverarchingPuzzleController : MonoBehaviour
         {
             if (InputManager.InputActions.Gameplay.Input1.WasPressedThisFrame())
             {
-                answerButtons[0].Select();
-                answerButtons[0].onClick.Invoke();
+                ChooseAnswerAtIndex(0);
+                return;
             }
             if (InputManager.InputActions.Gameplay.Input2.WasPressedThisFrame())
             {
-                answerButtons[1].Select();
+                ChooseAnswerAtIndex(1);
+                return;
             }
             if (InputManager.InputActions.Gameplay.Input3.WasPressedThisFrame())
             {
-                answerButtons[2].Select();
+                ChooseAnswerAtIndex(2);
+                return;
             }
             if (InputManager.InputActions.Gameplay.Input4.WasPressedThisFrame())
             {
-                answerButtons[3].Select();
+                ChooseAnswerAtIndex(3);
+                return;
             }
             if (InputManager.InputActions.Gameplay.Input5.WasPressedThisFrame())
             {
-                answerButtons[4].Select();
+                ChooseAnswerAtIndex(4);
+                return;
             }
             if (InputManager.InputActions.Gameplay.Input6.WasPressedThisFrame())
             {
-                answerButtons[5].Select();
+                ChooseAnswerAtIndex(5);
+                return;
             }
             if (InputManager.InputActions.Gameplay.Input7.WasPressedThisFrame())
             {
-                answerButtons[6].Select();
+                ChooseAnswerAtIndex(6);
+                return;
             }
             if (InputManager.InputActions.Gameplay.Input8.WasPressedThisFrame())
             {
-                answerButtons[7].Select();
+                ChooseAnswerAtIndex(7);
+                return;
             }
         }
     }
 
-    private IEnumerator ProcessAnswerCoroutine()
+    private IEnumerator ProcessAnswerCoroutine(int answerIndex)
     {
-        blockInput = true;
+        answerBankUiTexts[answerIndex].color = selectedColor;
+        // wait for player to process text select state change
         yield return new WaitForSeconds(0.5f);
-        // use leantween to scale down the height of the question and answer mask
-        LeanTween.scaleY(QuestionAndAnswerMask.gameObject, 0, 0.5f).setEase(LeanTweenType.easeInBack)
-            .setOnComplete(()=>
-            {
-                 blockInput = false;
-            });
+        LeanTween.scaleY(questionAndAnswerPanel.gameObject, 0, 0.5f).setEase(LeanTweenType.easeInBack);
+
+        // wait for transition to finish
+        yield return new WaitForSeconds(0.9f);
+        answerBankUiTexts[answerIndex].color = normalColor;
+
+        var isCorrect = SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex].CorrectAnswerIndex == answerIndex;  
+        var feedbackMessage = isCorrect ? correctAnswerLabel : wrongAnswerLabel;
+        var audioClip = isCorrect ? correctAnswerAudioClip : wrongAnwerAudioClip;
+        audioSource.PlayOneShot(audioClip);
+        feedbackMessage.transform.localScale = Vector3.zero;
+        feedbackMessage.SetActive(true);
+        LeanTween.scale(feedbackMessage, Vector3.one, 0.5f).setEase(LeanTweenType.easeOutBack);
+
+        // wait for transition to finish and for player to process feedback
+        yield return new WaitForSeconds(2f);
+
+        LeanTween.scale(feedbackMessage, Vector3.zero, 0.5f).setEase(LeanTweenType.easeOutBack)
+            .setOnComplete(() => feedbackMessage.SetActive(false));
+
+        // wait for transition to finish
+        yield return new WaitForSeconds(0.7f);
+
+        LeanTween.scaleY(questionAndAnswerPanel.gameObject, 1, 0.5f).setEase(LeanTweenType.easeOutBack);
+
+        // wait for transition to finish
+        yield return new WaitForSeconds(0.5f);
+        blockInput = false;
     }
 
     private void InitializeQuestionText()
@@ -97,18 +146,6 @@ public class OverarchingPuzzleController : MonoBehaviour
         for (int i = 0; i < answerBankUiTexts.Length; i++)
         {
             answerBankUiTexts[i].text = $"{i+1}. {SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex].AnswerBank[i]}";
-        }
-    }
-
-    /// <summary>
-    /// initialize the answer button array based to map to the answer bank ui texts array
-    /// </summary>
-    private void InitializeAnswerButtons()
-    {
-        answerButtons = new Button[answerBankUiTexts.Length];
-        for (int i = 0; i < answerBankUiTexts.Length; i++)
-        {
-            answerButtons[i] = answerBankUiTexts[i].GetComponent<Button>();
         }
     }
 }

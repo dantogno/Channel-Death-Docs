@@ -45,6 +45,8 @@ public static class SaveSystem
     private static void LoadTestPuzzleQuestion()
     {
         PuzzleQuestion question = Resources.Load<PuzzleQuestion>("PuzzleQuestions/PuzzleQuestion_FavColor");
+        question.InitializeQuestion();
+        Debug.Log($"Adding question: {question.QuestionText} with answer index {question.CorrectAnswerIndex}");
         currentGameData.QuestionList.Add(question);
     }
 
@@ -54,11 +56,12 @@ public static class SaveSystem
         List<PuzzleQuestion> allQuestions = new List<PuzzleQuestion>(Resources.LoadAll<PuzzleQuestion>("PuzzleQuestions"));
         List<PuzzleQuestion> chosenQuestions = new List<PuzzleQuestion>();
 
-        // todo: change to OverarchingPuzzleController.NumberOfQuestions
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < OverarchingPuzzleController.NumberOfQuestions; i++)
         {
             PuzzleQuestion question = allQuestions[UnityEngine.Random.Range(0, allQuestions.Count)];
             allQuestions.Remove(question);
+            question.InitializeQuestion();
+            Debug.Log($"Adding question: {question.QuestionText} with answer index {question.CorrectAnswerIndex}: {question.AnswerBank[question.CorrectAnswerIndex]}");
             chosenQuestions.Add(question);
         }
         currentGameData.QuestionList = chosenQuestions;

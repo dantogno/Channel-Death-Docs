@@ -32,7 +32,7 @@ public class PuzzleQuestion: ScriptableObject
     /// <summary>
     /// Single correct answer to be used in the puzzle, chosen from the AnswerBank
     /// </summary>
-    public string CorrectAnswer;
+    public int CorrectAnswerIndex { get; private set; }
 
     /// <summary>
     /// Clue revealed when victim is saved. Clue index should correspond with the correct answer index.
@@ -45,5 +45,13 @@ public class PuzzleQuestion: ScriptableObject
     /// We can loop them once they have all been shown.
     /// </summary>
     public bool HasClueBeenGiven = false;
+
+   /// <summary>
+   /// Select a correct answer from the answer bank at random
+   /// </summary>
+    public void InitializeQuestion()
+    {
+        CorrectAnswerIndex = UnityEngine.Random.Range(0, AnswerBank.Length);
+    }
 }
 
