@@ -76,7 +76,7 @@ public class MessageListener : OnScreenControl
     void ReleaseInput()
     {
         if (controlPath == null) return;
-        Debug.Log("release");
+        //Debug.Log("release");
         waitingRelease = false;
         timeSinceLast = 0f;
         SendValueToControl(0.0f);
