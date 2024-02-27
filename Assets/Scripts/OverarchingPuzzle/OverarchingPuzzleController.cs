@@ -17,7 +17,7 @@ public class OverarchingPuzzleController : MonoBehaviour
     private TMP_Text[] answerBankUiTexts;
 
     [SerializeField]
-    private TMP_Text questionText;
+    private TMP_Text questionText, timerText;
 
     [SerializeField]
     private GameObject questionAndAnswerPanel;
@@ -45,6 +45,12 @@ public class OverarchingPuzzleController : MonoBehaviour
         LeanTween.moveLocalY(lockedText, lockedText.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
     }
 
+    private void UpdateTimerText()
+    {
+        // update the timer text to show minutes and seconds remaining
+        timerText.text = $"{SaveSystem.CurrentGameData.TimeRemainingInSeconds / 60:00}:{SaveSystem.CurrentGameData.TimeRemainingInSeconds % 60:00}";
+    }
+
     private void ChooseAnswerAtIndex(int index)
     {
         if (!blockInput)
@@ -57,6 +63,7 @@ public class OverarchingPuzzleController : MonoBehaviour
 
     private void Update()
     {
+        UpdateTimerText();
         if (!blockInput)
         {
             if (InputManager.InputActions.Gameplay.Input1.WasPressedThisFrame())

@@ -84,13 +84,13 @@ public static class SaveSystem
 [Serializable]
 public class SaveData
 {
-    public float TimeLimitRemainingInMinutes;
+    public float TimeRemainingInSeconds;
     public List<PuzzleQuestion> QuestionList;
     public List<Victim> VictimHistory;
 
     public SaveData()
     {
-        TimeLimitRemainingInMinutes = GameManager.Instance.TotalGameTimeLimitInMinutes;
+        TimeRemainingInSeconds = GameManager.Instance.TotalTimeLimitInSeconds;
         QuestionList = new List<PuzzleQuestion>();
         VictimHistory = new List<Victim>();
     }

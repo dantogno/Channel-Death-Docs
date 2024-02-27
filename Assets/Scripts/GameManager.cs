@@ -9,7 +9,8 @@ using static UnityEngine.InputSystem.InputAction;
 public class GameManager : Singleton<GameManager>
 {
     [Tooltip("Game ends after this many minutes.")]
-    public float TotalGameTimeLimitInMinutes = 180;
+    [SerializeField]
+    private int totalTimeLimitInMinutes = 180;
 
     [Tooltip("Victim dies after this many seconds.")]
     public float KillTimeInSeconds = 180;
@@ -50,6 +51,8 @@ public class GameManager : Singleton<GameManager>
     public UVOffsetYAnim beltUVAnimation;
     public GameObject victimSpawnPoint;
     public GameObject killPosition;
+
+    public float TotalTimeLimitInSeconds => totalTimeLimitInMinutes * 60;
 
     /// <summary>
     /// Models used for victims. They have a Victim component to mark if they are male or female, 
@@ -190,7 +193,10 @@ public class GameManager : Singleton<GameManager>
                 KillVictim();
             }            
         }
+        // Update the time remaining
+        SaveSystem.CurrentGameData.TimeRemainingInSeconds -= Time.deltaTime;
     }
+
 
     private IEnumerator SwitchToKillingFloorAfterDelay()
     {
