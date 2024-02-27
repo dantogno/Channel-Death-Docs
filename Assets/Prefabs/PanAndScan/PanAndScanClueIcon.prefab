@@ -309,6 +309,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberText: {fileID: 7943593570539768335}
+  suitSprite: {fileID: 8843995974013010778}
+  availableSprits:
+  - {fileID: 21300000, guid: 17720c175d96c25428d74b28e1e8be9a, type: 3}
+  - {fileID: 21300000, guid: 1443fedc35f6e8949adcd09c4de3283d, type: 3}
+  - {fileID: 21300000, guid: 0d7aac91f6210dc45b451a07a8983b23, type: 3}
+  - {fileID: 21300000, guid: 6748e4c512054394da155e156ff7eae3, type: 3}
   isClue: 1
 --- !u!1 &7219081854890470689
 GameObject:

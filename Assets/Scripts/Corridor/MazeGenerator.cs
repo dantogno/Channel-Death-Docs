@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class MazeGenerator : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     private GameObject endPoint;
     [SerializeField]
+    private TMP_Text numberDisplay;
+    [SerializeField]
     private GameObject midPoint;
 
     public int mazeWidth;
@@ -22,6 +25,8 @@ public class MazeGenerator : MonoBehaviour
     public MazeCell[,] MazeGrid;
 
     public int cellScale;
+
+    private Channel parentChannel;
 
     private void Awake()
     {
@@ -63,6 +68,10 @@ public class MazeGenerator : MonoBehaviour
         Vector3 mp = MazeGrid[(int)((mazeWidth-1)/2), (int)((mazeDepth - 1) / 2)].transform.position;
         midPoint.transform.position = mp + new Vector3(0,0.1f,0);
         MazePlayerController.Instance.InitializePlayerLocation();
+        if (parentChannel == null) {
+            parentChannel = GetComponentInParent<Channel>();
+        }
+        numberDisplay.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
     }
 
     private MazeCell GetUnvisitedNeighbor(MazeCell currentCell)

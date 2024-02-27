@@ -21,6 +21,7 @@ public class PanAndScanMinigame : MonoBehaviour
     private string clue = string.Empty;
     private string oldClue = string.Empty;
     private Vector3 startPosition;
+    private Channel parentChannel;
       
 
     void Awake()
@@ -68,7 +69,12 @@ public class PanAndScanMinigame : MonoBehaviour
             if (isClue)
             {
                 clueText = instance.GetComponentInChildren<PanAndScanClueText>();
-                clueText.numberText.text = PasscodeManager.Instance.ClubsNumber;
+                if (parentChannel == null) {
+                    parentChannel = GetComponentInParent<Channel>();
+                }
+                clueText.numberText.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
+                clueText.suitSprite.sprite = clueText.availableSprits[(int)parentChannel.currentSuit];
+
             }
         }
     }
@@ -218,8 +224,8 @@ public class PanAndScanMinigame : MonoBehaviour
 
     private void OnEnable()
     {
-        clueText.numberText.text = PasscodeManager.Instance.ClubsNumber;
-        clue = PasscodeManager.Instance.ClubsNumber;
+        clueText.numberText.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
+        clue = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
         bool clueHasChanged = clue != oldClue;
         oldClue = clue;
         // todo: see if the camera is looking at the clue. If so, don't reset the position unless clue has changed.

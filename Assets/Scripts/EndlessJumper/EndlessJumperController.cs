@@ -26,6 +26,7 @@ public class EndlessJumperController : MonoBehaviour
     public AudioSource musicSource;
     private float startVolume;
     bool indeath = false;
+    private Channel parentChannel;
 
     private void FixedUpdate()
     {
@@ -74,6 +75,7 @@ public class EndlessJumperController : MonoBehaviour
         playerStartPos = player.transform.position;
         PasscodeManager.NewPasscodeSet += NewPasscodeSet;
         startVolume = musicSource.volume;
+        parentChannel = GetComponentInParent<Channel>();
     }
 
     private void OnEnable()
@@ -214,7 +216,7 @@ public class EndlessJumperController : MonoBehaviour
     public void Win()
     {
         win = true;
-        textDisplayGroup.GetComponentInChildren<TMPro.TMP_Text>().text = PasscodeManager.Instance.DiamondsNumber;
+        textDisplayGroup.GetComponentInChildren<TMPro.TMP_Text>().text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
         textDisplayGroup.SetActive(true);
         sources[1].Play();
     }

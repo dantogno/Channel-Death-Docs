@@ -107,6 +107,7 @@ public class GameManager : Singleton<GameManager>
     private bool isKilling = false;
     private Victim currentVictim_useProprety = null;
     private ChannelChangeEffects channelChangeEffects;
+    private MinigameSelector minigameSelector;
     private bool neverChangedChannel = true;
     public bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
    
@@ -125,6 +126,7 @@ public class GameManager : Singleton<GameManager>
         InitializeChannelArray();
         channelNumberText.gameObject.SetActive(false);
         UpdateChannelText();
+        minigameSelector = GetComponent<MinigameSelector>();
         // randomize the victimPrefabs
         victimModels = victimModels.OrderBy(x => Guid.NewGuid()).ToArray();
         InitializeVictimsOutOfViewPosition();
@@ -427,7 +429,9 @@ public class GameManager : Singleton<GameManager>
         channels[ChannelIndex].ChannelExited?.Invoke();
         ChannelIndex = newIndex;
         UpdateChannelText();
-        channels[newIndex].ChannelEntered?.Invoke();
+        if (minigameSelector.ActiveChannel(channels[newIndex])){
+            channels[newIndex].ChannelEntered?.Invoke();
+        }
         if (ChannelIndex == KillingFloorChannelIndex)
             ChangedToKillingChannel?.Invoke();
         channelChangeEffects.RampDownChannelChangeEffect();
