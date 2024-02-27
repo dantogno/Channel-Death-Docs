@@ -28,21 +28,45 @@ public class OverarchingPuzzleController : MonoBehaviour
     [SerializeField]
     private AudioClip correctAnswerAudioClip, wrongAnwerAudioClip;
 
+    [SerializeField]
+    [Tooltip("Order is relevant, numbered left to right")]
+    private Image[] progressDots;
+
+    [SerializeField]
+    private Color progressDotActiveColor;
 
     private Color selectedColor = Color.white;
     private Color normalColor;
+    private Color progressDotInactiveColor = Color.white;
     private int currentQuestionIndex = 0;
     private bool blockInput = false;
     private AudioSource audioSource;
+    private bool isLockedOut = false;
+
+    private Image activeProgressDot => progressDots[currentQuestionIndex];
 
     private void Start()
     {
         InitializeQuestionText();
         InitializeAnswerBank();
+        UpdateCurrentProgressDot();
         audioSource = GetComponent<AudioSource>();
         normalColor = answerBankUiTexts[0].color;
         // move the lockedText up and down looping with LeanTween
         LeanTween.moveLocalY(lockedText, lockedText.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
+    }
+
+    private void UpdateCurrentProgressDot()
+    {
+        // the progress dot that matches the current question index should use leantween to pingpong between active and inactive colors
+        LeanTween.value(activeProgressDot.gameObject, progressDotInactiveColor, progressDotActiveColor, 0.25f)
+            .setOnUpdate((Color val) => activeProgressDot.color = val).setEaseInOutSine().setLoopPingPong();
+
+        // the progress dots before the current question index should be set to the active color
+        for (int i = 0; i < currentQuestionIndex; i++)
+        {
+            progressDots[i].color = progressDotActiveColor;
+        }
     }
 
     private void UpdateTimerText()
@@ -120,7 +144,7 @@ public class OverarchingPuzzleController : MonoBehaviour
         yield return new WaitForSeconds(0.9f);
         answerBankUiTexts[answerIndex].color = normalColor;
 
-        var isCorrect = SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex].CorrectAnswerIndex == answerIndex;  
+        var isCorrect = DetermineIfAnswerIsCorrect(answerIndex);
         var feedbackMessage = isCorrect ? correctAnswerLabel : wrongAnswerLabel;
         var audioClip = isCorrect ? correctAnswerAudioClip : wrongAnwerAudioClip;
         audioSource.PlayOneShot(audioClip);
@@ -141,7 +165,32 @@ public class OverarchingPuzzleController : MonoBehaviour
 
         // wait for transition to finish
         yield return new WaitForSeconds(0.5f);
+
+        if (isCorrect)
+        {
+            currentQuestionIndex++;
+            UpdateCurrentProgressDot();
+        }
         blockInput = false;
+    }
+
+    private bool DetermineIfAnswerIsCorrect(int answerIndex)
+    {
+        var question = SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex];
+        bool isCorrect = false;
+        switch (question.Type)
+        {
+            case PuzzleQuestion.QuestionType.Normal:
+                isCorrect = question.CorrectAnswerIndex == answerIndex;
+                break;
+            case PuzzleQuestion.QuestionType.WhoDied:
+                break;
+            case PuzzleQuestion.QuestionType.WhoSaved:
+                break;
+            case PuzzleQuestion.QuestionType.InputAtSpecificTime:
+                break;
+        }
+        return isCorrect;
     }
 
     private void InitializeQuestionText()

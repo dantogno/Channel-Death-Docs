@@ -37,9 +37,11 @@ public static class SaveSystem
     {
         currentGameData = new SaveData();
 
-        // InitializePuzzleQuestions();
+        InitializePuzzleQuestions();
 
-        LoadTestPuzzleQuestion();
+        // TODO: get multiple questions to load, progress through them!
+
+        // LoadTestPuzzleQuestion();
     }
 
     private static void LoadTestPuzzleQuestion()
