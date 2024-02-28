@@ -37,7 +37,7 @@ public static class SaveSystem
     {
         currentGameData = new SaveData();
 
-        InitializePuzzleQuestions();
+        InitializePuzzleQuestionList();
 
         // TODO: get multiple questions to load, progress through them!
 
@@ -47,12 +47,11 @@ public static class SaveSystem
     private static void LoadTestPuzzleQuestion()
     {
         PuzzleQuestion question = Resources.Load<PuzzleQuestion>("PuzzleQuestions/PuzzleQuestion_FavColor");
-        question.InitializeQuestion();
         Debug.Log($"Adding question: {question.QuestionText} with answer index {question.CorrectAnswerIndex}");
         currentGameData.QuestionList.Add(question);
     }
 
-    private static void InitializePuzzleQuestions()
+    private static void InitializePuzzleQuestionList()
     {
         // initialize the question list by loading all questions from the resources folder and choosing a random subset of ten uniuqe questions
         List<PuzzleQuestion> allQuestions = new List<PuzzleQuestion>(Resources.LoadAll<PuzzleQuestion>("PuzzleQuestions"));
@@ -62,7 +61,6 @@ public static class SaveSystem
         {
             PuzzleQuestion question = allQuestions[UnityEngine.Random.Range(0, allQuestions.Count)];
             allQuestions.Remove(question);
-            question.InitializeQuestion();
             Debug.Log($"Adding question: {question.QuestionText} with answer index {question.CorrectAnswerIndex}: {question.AnswerBank[question.CorrectAnswerIndex]}");
             chosenQuestions.Add(question);
         }

@@ -47,13 +47,28 @@ public class OverarchingPuzzleController : MonoBehaviour
 
     private void Start()
     {
-        InitializeQuestionText();
-        InitializeAnswerBank();
         UpdateCurrentProgressDot();
         audioSource = GetComponent<AudioSource>();
         normalColor = answerBankUiTexts[0].color;
         // move the lockedText up and down looping with LeanTween
         LeanTween.moveLocalY(lockedText, lockedText.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
+        PrepareNextQuestion();
+    }
+
+    public void OnChannelEntered()
+    {
+        PrepareNextQuestion();
+    }
+
+    private void PrepareNextQuestion()
+    {
+        if (currentQuestionIndex < NumberOfQuestions)
+        {
+            var question = SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex];
+            question.InitializeQuestion();
+            UpdateQuestionText();
+            UpdateAnswerBankText();
+        }
     }
 
     private void UpdateCurrentProgressDot()
@@ -193,13 +208,12 @@ public class OverarchingPuzzleController : MonoBehaviour
         return isCorrect;
     }
 
-    private void InitializeQuestionText()
+    private void UpdateQuestionText()
     {
         questionText.text = SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex].QuestionText;
     }
 
-
-    private void InitializeAnswerBank()
+    private void UpdateAnswerBankText()
     {
         for (int i = 0; i < answerBankUiTexts.Length; i++)
         {

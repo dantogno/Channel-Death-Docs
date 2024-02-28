@@ -34,6 +34,8 @@ public class PuzzleQuestion: ScriptableObject
     /// </summary>
     public int CorrectAnswerIndex { get; private set; }
 
+    public bool IsInitialized { get; private set; } = false;
+
     /// <summary>
     /// Clue revealed when victim is saved. Clue index should correspond with the correct answer index.
     /// E.g. ClueBank[0] should be the clue for AnswerBank[0]
@@ -51,7 +53,20 @@ public class PuzzleQuestion: ScriptableObject
    /// </summary>
     public void InitializeQuestion()
     {
-        CorrectAnswerIndex = UnityEngine.Random.Range(0, AnswerBank.Length);
+        if (IsInitialized) return;
+        switch (Type)
+        {
+            case QuestionType.Normal:
+                CorrectAnswerIndex = UnityEngine.Random.Range(0, AnswerBank.Length);
+                break;
+            case QuestionType.WhoDied:
+                break;
+            case QuestionType.WhoSaved:
+                break;
+            case QuestionType.InputAtSpecificTime:
+                break;
+        }
+        IsInitialized = true;
     }
 }
 
