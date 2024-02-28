@@ -13,23 +13,22 @@ MonoBehaviour:
   m_Name: PuzzleQuestion_Toy
   m_EditorClassIdentifier: 
   Type: 0
-  QuestionText: 
+  QuestionText: What was my favorite childhood toy?
   AnswerBank:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Barbie
+  - Funko Pop
+  - Sled
+  - Toxic Avenger
+  - My Little Pony
+  - Robocop
+  - Human skin mask
+  - Clown dolls
   ClueBank:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  HasClueBeenGiven: 0
+  - I saw them brushing a Barbie doll's hair.
+  - They had a bunch of Funko Pop toys lined up around their desk.
+  - They kept a red toy sled on the wall.
+  - I saw them talking to a Toxic Avenger action figure.
+  - I saw them brushing a My Little Pony doll's hair.
+  - They kept talking about Delta City and OCP.
+  - They had a creepy mask that looked like stitched together skin.
+  - 'There were clown dolls all over the cell they kept me in. '

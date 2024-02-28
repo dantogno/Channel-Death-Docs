@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 0
   QuestionText: What is in my pocket?
   AnswerBank:
-  - Ring
+  - Magic ring
   - Teeth
   - Penny
   - Keys
@@ -32,4 +32,3 @@ MonoBehaviour:
   - They showed me a crumpled picture of their mom they had jammed in their pocket.
   - I tried to resist but they pulled a knife!
   - They showed me they had nothing in their pockets.
-  HasClueBeenGiven: 0
