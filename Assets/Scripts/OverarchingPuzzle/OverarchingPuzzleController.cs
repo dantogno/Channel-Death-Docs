@@ -182,7 +182,7 @@ public class OverarchingPuzzleController : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         if (isCorrect)
         {
-            if (currentQuestionIndex > NumberOfQuestions - 1)
+            if (currentQuestionIndex < NumberOfQuestions - 1)
             {
                 currentQuestionIndex++;
                 PrepareNextQuestion();
