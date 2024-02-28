@@ -23,14 +23,13 @@ MonoBehaviour:
   - 
   - 
   - 
-  CorrectAnswer: 
   ClueBank:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - They said it was important to remember the names of the fallen.
+  - They wrote down and underlined the names of vicitims who were killed.
+  - They said it was important to remember the names of the fallen.
+  - They wrote down and underlined the names of vicitims who were killed.
+  - They said it was important to remember the names of the fallen.
+  - They wrote down and underlined the names of vicitims who were killed.
+  - They said it was important to remember the names of the fallen.
+  - They wrote down and underlined the names of vicitims who were killed.
   HasClueBeenGiven: 0

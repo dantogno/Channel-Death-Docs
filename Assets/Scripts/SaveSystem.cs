@@ -52,9 +52,12 @@ public static class SaveSystem
         currentGameData.QuestionList.Add(question);
     }
 
+    /// <summary>
+    /// initialize the question list by loading all questions from the resources folder 
+    /// and choosing a random subset of ten unique questions
+    /// </summary>
     private static void InitializePuzzleQuestionList()
     {
-        // initialize the question list by loading all questions from the resources folder and choosing a random subset of ten uniuqe questions
         var allQuestions = Resources.LoadAll<PuzzleQuestion>("PuzzleQuestions").ToList();
         List<PuzzleQuestion> chosenQuestions = new List<PuzzleQuestion>();
 
@@ -62,8 +65,8 @@ public static class SaveSystem
         {
             PuzzleQuestion question = allQuestions[UnityEngine.Random.Range(0, allQuestions.Count)];
             allQuestions.Remove(question);
-            Debug.Log($"Adding question: {question.QuestionText} with answer index {question.CorrectAnswerIndex}: {question.AnswerBank[question.CorrectAnswerIndex]}");
             chosenQuestions.Add(question);
+            question.InitializeQuestion();
         }
         currentGameData.QuestionList = chosenQuestions;
     }

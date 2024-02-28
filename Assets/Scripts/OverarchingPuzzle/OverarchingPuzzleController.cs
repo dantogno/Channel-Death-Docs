@@ -7,8 +7,13 @@ using UnityEngine.UI;
 
 public class OverarchingPuzzleController : MonoBehaviour
 {
-    // TODO: set to 10
-    public const int NumberOfQuestions = 1;
+    // TODO: stop conveyor belt during sequence, block out channel changing
+    // Set up "power button" initial puzzle
+    // Warn player that if they start the quiz and fail they will not be able to try again for some time
+    // implement lock out timer
+    // TODO: reveal clues. Remember, some question types might need special rules for clues.
+
+    public const int NumberOfQuestions = 10;
     
     [Tooltip("Lines that come after the rescued victim describes the clue. Need to make sense with any clue.")]
     public string[] clueFollowUpLines;
@@ -43,12 +48,14 @@ public class OverarchingPuzzleController : MonoBehaviour
     private bool blockInput = false;
     private AudioSource audioSource;
     private bool isLockedOut = false;
+    private int minutes, seconds;
 
     private Image activeProgressDot => progressDots[currentQuestionIndex];
 
     private void Start()
     {
-        UpdateCurrentProgressDot();
+        // TODO: where should this be called? Start isn't good enough. Either event or when we "turn on the TV"
+        PrepareNextQuestion();
         audioSource = GetComponent<AudioSource>();
         normalColor = answerBankUiTexts[0].color;
         // move the lockedText up and down looping with LeanTween
@@ -63,6 +70,7 @@ public class OverarchingPuzzleController : MonoBehaviour
             question.InitializeQuestion();
             UpdateQuestionText();
             UpdateAnswerBankText();
+            UpdateCurrentProgressDot();
         }
     }
 
@@ -81,8 +89,10 @@ public class OverarchingPuzzleController : MonoBehaviour
 
     private void UpdateTimerText()
     {
+        minutes = Mathf.FloorToInt(SaveSystem.CurrentGameData.TimeRemainingInSeconds / 60);
+        seconds = Mathf.FloorToInt(SaveSystem.CurrentGameData.TimeRemainingInSeconds % 60);
         // update the timer text to show minutes and seconds remaining
-        timerText.text = $"{SaveSystem.CurrentGameData.TimeRemainingInSeconds / 60:00}:{SaveSystem.CurrentGameData.TimeRemainingInSeconds % 60:00}";
+        timerText.text = $"{minutes:00}:{seconds:00}";
     }
 
     private void ChooseAnswerAtIndex(int index)
@@ -170,17 +180,24 @@ public class OverarchingPuzzleController : MonoBehaviour
 
         // wait for transition to finish
         yield return new WaitForSeconds(0.7f);
-
+        if (isCorrect)
+        {
+            if (currentQuestionIndex > NumberOfQuestions - 1)
+            {
+                currentQuestionIndex++;
+                PrepareNextQuestion();
+            }
+            else
+            {
+                // todo: big finish
+            }
+      
+        }
         LeanTween.scaleY(questionAndAnswerPanel.gameObject, 1, 0.5f).setEase(LeanTweenType.easeOutBack);
 
         // wait for transition to finish
         yield return new WaitForSeconds(0.5f);
 
-        if (isCorrect)
-        {
-            currentQuestionIndex++;
-            UpdateCurrentProgressDot();
-        }
         blockInput = false;
     }
 
@@ -190,14 +207,12 @@ public class OverarchingPuzzleController : MonoBehaviour
         bool isCorrect = false;
         switch (question.Type)
         {
-            case PuzzleQuestion.QuestionType.Normal:
-                isCorrect = question.CorrectAnswerIndex == answerIndex;
-                break;
-            case PuzzleQuestion.QuestionType.WhoDied:
-                break;
-            case PuzzleQuestion.QuestionType.WhoSaved:
-                break;
             case PuzzleQuestion.QuestionType.InputAtSpecificTime:
+                // if time remaining minutes is even, correct answer is at index 0, else correct answer is at index 1
+                isCorrect = minutes % 2 == 0 ? question.CorrectAnswerIndex == 0 : question.CorrectAnswerIndex == 1;
+                break;
+            default:
+                isCorrect = question.CorrectAnswerIndex == answerIndex;
                 break;
         }
         return isCorrect;
@@ -212,7 +227,8 @@ public class OverarchingPuzzleController : MonoBehaviour
     {
         for (int i = 0; i < answerBankUiTexts.Length; i++)
         {
-            answerBankUiTexts[i].text = $"{i+1}. {SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex].AnswerBank[i]}";
+            // inserting some TMP formatting to try and make the space character take up less room.
+            answerBankUiTexts[i].text = $"{i+1}. <cspace=-1em>   </cspace>{SaveSystem.CurrentGameData.QuestionList[currentQuestionIndex].AnswerBank[i]}";
         }
     }
 }

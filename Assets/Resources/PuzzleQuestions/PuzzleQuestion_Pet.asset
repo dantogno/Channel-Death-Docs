@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f65e5409d425874984cb8b0c8c3ac2b, type: 3}
+  m_Name: PuzzleQuestion_Pet
+  m_EditorClassIdentifier: 
+  Type: 0
+  QuestionText: What is my favorite pet?
+  AnswerBank:
+  - Cat
+  - Lizard
+  - Dog
+  - Pig
+  - Snake
+  - Spider
+  - Squirrel
+  - Fish
+  ClueBank:
+  - They had were petting a cat on their lap while they watched people get butchered!
+  - There was a tank with some kind of lizard in it. I think they fed it pieces of
+    the victims!
+  - They had a dog. They played fetch with human bones!
+  - They had a pet pig that ate the human remains.
+  - There was a tank with some kind of snake in it. I think they fed it pieces of
+    the victims!
+  - They had several tanks with spiders in them.
+  - They had a squirrel that road around on their shoulder.
+  - They had a tank with some kind of fish in it. I think they fed it pieces of the
+    victims!
+  HasClueBeenGiven: 0

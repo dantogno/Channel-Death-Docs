@@ -23,8 +23,8 @@ public class Victim : MonoBehaviour
     public VictimState State { get; set; } = VictimState.None;
 
     private string displayName;
-    private static List<string> availableFemaleNames = new List<string>();
-    private static List<string> availableMaleNames = new List<string>();
+    public static List<string> AvailableFemaleNames { get; private set; } = new List<string>();
+    public static List<string> AvailableMaleNames { get; private set; } = new List<string>();
     private static System.Random random = new System.Random();
 
 
@@ -45,11 +45,11 @@ public class Victim : MonoBehaviour
             {
                 string[] columns = line.Split(',');
 
-                // Assuming male names are in the first column and female names in the second column
+                // Assuming female names are in the first column and male names in the second column
                 if (columns.Length >= 2)
                 {
-                    availableMaleNames.Add(columns[0].Trim());
-                    availableFemaleNames.Add(columns[1].Trim());
+                    AvailableFemaleNames.Add(columns[0].Trim());
+                    AvailableMaleNames.Add(columns[1].Trim());
                 }
             }
 
@@ -71,7 +71,7 @@ public class Victim : MonoBehaviour
         // remove any names that are in the history
         foreach (var victim in SaveSystem.CurrentGameData.VictimHistory)
         {
-            availableFemaleNames.Remove(victim.Name);
+            AvailableFemaleNames.Remove(victim.Name);
         }
     }
 
@@ -80,30 +80,30 @@ public class Victim : MonoBehaviour
         var name = string.Empty;
         if (isFemale)
         {
-            if (availableFemaleNames.Count == 0)
+            if (AvailableFemaleNames.Count == 0)
             {
                 Debug.LogWarning("Out of names! Reusing. This is bad for some puzzle questions...");
                 name = "NoNameJane";
             }
             else
             {
-                int index = random.Next(availableFemaleNames.Count);
-                name = availableFemaleNames[index];
-                availableFemaleNames.RemoveAt(index);
+                int index = random.Next(AvailableFemaleNames.Count);
+                name = AvailableFemaleNames[index];
+                AvailableFemaleNames.RemoveAt(index);
             }
         }
         else
         {
-            if (availableFemaleNames.Count == 0)
+            if (AvailableFemaleNames.Count == 0)
             {
                 Debug.LogWarning("Out of names! Reusing. This is bad for some puzzle questions...");
                 name = "NoNameBlane";
             }
             else
             {
-                int index = random.Next(availableMaleNames.Count);
-                name = availableMaleNames[index];
-                availableMaleNames.RemoveAt(index);
+                int index = random.Next(AvailableMaleNames.Count);
+                name = AvailableMaleNames[index];
+                AvailableMaleNames.RemoveAt(index);
             }
         }
        Name = name;

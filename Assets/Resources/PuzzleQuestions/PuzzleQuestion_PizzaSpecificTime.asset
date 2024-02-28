@@ -10,19 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f65e5409d425874984cb8b0c8c3ac2b, type: 3}
-  m_Name: PuzzleQuestion
+  m_Name: PuzzleQuestion_PizzaSpecificTime
   m_EditorClassIdentifier: 
-  Type: 0
-  QuestionText: 
+  Type: 3
+  QuestionText: What is the best pizza topping?
   AnswerBank:
+  - Pepperoni
+  - Anchovies
+  - Olives
+  - Sausage
+  - Pineapple
+  - Onion
+  - Mushroom
+  - Human meat
+  ClueBank:
+  - 'They said: ''Remember to answer the question about pizza on an even numbered
+    minute.'' '
+  - 'They said: ''Remember to answer the question about pizza on an odd numbered
+    minute.'' '
   - 
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  CorrectAnswer: 
-  ClueText: 
   HasClueBeenGiven: 0
