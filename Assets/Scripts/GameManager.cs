@@ -123,6 +123,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        Victim.InitializeNameListsFromCSV();
         bloodVideo.SetActive(false);
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;

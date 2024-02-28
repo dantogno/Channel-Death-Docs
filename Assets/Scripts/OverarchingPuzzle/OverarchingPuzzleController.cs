@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class OverarchingPuzzleController : MonoBehaviour
 {
-    public const int NumberOfQuestions = 10;
+    // TODO: set to 10
+    public const int NumberOfQuestions = 1;
     
     [Tooltip("Lines that come after the rescued victim describes the clue. Need to make sense with any clue.")]
     public string[] clueFollowUpLines;
@@ -52,12 +53,6 @@ public class OverarchingPuzzleController : MonoBehaviour
         normalColor = answerBankUiTexts[0].color;
         // move the lockedText up and down looping with LeanTween
         LeanTween.moveLocalY(lockedText, lockedText.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
-        PrepareNextQuestion();
-    }
-
-    public void OnChannelEntered()
-    {
-        PrepareNextQuestion();
     }
 
     private void PrepareNextQuestion()

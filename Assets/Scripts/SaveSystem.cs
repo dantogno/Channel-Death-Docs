@@ -4,6 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using System.Linq;
 
 public static class SaveSystem 
 {
@@ -54,7 +55,7 @@ public static class SaveSystem
     private static void InitializePuzzleQuestionList()
     {
         // initialize the question list by loading all questions from the resources folder and choosing a random subset of ten uniuqe questions
-        List<PuzzleQuestion> allQuestions = new List<PuzzleQuestion>(Resources.LoadAll<PuzzleQuestion>("PuzzleQuestions"));
+        var allQuestions = Resources.LoadAll<PuzzleQuestion>("PuzzleQuestions").ToList();
         List<PuzzleQuestion> chosenQuestions = new List<PuzzleQuestion>();
 
         for (int i = 0; i < OverarchingPuzzleController.NumberOfQuestions; i++)

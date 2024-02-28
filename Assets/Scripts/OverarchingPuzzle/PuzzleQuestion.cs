@@ -53,13 +53,14 @@ public class PuzzleQuestion: ScriptableObject
    /// </summary>
     public void InitializeQuestion()
     {
-        if (IsInitialized) return;
         switch (Type)
         {
             case QuestionType.Normal:
-                CorrectAnswerIndex = UnityEngine.Random.Range(0, AnswerBank.Length);
+                if (!IsInitialized)
+                    CorrectAnswerIndex = UnityEngine.Random.Range(0, AnswerBank.Length);
                 break;
             case QuestionType.WhoDied:
+
                 break;
             case QuestionType.WhoSaved:
                 break;
