@@ -188,6 +188,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Power"",
+                    ""type"": ""Button"",
+                    ""id"": ""0fb5aca8-366d-43d0-91a6-582c2b701cd6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""855cdf4b-093f-4980-9a16-c56d1fd54cbb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -432,6 +450,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Input8"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79545bc4-c56b-4eab-8f0e-529b08432c71"",
+                    ""path"": ""<Keyboard>/home"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Power"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1384b2ee-e751-43df-9aae-be7d6f521fd5"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -458,6 +498,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_UpPlusR = m_Gameplay.FindAction("UpPlusR", throwIfNotFound: true);
         m_Gameplay_DownMinusL = m_Gameplay.FindAction("DownMinusL", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_Power = m_Gameplay.FindAction("Power", throwIfNotFound: true);
+        m_Gameplay_Enter = m_Gameplay.FindAction("Enter", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -537,6 +579,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_UpPlusR;
     private readonly InputAction m_Gameplay_DownMinusL;
     private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_Power;
+    private readonly InputAction m_Gameplay_Enter;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -559,6 +603,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @UpPlusR => m_Wrapper.m_Gameplay_UpPlusR;
         public InputAction @DownMinusL => m_Wrapper.m_Gameplay_DownMinusL;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @Power => m_Wrapper.m_Gameplay_Power;
+        public InputAction @Enter => m_Wrapper.m_Gameplay_Enter;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -622,6 +668,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Power.started += instance.OnPower;
+            @Power.performed += instance.OnPower;
+            @Power.canceled += instance.OnPower;
+            @Enter.started += instance.OnEnter;
+            @Enter.performed += instance.OnEnter;
+            @Enter.canceled += instance.OnEnter;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -680,6 +732,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Power.started -= instance.OnPower;
+            @Power.performed -= instance.OnPower;
+            @Power.canceled -= instance.OnPower;
+            @Enter.started -= instance.OnEnter;
+            @Enter.performed -= instance.OnEnter;
+            @Enter.canceled -= instance.OnEnter;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -717,5 +775,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnUpPlusR(InputAction.CallbackContext context);
         void OnDownMinusL(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnPower(InputAction.CallbackContext context);
+        void OnEnter(InputAction.CallbackContext context);
     }
 }

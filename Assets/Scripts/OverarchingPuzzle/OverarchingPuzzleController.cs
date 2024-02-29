@@ -14,6 +14,9 @@ public class OverarchingPuzzleController : MonoBehaviour
     // TODO: reveal clues. Remember, some question types might need special rules for clues.
 
     public const int NumberOfQuestions = 10;
+
+    [SerializeField]
+    private int lockOutTimeInMinutes = 5;
     
     [Tooltip("Lines that come after the rescued victim describes the clue. Need to make sense with any clue.")]
     public string[] clueFollowUpLines;
@@ -26,7 +29,7 @@ public class OverarchingPuzzleController : MonoBehaviour
     private TMP_Text questionText, timerText;
 
     [SerializeField]
-    private GameObject questionAndAnswerPanel;
+    private GameObject monitorScreen, questionAndAnswerPanel;
 
     [SerializeField]
     private GameObject correctAnswerLabel, wrongAnswerLabel, lockedText;
@@ -45,10 +48,29 @@ public class OverarchingPuzzleController : MonoBehaviour
     private Color normalColor;
     private Color progressDotInactiveColor = Color.white;
     private int currentQuestionIndex = 0;
-    private bool blockInput = false;
     private AudioSource audioSource;
+    private bool blockInput = false;
     private bool isLockedOut = false;
+    private bool isTurnedOn = false;
+    private bool puzzleIsStarted = false;
+    private float lockOutTimerInSeconds;
     private int minutes, seconds;
+
+    private bool IsLockedOut
+    {
+        get => isLockedOut;
+        set
+        {
+            if (value == false)
+            {
+                // reset the lockout timer
+                lockOutTimerInSeconds = lockOutTimeInMinutes * 60;
+            }
+            isLockedOut = value;
+            lockedText.SetActive(value);
+            timerText.color = value ? Color.red : normalColor;
+        }
+    }
 
     private Image activeProgressDot => progressDots[currentQuestionIndex];
 
@@ -58,8 +80,87 @@ public class OverarchingPuzzleController : MonoBehaviour
         PrepareNextQuestion();
         audioSource = GetComponent<AudioSource>();
         normalColor = answerBankUiTexts[0].color;
+        IsLockedOut = false;
         // move the lockedText up and down looping with LeanTween
         LeanTween.moveLocalY(lockedText, lockedText.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
+        // set the monitor screen Y scale to 0
+        monitorScreen.transform.localScale = new Vector3(1, 0, 1);
+    }
+    private void Update()
+    {
+        UpdateTimers();
+        // if turned off...
+        if (!isTurnedOn)
+        {
+            if (InputManager.InputActions.Gameplay.Power.WasPressedThisFrame())
+            {
+                isTurnedOn = true;
+                // scale the y from 0 to 1 with Leantween
+                LeanTween.scaleY(monitorScreen, 1, 0.25f).setEaseInQuart();
+            }
+        }
+        // if turned on...
+        else 
+        {
+            if (!blockInput && !IsLockedOut)
+            {
+                // turn the monitor off if they press power.
+                if (InputManager.InputActions.Gameplay.Power.WasPressedThisFrame())
+                {
+                    isTurnedOn = false;
+                    // scale the y from 0 to 1 with Leantween
+                    LeanTween.scaleY(monitorScreen, 0, 0.25f).setEaseOutQuart();
+                }
+                else
+                {
+                    HandlePuzzleQuestionInput();
+                }
+            }     
+        }
+    }
+
+    private void HandlePuzzleQuestionInput()
+    {
+        if (InputManager.InputActions.Gameplay.Input1.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(0);
+            return;
+        }
+        if (InputManager.InputActions.Gameplay.Input2.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(1);
+            return;
+        }
+        if (InputManager.InputActions.Gameplay.Input3.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(2);
+            return;
+        }
+        if (InputManager.InputActions.Gameplay.Input4.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(3);
+            return;
+        }
+        if (InputManager.InputActions.Gameplay.Input5.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(4);
+            return;
+        }
+        if (InputManager.InputActions.Gameplay.Input6.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(5);
+            return;
+        }
+        if (InputManager.InputActions.Gameplay.Input7.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(6);
+            return;
+        }
+        if (InputManager.InputActions.Gameplay.Input8.WasPressedThisFrame())
+        {
+            ChooseAnswerAtIndex(7);
+            return;
+        }
     }
 
     private void PrepareNextQuestion()
@@ -87,12 +188,31 @@ public class OverarchingPuzzleController : MonoBehaviour
         }
     }
 
-    private void UpdateTimerText()
+    private void UpdateTimers()
     {
-        minutes = Mathf.FloorToInt(SaveSystem.CurrentGameData.TimeRemainingInSeconds / 60);
-        seconds = Mathf.FloorToInt(SaveSystem.CurrentGameData.TimeRemainingInSeconds % 60);
-        // update the timer text to show minutes and seconds remaining
-        timerText.text = $"{minutes:00}:{seconds:00}";
+        if (IsLockedOut)
+        {
+            lockOutTimerInSeconds -= Time.deltaTime;
+            minutes = Mathf.FloorToInt(lockOutTimerInSeconds / 60);
+            seconds = Mathf.FloorToInt(lockOutTimerInSeconds % 60);
+            timerText.text = $"{minutes:00}:{seconds:00}";
+        }
+        else 
+        {
+            if (isTurnedOn)
+            {
+                minutes = Mathf.FloorToInt(SaveSystem.CurrentGameData.TimeRemainingInSeconds / 60);
+                seconds = Mathf.FloorToInt(SaveSystem.CurrentGameData.TimeRemainingInSeconds % 60);
+
+                // update the timer text to show minutes and seconds remaining
+                timerText.text = $"{minutes:00}:{seconds:00}";
+            }
+            else
+            // If the monitor is off, set the timer text to the turn on message.
+            {
+                timerText.text = "Power On?";
+            }
+        }
     }
 
     private void ChooseAnswerAtIndex(int index)
@@ -105,53 +225,6 @@ public class OverarchingPuzzleController : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        UpdateTimerText();
-        if (!blockInput)
-        {
-            if (InputManager.InputActions.Gameplay.Input1.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(0);
-                return;
-            }
-            if (InputManager.InputActions.Gameplay.Input2.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(1);
-                return;
-            }
-            if (InputManager.InputActions.Gameplay.Input3.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(2);
-                return;
-            }
-            if (InputManager.InputActions.Gameplay.Input4.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(3);
-                return;
-            }
-            if (InputManager.InputActions.Gameplay.Input5.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(4);
-                return;
-            }
-            if (InputManager.InputActions.Gameplay.Input6.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(5);
-                return;
-            }
-            if (InputManager.InputActions.Gameplay.Input7.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(6);
-                return;
-            }
-            if (InputManager.InputActions.Gameplay.Input8.WasPressedThisFrame())
-            {
-                ChooseAnswerAtIndex(7);
-                return;
-            }
-        }
-    }
 
     private IEnumerator ProcessAnswerCoroutine(int answerIndex)
     {
