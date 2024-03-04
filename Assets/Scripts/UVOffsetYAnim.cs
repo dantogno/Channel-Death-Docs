@@ -16,7 +16,10 @@ public class UVOffsetYAnim : MonoBehaviour
 
     private void Start()
     {
-        modifiedInstanceMaterial = renderersToUpdateMaterial[0].materials[0];
+        if(renderersToUpdateMaterial.Length > 0)
+        {
+            modifiedInstanceMaterial = renderersToUpdateMaterial[0].materials[0];
+        }
         
         foreach (Renderer renderer in renderersToUpdateMaterial)
             renderer.materials[0] = modifiedInstanceMaterial;

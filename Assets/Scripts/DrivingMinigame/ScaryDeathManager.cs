@@ -87,6 +87,10 @@ public class ScaryDeathManager : MonoBehaviour
         foreach (TMP_Text text in displayTexts) {
             text.text = number;
         }
+        foreach (TMP_Text text in displayTexts)
+        {
+            text.enabled = true;
+        }
     }
 
     public void ResetChannel()
