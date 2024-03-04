@@ -76,3 +76,7 @@ MonoBehaviour:
     input: {fileID: -9042186066024948950, guid: 68438f16997d1db4abde6089abad50b0,
       type: 3}
     remoteCommand: 0x8
+  - name: Gameplay/Sleep
+    input: {fileID: -6749560462240071155, guid: 68438f16997d1db4abde6089abad50b0,
+      type: 3}
+    remoteCommand: 0x36
