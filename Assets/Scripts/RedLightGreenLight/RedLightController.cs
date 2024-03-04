@@ -47,8 +47,8 @@ public class RedLightController : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.InputActions.Gameplay.Jump.started += InputPressed;
-        InputManager.InputActions.Gameplay.Jump.canceled += InputRelease;
+        InputManager.InputActions.Gameplay.Sleep.started += InputPressed;
+        InputManager.InputActions.Gameplay.Sleep.canceled += InputRelease;
         foreach (GameObject go in graphics) {
             go.SetActive(true);
         }

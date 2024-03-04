@@ -149,7 +149,9 @@ public class EndlessJumperController : MonoBehaviour
     {
         go.SetActive(false);
         if (sectionPooling.TryGetValue(go.GetComponent<GroundId>().index, out List<GameObject> gos)) {
-            gos.Add(go);
+            if (!gos.Contains(go)){
+                gos.Add(go);
+            }
         }
         else {
             sectionPooling.Add(go.GetComponent<GroundId>().index, new List<GameObject>());

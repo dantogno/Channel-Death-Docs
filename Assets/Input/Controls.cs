@@ -206,6 +206,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sleep"",
+                    ""type"": ""Button"",
+                    ""id"": ""98d61f56-4e5b-4bd8-9737-5468b74f8058"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -472,6 +481,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Enter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ff8a18b-15d3-424b-a88a-fc87a4179d41"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sleep"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -500,6 +520,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Power = m_Gameplay.FindAction("Power", throwIfNotFound: true);
         m_Gameplay_Enter = m_Gameplay.FindAction("Enter", throwIfNotFound: true);
+        m_Gameplay_Sleep = m_Gameplay.FindAction("Sleep", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -581,6 +602,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Power;
     private readonly InputAction m_Gameplay_Enter;
+    private readonly InputAction m_Gameplay_Sleep;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -605,6 +627,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Power => m_Wrapper.m_Gameplay_Power;
         public InputAction @Enter => m_Wrapper.m_Gameplay_Enter;
+        public InputAction @Sleep => m_Wrapper.m_Gameplay_Sleep;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -674,6 +697,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Enter.started += instance.OnEnter;
             @Enter.performed += instance.OnEnter;
             @Enter.canceled += instance.OnEnter;
+            @Sleep.started += instance.OnSleep;
+            @Sleep.performed += instance.OnSleep;
+            @Sleep.canceled += instance.OnSleep;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -738,6 +764,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Enter.started -= instance.OnEnter;
             @Enter.performed -= instance.OnEnter;
             @Enter.canceled -= instance.OnEnter;
+            @Sleep.started -= instance.OnSleep;
+            @Sleep.performed -= instance.OnSleep;
+            @Sleep.canceled -= instance.OnSleep;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -777,5 +806,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnPower(InputAction.CallbackContext context);
         void OnEnter(InputAction.CallbackContext context);
+        void OnSleep(InputAction.CallbackContext context);
     }
 }
