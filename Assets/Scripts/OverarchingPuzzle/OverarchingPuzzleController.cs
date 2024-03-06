@@ -59,25 +59,21 @@ public class OverarchingPuzzleController : MonoBehaviour
     private bool quizIsStarted = false;
     private float lockOutTimerInSeconds;
     private int minutes, seconds;
+    private LTDescr progressDotTween;
 
     private bool IsLockedOut
     {
         get => isLockedOut_useProperty;
         set
         {
-            if (value == false)
-            {
-                // reset the lockout timer
-                ResetQuiz();
-
-                // TODO: turn off tv?
-            }
-            else
-                UpdateCurrentProgressDot();
-
             isLockedOut_useProperty = value;
             lockedPrompt.SetActive(value);
             timerText.color = value ? Color.red : normalColor;
+            if (value == false)
+            {
+                LeanTween.scale(initialPrompt, Vector3.one, 0.25f).setEaseInQuart();
+                TurnOffMonitor();
+            }
         }
     }
 
@@ -86,8 +82,6 @@ public class OverarchingPuzzleController : MonoBehaviour
         quizIsStarted = false;
         currentQuestionIndex = 0;
         lockOutTimerInSeconds = 10;//TODO: remove test code! lockOutTimeInMinutes * 60;
-        PrepareNextQuestion();
-        LeanTween.scale(initialPrompt, Vector3.one, 0.25f).setEaseInQuart();
     }
 
     public void OnChannelExit()
@@ -144,19 +138,24 @@ public class OverarchingPuzzleController : MonoBehaviour
                 // if puzzle isn't started, check if they want to start it
                 else if (InputManager.InputActions.Gameplay.Enter.WasPressedThisFrame())
                 {
-                    quizIsStarted = true;
-                    UpdateCurrentProgressDot();
-                    // use leantween to scale out the initial prompt
-                    LeanTween.scale(initialPrompt, Vector3.zero, 0.25f).setEaseOutQuart()
-                        .setOnComplete(() =>
-                        {
-                            questionAndAnswerPanel.transform.localScale = Vector3.zero;
-                            questionAndAnswerPanel.SetActive(true);
-                            LeanTween.scale(questionAndAnswerPanel, Vector3.one, 0.25f).setEaseInQuart();
-                        });
+                    StartQuiz();
                 }
             }     
         }
+    }
+
+    private void StartQuiz()
+    {
+        quizIsStarted = true;
+        PrepareNextQuestion();
+        // use leantween to scale out the initial prompt
+        LeanTween.scale(initialPrompt, Vector3.zero, 0.25f).setEaseOutQuart()
+            .setOnComplete(() =>
+            {
+                questionAndAnswerPanel.transform.localScale = Vector3.zero;
+                questionAndAnswerPanel.SetActive(true);
+                LeanTween.scale(questionAndAnswerPanel, Vector3.one, 0.25f).setEaseInQuart();
+            });
     }
 
     private void TurnOffMonitor()
@@ -222,30 +221,33 @@ public class OverarchingPuzzleController : MonoBehaviour
         }
     }
 
+    private void TurnOffAllProgressDots()
+    {
+        // if quiz is not started, all progress dots should be set to the inactive color
+        for (int i = 0; i < NumberOfQuestions; i++)
+        {
+            progressDots[i].color = progressDotInactiveColor;
+        }
+        if (progressDotTween != null)
+            progressDotTween.reset();
+    }
+
     private void UpdateCurrentProgressDot()
     {
+        if (progressDotTween != null)
+            progressDotTween.reset();
+
         if (quizIsStarted && !IsLockedOut && isTurnedOn)
         {
             // the progress dot that matches the current question index should use leantween to pingpong between active and inactive colors
-            LeanTween.value(activeProgressDot.gameObject, progressDotInactiveColor, progressDotActiveColor, 0.25f)
-                .setOnUpdate((Color val) => activeProgressDot.color = val).setEaseInOutSine().setLoopPingPong();
-
+            progressDotTween = LeanTween.value(activeProgressDot.gameObject, progressDotInactiveColor, progressDotActiveColor, 0.25f)
+              .setOnUpdate((Color val) => activeProgressDot.color = val).setEaseInOutSine().setLoopPingPong();
             // the progress dots before the current question index should be set to the active color
             for (int i = 0; i < currentQuestionIndex; i++)
             {
                 progressDots[i].color = progressDotActiveColor;
             }
         }
-        else
-        {
-            // TODO: this isn't working.
-            // if quiz is not started, all progress dots should be set to the inactive color
-            for (int i = 0; i < currentQuestionIndex; i++)
-            {
-                progressDots[i].color = progressDotInactiveColor;
-            }
-        }
-
     }
 
     private void UpdateTimers()
@@ -338,8 +340,7 @@ public class OverarchingPuzzleController : MonoBehaviour
         else
         {
             // incorrect answer
-            // Lock out behavior handled in the IsLockedOut property
-            IsLockedOut = true;
+            HandleWrongAnswer();
         }
 
 
@@ -347,6 +348,14 @@ public class OverarchingPuzzleController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         blockInput = false;
+    }
+
+    private void HandleWrongAnswer()
+    {
+        // Lock out behavior handled in the IsLockedOut property
+        ResetQuiz();
+        IsLockedOut = true;
+        TurnOffAllProgressDots();
     }
 
     private bool DetermineIfAnswerIsCorrect(int answerIndex)
