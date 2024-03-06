@@ -175,14 +175,14 @@ public class PuzzleQuestion: ScriptableObject
     {
         // fill the answer bank items index 1 - 7 with names from the available names lists
         // Reserving index 0 for "no one" answer
-
-        var availableNames = Victim.AvailableFemaleNames;
-        availableNames.AddRange(Victim.AvailableMaleNames);
+        List<string> wrongAnswerNames = new List<string>();
+        wrongAnswerNames.AddRange(Victim.AvailableFemaleNames);
+        wrongAnswerNames.AddRange(Victim.AvailableMaleNames);
 
         for (int i = 1; i < AnswerBank.Length; i++)
         {
-            AnswerBank[i] = availableNames[UnityEngine.Random.Range(0, availableNames.Count)];
-            availableNames.Remove(availableNames[i]);
+            AnswerBank[i] = wrongAnswerNames[UnityEngine.Random.Range(0, wrongAnswerNames.Count)];
+            wrongAnswerNames.Remove(wrongAnswerNames[i]);
         }  
     }
 

@@ -76,6 +76,7 @@ public class OverarchingPuzzleController : MonoBehaviour
             }
         }
     }
+    private Image activeProgressDot => progressDots[currentQuestionIndex];
 
     private void ResetQuiz()
     {
@@ -95,8 +96,6 @@ public class OverarchingPuzzleController : MonoBehaviour
         isChannelActive = true;
         mainContainer.SetActive(true);
     }
-
-    private Image activeProgressDot => progressDots[currentQuestionIndex];
 
     private void Start()
     {
@@ -291,7 +290,6 @@ public class OverarchingPuzzleController : MonoBehaviour
             blockInput = true;
         }
     }
-
 
     private IEnumerator ProcessAnswerCoroutine(int answerIndex)
     {

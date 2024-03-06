@@ -52,6 +52,9 @@ public class Victim : MonoBehaviour
                     AvailableMaleNames.Add(columns[1].Trim());
                 }
             }
+            // Remove column headers, they aren't names!
+            AvailableFemaleNames.RemoveAt(0);
+            AvailableMaleNames.RemoveAt(0);
 
             SetAvailableNamesFromSavedData();
         }
