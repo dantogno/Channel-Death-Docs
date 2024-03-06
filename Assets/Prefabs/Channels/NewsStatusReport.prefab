@@ -1178,6 +1178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 6
+  suitImage: {fileID: 0}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -1208,6 +1209,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!1001 &4874082751158473798
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 4154983523082897676}
   - component: {fileID: 8791959693069228541}
   - component: {fileID: 5695622606203281616}
+  - component: {fileID: 8970025992810310895}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -182,7 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bffc6cbbfde95428fbb7f58f674977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killTimeInSeconds: 300
+  totalTimeLimitInMinutes: 180
+  KillTimeInSeconds: 180
   KillerName: The Broadcast Killer
   channelChangeAudio: {fileID: 5695622606203281616}
   numberOVictimsToSpawnBoss: 4
@@ -210,13 +212,7 @@ MonoBehaviour:
   beltUVAnimation: {fileID: 0}
   victimSpawnPoint: {fileID: 0}
   killPosition: {fileID: 0}
-  victimPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  victimModels: []
   victimLocalRotation: {x: 11, y: 279.76187, z: 0}
 --- !u!114 &8791959693069228541
 MonoBehaviour:
@@ -330,6 +326,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8970025992810310895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3889132620741367977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f54bc505d8e2c41b46b26b2b481f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minigamePossibilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  staticChannel: {fileID: 0}
+  suitSprites:
+  - {fileID: 21300000, guid: 479dd64eed4e1c547b5549b03e6466cd, type: 3}
+  - {fileID: 21300000, guid: 58d6d08562fd44e48a3842a341507ae0, type: 3}
+  - {fileID: 21300000, guid: b1fb87b5df12d37498b0d60650bcd405, type: 3}
+  - {fileID: 21300000, guid: c92dbbffbd1524f40807c85d1ab24130, type: 3}
 --- !u!1 &4451704924996257151
 GameObject:
   m_ObjectHideFlags: 0

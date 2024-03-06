@@ -32,7 +32,7 @@ public class OverarchingPuzzleController : MonoBehaviour
     private GameObject monitorScreen, questionAndAnswerPanel;
 
     [SerializeField]
-    private GameObject correctAnswerLabel, wrongAnswerLabel, lockedPrompt;
+    private GameObject correctAnswerLabel, wrongAnswerLabel, lockedPrompt, mainContainer;
 
     [SerializeField]
     private AudioClip correctAnswerAudioClip, wrongAnwerAudioClip;
@@ -53,6 +53,7 @@ public class OverarchingPuzzleController : MonoBehaviour
     private int currentQuestionIndex = 0;
     private AudioSource audioSource;
     private bool blockInput = false;
+    private bool isChannelActive = false;
     private bool isLockedOut_useProperty = false;
     private bool isTurnedOn = false;
     private bool quizIsStarted = false;
@@ -68,6 +69,8 @@ public class OverarchingPuzzleController : MonoBehaviour
             {
                 // reset the lockout timer
                 ResetQuiz();
+
+                // TODO: turn off tv?
             }
             else
                 UpdateCurrentProgressDot();
@@ -89,23 +92,27 @@ public class OverarchingPuzzleController : MonoBehaviour
 
     public void OnChannelExit()
     {
-        // TODO: turn off the TV?
+        isChannelActive = false;
+        mainContainer.SetActive(false);
+    }
+
+    public void OnChannelEnter()
+    {
+        isChannelActive = true;
+        mainContainer.SetActive(true);
     }
 
     private Image activeProgressDot => progressDots[currentQuestionIndex];
 
     private void Start()
     {
-        // TODO: where should this be called? Start isn't good enough. Either event or when we "turn on the TV"
-        PrepareNextQuestion();
         audioSource = GetComponent<AudioSource>();
         normalColor = answerBankUiTexts[0].color;
         IsLockedOut = false;
         // move the lockedText up and down looping with LeanTween
         var lockedTextGameObject = lockedPrompt.GetComponentInChildren<TMP_Text>().gameObject;
         LeanTween.moveLocalY(lockedTextGameObject, lockedTextGameObject.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
-        // set the monitor screen Y scale to 0
-        monitorScreen.transform.localScale = new Vector3(1, 0, 1);
+        TurnOffMonitor();
     }
     private void Update()
     {
@@ -113,7 +120,7 @@ public class OverarchingPuzzleController : MonoBehaviour
         // if turned off...
         if (!isTurnedOn)
         {
-            if (InputManager.InputActions.Gameplay.Power.WasPressedThisFrame())
+            if (isChannelActive && InputManager.InputActions.Gameplay.Power.WasPressedThisFrame())
             {
                 isTurnedOn = true;
                 // scale the y from 0 to 1 with Leantween
@@ -123,7 +130,7 @@ public class OverarchingPuzzleController : MonoBehaviour
         // if turned on...
         else 
         {
-            if (!blockInput && !IsLockedOut)
+            if (!blockInput && !IsLockedOut && isChannelActive)
             {
                 // turn the monitor off if they press power.
                 if (InputManager.InputActions.Gameplay.Power.WasPressedThisFrame())

@@ -2758,26 +2758,6 @@ PrefabInstance:
       propertyPath: rendererToUpdateMaterial
       value: 
       objectReference: {fileID: 6754846560940212475}
-    - target: {fileID: 9125212456761256046, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: renderersToUpdateMaterial.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9125212456761256046, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: renderersToUpdateMaterial.Array.data[0]
-      value: 
-      objectReference: {fileID: 6754846560940212475}
-    - target: {fileID: 9125212456761256046, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: renderersToUpdateMaterial.Array.data[1]
-      value: 
-      objectReference: {fileID: 6754846560940212474}
-    - target: {fileID: 9125212456761256046, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: renderersToUpdateMaterial.Array.data[2]
-      value: 
-      objectReference: {fileID: 6754846560940212473}
     - target: {fileID: 9200354233711706960, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: m_Name
@@ -2788,18 +2768,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: accf6d74f659f0a458b3df13a80a0bb5, type: 3}
---- !u!23 &6754846560940212473 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7659749943547822538, guid: accf6d74f659f0a458b3df13a80a0bb5,
-    type: 3}
-  m_PrefabInstance: {fileID: 6754846560940212472}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &6754846560940212474 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1317788050366545036, guid: accf6d74f659f0a458b3df13a80a0bb5,
-    type: 3}
-  m_PrefabInstance: {fileID: 6754846560940212472}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &6754846560940212475 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 470315040434613420, guid: accf6d74f659f0a458b3df13a80a0bb5,
