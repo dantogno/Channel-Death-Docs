@@ -612,6 +612,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 34f0dc7ca58650b468779768e884b448, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4baa5ca465c05074292ff01aeb4b12e3,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1283,6 +1288,50 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &762843810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 762843811}
+  - component: {fileID: 762843812}
+  m_Layer: 0
+  m_Name: InterrogationSceneController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &762843811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762843810}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.0276604, y: -0.69021994, z: 4.0831785}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &762843812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762843810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d2ddaa6c8667e41b3c999f49d7423c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &867345401 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3728264939170672637, guid: 4baa5ca465c05074292ff01aeb4b12e3,
@@ -7581,3 +7630,4 @@ SceneRoots:
   - {fileID: 1015836594}
   - {fileID: 1284234386}
   - {fileID: 8630480797121225148}
+  - {fileID: 762843811}
