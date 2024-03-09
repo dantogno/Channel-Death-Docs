@@ -80,3 +80,9 @@ MonoBehaviour:
     input: {fileID: -6749560462240071155, guid: 68438f16997d1db4abde6089abad50b0,
       type: 3}
     remoteCommand: 0x36
+  - name: Gameplay/Enter
+    input: {fileID: 6156328279847690541, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+    remoteCommand: 0xB
+  - name: Gameplay/Power
+    input: {fileID: 7099013728268773996, guid: 68438f16997d1db4abde6089abad50b0, type: 3}
+    remoteCommand: 0x15

@@ -81,6 +81,10 @@ public class PlayerCarController : MonoBehaviour
         InputManager.InputActions.Gameplay.Input4.canceled += StopSteerLeft;
         InputManager.InputActions.Gameplay.Input6.performed += SteerRight;
         InputManager.InputActions.Gameplay.Input6.canceled += StopSteerRight;
+        InputManager.InputActions.Gameplay.UpPlusR.performed += SteerRight;
+        InputManager.InputActions.Gameplay.UpPlusR.canceled += StopSteerRight;
+        InputManager.InputActions.Gameplay.DownMinusL.performed += SteerLeft;
+        InputManager.InputActions.Gameplay.DownMinusL.canceled += StopSteerLeft;
         StartMessage();
     }
 
@@ -95,6 +99,10 @@ public class PlayerCarController : MonoBehaviour
         InputManager.InputActions.Gameplay.Input4.canceled -= StopSteerLeft;
         InputManager.InputActions.Gameplay.Input6.performed -= SteerRight;
         InputManager.InputActions.Gameplay.Input6.canceled -= StopSteerRight;
+        InputManager.InputActions.Gameplay.UpPlusR.performed -= SteerRight;
+        InputManager.InputActions.Gameplay.UpPlusR.canceled -= StopSteerRight;
+        InputManager.InputActions.Gameplay.DownMinusL.performed -= SteerLeft;
+        InputManager.InputActions.Gameplay.DownMinusL.canceled -= StopSteerLeft;
     }
 
     void SteerLeft(InputAction.CallbackContext context)
