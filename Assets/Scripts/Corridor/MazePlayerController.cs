@@ -98,6 +98,7 @@ public class MazePlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        RenderSettings.fogDensity = 0.2f;
         currentFov = baseFov;
         InputManager.InputActions.Gameplay.Input2.performed += Walk;
         InputManager.InputActions.Gameplay.Input2.canceled += StopWalking;
@@ -114,6 +115,7 @@ public class MazePlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        RenderSettings.fogDensity = 0.01f;
         InputManager.InputActions.Gameplay.Input2.canceled -= StopWalking;
         //InputManager.InputActions.Gameplay.Input8.canceled -= StopWalking;
         InputManager.InputActions.Gameplay.Input2.performed -= Walk;
@@ -133,8 +135,10 @@ public class MazePlayerController : MonoBehaviour
         switch (playerState)
         {
             case PlayerState.idle:
+                armVisuals.bobScale = 0;
                 break;
             case PlayerState.walking:
+                armVisuals.bobScale = 0.2f;
                 if (!waitingForPlay)
                 {
                     footstepSource.PlayOneShot(getRandomFootstepSound());
@@ -152,6 +156,7 @@ public class MazePlayerController : MonoBehaviour
                     currentFov = walkFov;
                 }
                 armVisuals.bobArms();
+                armVisuals.updateBob();
                 if (Vector3.Distance(transform.position, targetPosition) < 0.0099f)
                 {
                     transform.position = targetPosition;
@@ -167,6 +172,7 @@ public class MazePlayerController : MonoBehaviour
                 }
                 break;
             case PlayerState.turning:
+                armVisuals.bobScale = 0;
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetQuaternion, turnSpeed * Time.deltaTime);
                 if (Quaternion.Dot(transform.rotation, targetQuaternion) > 0.9999f)
                 {
@@ -275,5 +281,8 @@ public class MazePlayerController : MonoBehaviour
         return stepSounds[i];
     }
 
-
+    public Vector2 CurrentCellPos()
+    {
+        return currentCell;
+    }
 }

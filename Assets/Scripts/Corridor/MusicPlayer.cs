@@ -23,6 +23,8 @@ public class MusicPlayer : MonoBehaviour
 
     float initialVolume;
 
+    Vector3 GoalPos;
+
     private void Awake()
     {
         instance = this;
@@ -30,8 +32,9 @@ public class MusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GoalPos = MazeGenerator.Instance.GetGoalPos();
         musicSource = GetComponent<AudioSource>();        
-        initDis = Vector3.Distance(transform.position, MazePlayerController.Instance.transform.position);
+        initDis = Vector3.Distance(GoalPos, MazePlayerController.Instance.transform.position);
         initialVolume = musicSource.volume;
     }
 
@@ -39,15 +42,18 @@ public class MusicPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dis = Vector3.Distance(transform.position, MazePlayerController.Instance.transform.position);
-        float ratio = dis / initDis;
-        float weight = (1 - ratio);
-        Mathf.Clamp(weight, 0, 1);
-        float pitch = lowestPitch + (1-lowestPitch)* (1 - ratio) + 0.1f;
-        pitch = Mathf.Clamp(pitch, 0.5f, 1.0f);
-        musicSource.pitch = pitch;
-        postProcess.weight = weight;
-
+        if (!MazeGenerator.Instance.IsPlayerInEndingHall())
+        {
+            float dis = Vector3.Distance(GoalPos, MazePlayerController.Instance.transform.position);
+            float ratio = dis / initDis;
+            float weight = (1 - ratio);
+            Mathf.Clamp(weight, 0, 1);
+            float pitch = lowestPitch + (1 - lowestPitch) * (1 - ratio) + 0.1f;
+            pitch = Mathf.Clamp(pitch, 0.5f, 1.0f);
+            musicSource.pitch = pitch;
+            Mathf.Clamp(weight, 0, 0.8f);
+            postProcess.weight = weight;
+        }
     }
 
     private void FixedUpdate()

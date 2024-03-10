@@ -14,6 +14,8 @@ public class MazeCell : MonoBehaviour
     private GameObject backWall;
     [SerializeField]
     private GameObject unvisitedBlock;
+    [SerializeField]
+    private GameObject light;
 
     public bool Visited { get; private set; }
 
@@ -41,5 +43,10 @@ public class MazeCell : MonoBehaviour
     public void ClearBackWall()
     {
         backWall.SetActive(false);
+    }
+
+    public void DisableLight()
+    {
+        light.SetActive(false);
     }
 }

@@ -1,41 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
-public class Headlights : MonoBehaviour
+public class LightFlicker : MonoBehaviour
 {
-    Light[] spotlights;
+    Light light;
 
     [SerializeField]
     private float frequency;
     [SerializeField]
     private float frequencyVariation;
     [SerializeField]
-    private float flickerSpeed;
+    private float flickerSpeed, offTimeVariation;
     [SerializeField]
     private float flickerIntensity;
 
     [SerializeField]
     float brightness;
+
+    MeshRenderer renderer;
+
+    Material lightMat;
+
+    AudioSource audioSource;
+
+    float baseVol,basePitch;
     // Start is called before the first frame update
     void Start()
     {
-        spotlights = GetComponentsInChildren<Light>();
-        for (int i = 0; i < spotlights.Length; i++)
-        {
-            StartCoroutine(flickerLight(spotlights[i]));
-        }
+        audioSource = GetComponent<AudioSource>();
+        baseVol = audioSource.volume;
+        basePitch = audioSource.pitch;
+        light = GetComponentInChildren<Light>();
+        renderer = GetComponent<MeshRenderer>();
+        lightMat = renderer.material;
+        StartCoroutine(flickerLight(light));
     }
 
     private void OnEnable()
     {
-        if(spotlights != null)
+        if(light != null)
         {
-            for (int i = 0; i < spotlights.Length; i++)
-            {
-                StartCoroutine(flickerLight(spotlights[i]));
-            }
+            StartCoroutine(flickerLight(light));
         }
     }
 
@@ -51,13 +57,19 @@ public class Headlights : MonoBehaviour
         setIntensity(l, brightness);
         yield return new WaitForSeconds(flickerSpeed);
         setIntensity(l, flickerIntensity);
-        yield return new WaitForSeconds(flickerSpeed);
+        audioSource.pitch = 1;
+        yield return new WaitForSeconds(flickerSpeed + offTimeVariation);
         setIntensity(l, 0);
+        audioSource.volume = 0;
+        renderer.enabled = false;
         yield return new WaitForSeconds(flickerSpeed);
+        audioSource.volume = baseVol;
+        renderer.enabled = true;
         setIntensity(l, flickerIntensity);
         yield return new WaitForSeconds(flickerSpeed);
         setIntensity(l, brightness);
-        yield return new WaitForSeconds(frequency + Random.Range(0,frequencyVariation));
+        audioSource.pitch = basePitch;
+        yield return new WaitForSeconds(frequency + Random.Range(0, frequencyVariation));
         StartCoroutine(flickerLight(l));
     }
 
@@ -69,6 +81,6 @@ public class Headlights : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

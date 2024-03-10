@@ -1065,6 +1065,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 744932955434125047, guid: 50c746a91bd5f5f49967abd789b48a0f,
+        type: 3}
+      propertyPath: turnAcceleration
+      value: 0.001
+      objectReference: {fileID: 0}
     - target: {fileID: 4966979846104302663, guid: 50c746a91bd5f5f49967abd789b48a0f,
         type: 3}
       propertyPath: m_Name
@@ -1169,6 +1174,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2071890596}
     m_Modifications:
+    - target: {fileID: 644911656868175271, guid: 5681886177c7bbc469ec00c8c66330e3,
+        type: 3}
+      propertyPath: weight
+      value: 0.9604158
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236151203795434479, guid: 5681886177c7bbc469ec00c8c66330e3,
+        type: 3}
+      propertyPath: ChannelExited.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1134506601}
+    - target: {fileID: 1236151203795434479, guid: 5681886177c7bbc469ec00c8c66330e3,
+        type: 3}
+      propertyPath: ChannelExited.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1173894687}
+    - target: {fileID: 1236151203795434479, guid: 5681886177c7bbc469ec00c8c66330e3,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1134506601}
+    - target: {fileID: 1236151203795434479, guid: 5681886177c7bbc469ec00c8c66330e3,
+        type: 3}
+      propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1173894687}
+    - target: {fileID: 7306328838913475863, guid: 5681886177c7bbc469ec00c8c66330e3,
+        type: 3}
+      propertyPath: jumpScareVol
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 7702250178452638919, guid: 5681886177c7bbc469ec00c8c66330e3,
         type: 3}
       propertyPath: m_Name
@@ -1223,6 +1258,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8867805974638837730, guid: 5681886177c7bbc469ec00c8c66330e3,
+        type: 3}
+      propertyPath: mazeDepth
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2067,51 +2107,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6754846560940212472}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1978709468
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1978709470}
-  - component: {fileID: 1978709469}
-  m_Layer: 0
-  m_Name: CameraManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1978709469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978709468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 686e41dc6940c4b44a6449e66b0f0b56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainChannelCamera: {fileID: 1173894687}
---- !u!4 &1978709470
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978709468}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.544205, y: 6.1313276, z: -1.4286174}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1980442548 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7035281638254140253, guid: 02a05d4f6b7902146a8052e11df8e904,
@@ -2724,17 +2719,17 @@ PrefabInstance:
         type: 3}
       propertyPath: channelPrefabs.Array.data[9]
       value: 
-      objectReference: {fileID: 507860267}
+      objectReference: {fileID: 1832904095}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[10]
       value: 
-      objectReference: {fileID: 1832904095}
+      objectReference: {fileID: 5068702}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[11]
       value: 
-      objectReference: {fileID: 5068702}
+      objectReference: {fileID: 507860267}
     - target: {fileID: 5907609225031050395, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2834,22 +2829,22 @@ PrefabInstance:
         type: 3}
       propertyPath: minigamePossibilities.Array.data[4]
       value: 
-      objectReference: {fileID: 507860269}
+      objectReference: {fileID: 1980442550}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[5]
       value: 
-      objectReference: {fileID: 5068704}
+      objectReference: {fileID: 1505371376}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[6]
       value: 
-      objectReference: {fileID: 1980442550}
+      objectReference: {fileID: 5068704}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[7]
       value: 
-      objectReference: {fileID: 1505371376}
+      objectReference: {fileID: 507860269}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3290,5 +3285,4 @@ SceneRoots:
   - {fileID: 2071890596}
   - {fileID: 897273211}
   - {fileID: 2053802354}
-  - {fileID: 1978709470}
   - {fileID: 1173894692}

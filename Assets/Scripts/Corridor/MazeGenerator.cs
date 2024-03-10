@@ -33,22 +33,111 @@ public class MazeGenerator : MonoBehaviour
         Instance = this;
     }
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
+    {
+        StartMazeGeneration();
+        MazeCell[,] endhall = generateEndingHall();
+        MazeGrid = concantonate2DArray(MazeGrid, endhall);
+        endPoint.transform.position = MazeGrid[0, mazeDepth - 1].transform.position;
+        Vector3 mp = MazeGrid[(int)((mazeWidth - 1) / 2), (int)((mazeDepth - 1) / 2)].transform.position;
+        midPoint.transform.position = mp + new Vector3(0, 0, 0);
+        MazePlayerController.Instance.InitializePlayerLocation();
+        if (parentChannel == null)
+        {
+            parentChannel = GetComponentInParent<Channel>();
+        }
+        numberDisplay.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
+    }
+
+    public Vector3 GetGoalPos()
+    {
+        return MazeGrid[mazeWidth-1, mazeDepth-1].transform.position;
+    }
+
+    public bool IsPlayerInEndingHall()
+    {
+        float playerPos = MazePlayerController.Instance.CurrentCellPos().y;
+        float hallPos = mazeDepth - 2;
+        if(playerPos > hallPos)
+        {
+            return true;
+        }
+        return false;
+    }
+    private MazeCell[,] concantonate2DArray(MazeCell[,] main, MazeCell[,] end)
+    {
+        int newdepth = main.GetLength(1) + end.GetLength(1);
+        MazeCell[,] full = new MazeCell[mazeWidth, newdepth];
+        for(int x = 0; x < mazeWidth; x++)
+        {
+            for(int z = 0; z < newdepth; z++)
+            {
+                if (z < main.GetLength(1))
+                {
+                    full[x,z] = main[x, z];
+                }
+                else
+                {
+                    full[x,z] = end[x, z-main.GetLength(1)];
+                }
+                full[x, z].transform.position = new Vector3(x * cellScale, 0, z * cellScale);
+                if(x == mazeWidth - 1 && z == newdepth - 2)
+                {
+                    full[x,z].ClearFrontWall();
+                }
+                if(x % 2 == 0)
+                {
+                    full[x,z].DisableLight();
+                }
+            }
+        }
+        //update overallmazedepth
+        mazeDepth = newdepth;
+        return full;
+    }
+
+
+    private MazeCell[,] generateEndingHall()
+    {
+        MazeCell[,] endingHall = new MazeCell[mazeWidth, 1];
+        for(int x = 0; x < mazeWidth; x++)
+        {
+            for(int z = 0; z < 1; z++)
+            {
+                endingHall[x,z] = Instantiate(mazeChunkPrefab, new Vector3(x * cellScale,0,z*cellScale), Quaternion.identity, transform);
+                if(x!= 0)
+                {
+                    endingHall[x,z].ClearLeftWall();
+                }
+                if(x!= mazeWidth-1)
+                {
+                    endingHall[x, z].ClearRightWall();
+                }
+                if(x== mazeWidth-1)
+                {
+                    endingHall[x,z].ClearBackWall();
+                }
+            }
+        }
+        return endingHall;
+    }
+
+    void StartMazeGeneration()
     {
         MazeGrid = new MazeCell[mazeWidth, mazeDepth];
 
-        for(int x = 0; x < mazeWidth; x++)
+        for (int x = 0; x < mazeWidth; x++)
         {
-            for(int z = 0; z < mazeDepth; z++)
+            for (int z = 0; z < mazeDepth; z++)
             {
-                MazeGrid[x,z] = Instantiate(mazeChunkPrefab, new Vector3(x * cellScale,0,z * cellScale), Quaternion.identity, transform);
+                MazeGrid[x, z] = Instantiate(mazeChunkPrefab, new Vector3(x * cellScale, 0, z * cellScale), Quaternion.identity, transform);
             }
         }
-        
-        yield return GenerateMaze(null, MazeGrid[0, 0]);
+
+        GenerateMaze(null, MazeGrid[0, 0]);
     }
 
-    private IEnumerator GenerateMaze(MazeCell previousCell, MazeCell currentCell)
+    private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
     {
         currentCell.Visit();
         ClearWalls(previousCell, currentCell);
@@ -61,17 +150,10 @@ public class MazeGenerator : MonoBehaviour
 
             if (nextCell != null)
             {
-                yield return GenerateMaze(currentCell, nextCell);
+                GenerateMaze(currentCell, nextCell);
             }
         }while(nextCell != null);
-        endPoint.transform.position = MazeGrid[mazeWidth - 1, mazeDepth - 1].transform.position;
-        Vector3 mp = MazeGrid[(int)((mazeWidth-1)/2), (int)((mazeDepth - 1) / 2)].transform.position;
-        midPoint.transform.position = mp + new Vector3(0,0.1f,0);
-        MazePlayerController.Instance.InitializePlayerLocation();
-        if (parentChannel == null) {
-            parentChannel = GetComponentInParent<Channel>();
-        }
-        numberDisplay.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
+        
     }
 
     private MazeCell GetUnvisitedNeighbor(MazeCell currentCell)
