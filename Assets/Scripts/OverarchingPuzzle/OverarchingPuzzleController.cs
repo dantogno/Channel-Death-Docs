@@ -17,9 +17,6 @@ public class OverarchingPuzzleController : MonoBehaviour
 
     [SerializeField]
     private int lockOutTimeInMinutes = 5;
-    
-    [Tooltip("Lines that come after the rescued victim describes the clue. Need to make sense with any clue.")]
-    public string[] clueFollowUpLines;
 
     [SerializeField]
     [Tooltip("Order must match desired number labels")]

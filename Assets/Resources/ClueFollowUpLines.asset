@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74f7b47fbff9ce4883c5d3c30f9d924, type: 3}
+  m_Name: ClueFollowUpLines
+  m_EditorClassIdentifier: 
+  DetectiveIntroLines:
+  - Do you remember anything about the suspect?
+  - Can you recall any details about the killer?
+  - I know this is traumatic, but please, anything you might remember could help.
+  - We want to bust this punk! Give us anything to go on, please.
+  VictimFollowUpLines:
+  - It has to mean something!
+  - It was so creepy.
+  - Do you think it's some kind of clue?
+  - I don't want to be a part of their sick games!
+  - I hope that's somehow useful.
+  - Sorry, that's all I can remember.
+  - What a freak! Thank god I'm out of there.
+  - You cops better nail this sicko!
+  - Anyway dudes, thanks for rescuing me. Let's go for a burger... Ha! Ha! Ha! Ha!
+  - Please don't make me think about it more.
+  - I don't get it.
+  - Why me?!
