@@ -43,6 +43,9 @@ public class DoorController : MonoBehaviour
     ControllerState state;
 
     Vector3 initialPosition;
+
+    [SerializeField]
+    AudioHighPassFilter musicFilter;
     // Start is called before the first frame update
     void Start()
     {
@@ -122,6 +125,7 @@ public class DoorController : MonoBehaviour
                 }
                 break;
         }
+        updateMusicFilter();
     }
 
     private void PlayFootstepSound(AudioSource s, List<AudioClip> c, int pitchVar, float volume)
@@ -149,5 +153,27 @@ public class DoorController : MonoBehaviour
     AudioClip getRandomSound(List<AudioClip> clips)
     {
         return clips[Random.Range(0, clips.Count - 1)];
+    }
+
+    public void updateMusicFilter()
+    {
+        Vector3 endPos = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z + (moveDistance*2));
+        float dis = Vector3.Distance(endPos, transform.position);
+        float ratio = dis / initialPosition.z;
+        float weight = (1 - ratio);
+        float cutoff = MapValue(weight, 0, 1, 5000, 0);
+        Mathf.Clamp(cutoff, 0, 5000);
+        musicFilter.cutoffFrequency = cutoff * -1;   
+    }
+
+    public float MapValue(float value, float fromMin, float fromMax, float toMin, float toMax)
+    {
+        // First, normalize the input value within the original range
+        float normalizedValue = (value - fromMin) / (fromMax - fromMin);
+
+        // Then, scale the normalized value to the new range
+        float mappedValue = normalizedValue * (toMax - toMin) + toMin;
+
+        return mappedValue;
     }
 }
