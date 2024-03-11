@@ -66,7 +66,6 @@ public class MusicPlayer : MonoBehaviour
                 currentVolume = initialVolume;
                 duckVolume = false;
             }
-            Debug.Log(currentVolume);
             musicSource.volume = currentVolume;
         }
     }

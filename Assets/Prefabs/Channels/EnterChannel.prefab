@@ -13615,12 +13615,12 @@ PrefabInstance:
     - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
@@ -13645,12 +13645,27 @@ PrefabInstance:
     - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 5314.5938
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 3995.704
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1946729138365585388, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
@@ -13712,16 +13727,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2181368209019298631, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5775647089728878730, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b1fb87b5df12d37498b0d60650bcd405,
         type: 3}
+    - target: {fileID: 5828352169506853099, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828352169506853099, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828352169506853099, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828352169506853099, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15
+      objectReference: {fileID: 0}
     - target: {fileID: 7604743744270672683, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
       propertyPath: m_Name
       value: Channel World Space Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7842135117985547037, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 3926050416329213945}
+    - target: {fileID: 7842135117985547037, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7842135117985547037, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}

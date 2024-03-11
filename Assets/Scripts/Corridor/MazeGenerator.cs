@@ -35,12 +35,33 @@ public class MazeGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitializeMaze();
+    }
+
+    public void ResetMaze()
+    {
+        destroyMaze();
+        InitializeMaze();
+    }
+
+    void destroyMaze()
+    {
+        mazeDepth -= 1;
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    void InitializeMaze()
+    {
         StartMazeGeneration();
         MazeCell[,] endhall = generateEndingHall();
         MazeGrid = concantonate2DArray(MazeGrid, endhall);
         endPoint.transform.position = MazeGrid[0, mazeDepth - 1].transform.position;
         Vector3 mp = MazeGrid[(int)((mazeWidth - 1) / 2), (int)((mazeDepth - 1) / 2)].transform.position;
         midPoint.transform.position = mp + new Vector3(0, 0, 0);
+        JumpScare.Instance.InitializeJumpscare();
         MazePlayerController.Instance.InitializePlayerLocation();
         if (parentChannel == null)
         {

@@ -41,15 +41,32 @@ public class DoorController : MonoBehaviour
     AudioSource creakSource;
     enum ControllerState { idle, walking}
     ControllerState state;
+
+    Vector3 initialPosition;
     // Start is called before the first frame update
     void Start()
     {
+        initialPosition = transform.position;
+        PasscodeManager.NewPasscodeSet += NewPasscodeSet;
         initialZ = transform.position.z;
         footstepSource = this.gameObject.AddComponent<AudioSource>();
         GameObject g = new GameObject();
         g.transform.position = transform.position;
         g.transform.parent = transform;
         creakSource = g.AddComponent<AudioSource>();
+    }
+
+    public void NewPasscodeSet(string str)
+    {
+        transform.position = initialPosition;
+        bloodMovement.SetActive(false);
+        currentDoor = 0;
+        initialZ = transform.position.z;
+        foreach (var d in doors)
+        {
+            d.ResetDoor();
+        }
+        numText.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
     }
 
     private void OnEnable()
@@ -60,6 +77,11 @@ public class DoorController : MonoBehaviour
     private void OnDisable()
     {
         InputManager.InputActions.Gameplay.Enter.performed -= EnterPressed;
+    }
+
+    private void OnDestroy()
+    {
+        PasscodeManager.NewPasscodeSet -= NewPasscodeSet;
     }
 
     private void EnterPressed(InputAction.CallbackContext context)

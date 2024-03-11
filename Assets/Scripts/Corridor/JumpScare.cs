@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 
 public class JumpScare : MonoBehaviour
 {
+    public static JumpScare Instance;
     [SerializeField]
     GameObject jumpScareObj;
 
@@ -31,13 +32,14 @@ public class JumpScare : MonoBehaviour
     [SerializeField]
     float scareTime, crawlScareDelay, jumpScareVol;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        if(Crawl != null)
-        {
-            initialCrawlPos = Crawl.transform.position;
-        }
+        
         canvasObj.SetActive(false);
         GameObject g = new GameObject();
         g.name = "scareSFX";
@@ -50,11 +52,29 @@ public class JumpScare : MonoBehaviour
         jumpScareSource.volume = jumpScareVol;
         jumpScareObj.SetActive(false);
     }
+    bool hasInitialized;
+    public void InitializeJumpscare()
+    {
+        if (Crawl != null && !hasInitialized)
+        {
+            hasInitialized = true;
+            initialCrawlPos = Crawl.transform.position;
+        }
+    }
 
-    Vector3 initialCrawlPos;
+    public Vector3 initialCrawlPos;
     Vector3 crawlDirection;
     bool crawling;
     // Update is called once per frame
+
+    public void ResetJumpScare()
+    {
+        crawling = false;
+        JumpScareTriggered = false;
+        Crawl.transform.position = initialCrawlPos;
+        canvasObj.SetActive(false);
+        jumpScareObj.SetActive(false);
+    }
     void Update()
     {
         if (!JumpScareTriggered)

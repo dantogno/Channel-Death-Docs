@@ -19,12 +19,17 @@ public class Door : MonoBehaviour
     AudioSource source;
     [SerializeField]
     AudioClip doorOpenSound;
+
+    Vector3 initialPosition;
+    Quaternion initialRotation;
     // Start is called before the first frame update
     protected virtual void Start()
     {
         source = this.gameObject.AddComponent<AudioSource>();
         source.playOnAwake = false;
         source.clip = doorOpenSound;
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -53,5 +58,14 @@ public class Door : MonoBehaviour
             solved = true;
             openDoor = true;
         }
+    }
+
+    public virtual void ResetDoor()
+    {
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        openDoor = false;
+        solved = false;
+        progress = 0;
     }
 }

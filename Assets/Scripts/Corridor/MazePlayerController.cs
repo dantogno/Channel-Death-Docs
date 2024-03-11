@@ -53,6 +53,7 @@ public class MazePlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PasscodeManager.NewPasscodeSet += NewPasscodeSet;
         currentFov = baseFov;
         armVisuals = arms.GetComponent<ArmVisuals>();
         footstepSource = GetComponent<AudioSource>();
@@ -61,7 +62,7 @@ public class MazePlayerController : MonoBehaviour
     public void InitializePlayerLocation()
     {
         Vector3 startPos = MazeGenerator.Instance.MazeGrid[0, 0].transform.position;
-        transform.position.Set(startPos.x, transform.position.y, startPos.z);
+        transform.position = new Vector3(startPos.x, transform.position.y, startPos.z);
         currentCell = new Vector2(0, 0);
     }
 
@@ -284,5 +285,17 @@ public class MazePlayerController : MonoBehaviour
     public Vector2 CurrentCellPos()
     {
         return currentCell;
+    }
+
+    void NewPasscodeSet(string str)
+    {
+        MazeGenerator.Instance.ResetMaze();
+        JumpScare.Instance.ResetJumpScare();
+        InitializePlayerLocation();
+    }
+
+    private void OnDestroy()
+    {
+        PasscodeManager.NewPasscodeSet -= NewPasscodeSet;
     }
 }
