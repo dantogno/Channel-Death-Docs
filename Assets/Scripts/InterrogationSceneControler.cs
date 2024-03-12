@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using static Victim;
@@ -12,6 +13,11 @@ public class InterrogationSceneControler : MonoBehaviour
     [SerializeField]
     private float delayBetweenLines = 0.5f;
 
+    [SerializeField]
+    private GameObject[] victims;
+
+    [SerializeField]
+    private GameObject censorFollowTargetEmptyGameObject;
 
     [SerializeField]private TMP_Text closedCaptionText;
     [SerializeField] private GameObject closedCaptionBG;
@@ -37,7 +43,31 @@ public class InterrogationSceneControler : MonoBehaviour
 
     private IEnumerator PlaySequence()
     {
-        // show detective line
+        // Detective: confirm your name:
+        closedCaptionText.text = detectivePrefix + "Can please you state your name for the recording?";
+        closedCaptionText.gameObject.SetActive(true);
+        closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
+        yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
+
+        // clear
+        closedCaptionText.gameObject.SetActive(false);
+        closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
+        yield return new WaitForSeconds(delayBetweenLines);
+
+        // Victim: I'm [name]
+        var rescuedVictims = SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == VictimState.Rescued);
+        var randomVictim = rescuedVictims.ElementAt(Random.Range(0, rescuedVictims.Count()));
+        closedCaptionText.text = victimPrefix + "I'm " + randomVictim.Name;
+        closedCaptionText.gameObject.SetActive(true);
+        closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
+        yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
+
+        // clear
+        closedCaptionText.gameObject.SetActive(false);
+        closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
+        yield return new WaitForSeconds(delayBetweenLines);
+
+        // show detective intro line
         closedCaptionText.text = GetDetectiveIntroLine();
         closedCaptionText.gameObject.SetActive(true);
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
@@ -112,6 +142,8 @@ public class InterrogationSceneControler : MonoBehaviour
     {
         // if we have anyone rescued, play the sequence
         StopAllCoroutines();
+        TurnOffVictimModels();
+        SelectVictimModel();
         closedCaptionText.gameObject.SetActive(false);
         StartCoroutine(PlaySequence());
     }
@@ -130,10 +162,38 @@ public class InterrogationSceneControler : MonoBehaviour
             // create an empty gameobject and add the victim component to it
             var victim = new GameObject().AddComponent<Victim>();
             victim.isFemale = Random.Range(0, 2) == 0;
-            victim.name = "Victim " + i;
+            victim.Name = "Victim " + i;
             victim.State = VictimState.Rescued;
             SaveSystem.CurrentGameData.VictimHistory.Add(victim);
         }
         OnChannelEntered();
+    }
+
+    /// <summary>
+    /// Pick a random victim model to use
+    /// </summary>
+    private void SelectVictimModel()
+    {
+        // select a random victim model
+        var randomVictim = victims[Random.Range(0, victims.Length)];
+        randomVictim.SetActive(true);
+
+        // find the child gameobject named "head" and assign it as the follow target
+        var head = randomVictim.GetComponentInChildren<CensorFollowTarget>();
+        if (head != null)
+        {
+            censorFollowTargetEmptyGameObject.transform.SetParent(head.transform, false);
+        }
+        else
+        {
+            Debug.LogWarning("Can't find head censor follow target on victim model");
+        }
+    }
+    private void TurnOffVictimModels()
+    {
+        foreach (var victim in victims)
+        {
+            victim.SetActive(false);
+        }
     }
 }
