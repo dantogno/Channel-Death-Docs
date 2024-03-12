@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System;
 using System.Linq;
+using static Victim;
 
 public static class SaveSystem 
 {
@@ -19,6 +20,12 @@ public static class SaveSystem
                 {
                     string jsonFileData = File.ReadAllText(fileLocation);
                     currentGameData = JsonConvert.DeserializeObject<SaveData>(jsonFileData);
+                    // clear victims in history that have state == none
+                    // these are victims that were not saved or killed when the game was saved
+                    if (currentGameData.VictimHistory != null)
+                    {
+                        currentGameData.VictimHistory.RemoveAll(victim => victim.State == VictimState.None);
+                    }
                 }
                 else
                 {

@@ -89,9 +89,8 @@ public class GameManager : Singleton<GameManager>
         private set => currentVictim_useProprety = value;
     }
 
-    public int KillCount { get; private set; } = 0;
-    public int SaveCount { get; private set; } = 0;
-
+    public int KillCount => SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == Victim.VictimState.Dead).Count();
+    public int SaveCount => SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == Victim.VictimState.Rescued).Count();
 
     private float conveyorBeltDefaultSpeed;
     private bool currentVictimIsDead;
@@ -353,7 +352,7 @@ public class GameManager : Singleton<GameManager>
         var shouldGoToCredits = CurrentVictimIsKiller;
         currentVictimIsDead = true;
         CurrentVictim.State = Victim.VictimState.Dead;
-        KillCount++;
+ 
         var animController = victimSpawnPoint.GetComponentInChildren<Animator>();
         animController.SetTrigger("Die");
         VictimDied?.Invoke(CurrentVictim);
@@ -506,10 +505,11 @@ public class GameManager : Singleton<GameManager>
                 ChangeToCreditsChannel();
         }
     }
-
+    
     private void RescueVictim()
     {
-        SaveCount++;
+        // Unneeded since we use victim history list now... Right?
+        //SaveCount++;
         victimIsBeingRescued = true;
         CurrentVictim.State = Victim.VictimState.Rescued;
     }
