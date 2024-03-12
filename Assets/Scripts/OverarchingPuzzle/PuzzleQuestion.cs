@@ -47,6 +47,8 @@ public class PuzzleQuestion: ScriptableObject
     /// </summary>
     public string[] ClueBank = new string[AnswerBankSize];
 
+    public bool HasClueBeenGiven = false;
+
    /// <summary>
    /// Set the correct answer index depending on the question type.
    /// Called once at the start of the game when questions are first chosen.
