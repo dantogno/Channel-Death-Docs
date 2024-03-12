@@ -463,7 +463,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""79545bc4-c56b-4eab-8f0e-529b08432c71"",
-                    ""path"": ""<Keyboard>/home"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
