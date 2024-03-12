@@ -270,7 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff96320ce474f84995f09f1ba4165e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instructionsText: {fileID: 125297736}
 --- !u!1 &177821975
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 3
+  suitImage: {fileID: 0}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -841,6 +841,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!4 &456406644
 Transform:
   m_ObjectHideFlags: 0
@@ -1040,7 +1041,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981a39433f3610d4ca9ad8dbbef24b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outcomeText: {fileID: 1479751410}
+  correct: {fileID: 0}
+  wrong: {fileID: 0}
 --- !u!4 &897273211
 Transform:
   m_ObjectHideFlags: 0
@@ -2389,9 +2391,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0ee8a978fd7f34aa7e35b61a56d8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: da1cc5007fd84264a978fe8d90cbcfc9, type: 2}
   xOffset: -0.66
   speed: 0.03
+  renderersToUpdateMaterial: []
 --- !u!4 &1600061590
 Transform:
   m_ObjectHideFlags: 0
@@ -2472,6 +2474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 2
+  suitImage: {fileID: 0}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -2502,6 +2505,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!1 &1728897581
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,6 +2536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 5
+  suitImage: {fileID: 0}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -2562,6 +2567,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!4 &1728897583
 Transform:
   m_ObjectHideFlags: 0
@@ -3091,6 +3097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 4
+  suitImage: {fileID: 0}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -3121,6 +3128,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!1 &2000401017
 GameObject:
   m_ObjectHideFlags: 0
@@ -3363,6 +3371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 0
+  suitImage: {fileID: 0}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -3393,6 +3402,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!1 &2071890595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,21 +3448,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1502276883280174610, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1502276883280174610, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 1502276883280174610, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 768
-      objectReference: {fileID: 0}
     - target: {fileID: 3889132620741367977, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: m_Name
@@ -3460,19 +3455,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
       propertyPath: killPosition
       value: 
       objectReference: {fileID: 984225591}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: spawnPosition
-      value: 
-      objectReference: {fileID: 1898758985}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: beltUVAnimation
@@ -3483,46 +3468,6 @@ PrefabInstance:
       propertyPath: victimSpawnPoint
       value: 
       objectReference: {fileID: 1898758985}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: killTimeInSeconds
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: timePenaltyDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: timePenaltyMultiplier
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: victimLocalRotation.x
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: victimPrefabs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: channelPrefabs.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: victimPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 1189781573}
-    - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
-        type: 3}
-      propertyPath: victimPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 1278560112}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[0]

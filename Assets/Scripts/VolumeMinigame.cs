@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Video;
+using UnityEngine.Rendering;
 using static UnityEngine.Rendering.DebugUI;
 
 public class VolumeMinigame : MonoBehaviour
@@ -40,6 +41,18 @@ public class VolumeMinigame : MonoBehaviour
     private int oldClue = -1;
     private Channel parentChannel;
 
+
+    [SerializeField]
+    TextMeshProUGUI captionBox;
+
+    [SerializeField]
+    List<string> phonographCaptions;
+
+    [SerializeField]
+    List<string> clueCaptions;
+
+    [SerializeField]
+    Volume postProcess;
     /// <summary>
     /// The number of volume symbols in the volume symbol string divided by the max volume
     /// </summary>
@@ -65,13 +78,35 @@ public class VolumeMinigame : MonoBehaviour
         clueAudioSource.Play();
     }
 
+    private void SetInstructionCaption(int instruction)
+    {
+        if(instruction <= phonographCaptions.Count-1)
+        {
+            string s = phonographCaptions[instruction];
+
+            captionBox.text = s;
+        }
+    }
+
+    private void HideCaption()
+    {
+        captionBox.text = "";
+    }
+
+    private void SetClueCaption()
+    {
+        captionBox.text = clueCaptions[clue];
+    }
+
     private IEnumerator PlayMinigameSequence()
     {
         // start feature
         instructions.Play();
+        SetInstructionCaption(0);
         PlayMainFeature();
         yield return new WaitForSeconds(10);
         PauseMainFeature();
+        HideCaption();
 
         // play first commercial break
         StartCommercial();
@@ -82,8 +117,10 @@ public class VolumeMinigame : MonoBehaviour
         PlayMainFeature();
         yield return new WaitForSeconds(1);
         instructions2.Play();
+        SetInstructionCaption(1);
         yield return new WaitForSeconds(15);
         PauseMainFeature();
+        HideCaption();
 
         // play second commercial break
         StartCommercial();
@@ -94,8 +131,10 @@ public class VolumeMinigame : MonoBehaviour
         PlayMainFeature();
         yield return new WaitForSeconds(1);
         instructions3.Play();
+        SetInstructionCaption(2);
         yield return new WaitForSeconds(10);
         PauseMainFeature();
+        HideCaption();
 
         // play third commercial break
         StartCommercial();
@@ -106,6 +145,7 @@ public class VolumeMinigame : MonoBehaviour
         PlayMainFeature();
         clueAudioSource.clip = GetClueClip();
         clueAudioSource.Play();
+        SetClueCaption();
         shouldSkipToClue = true;
     }
 
@@ -133,8 +173,6 @@ public class VolumeMinigame : MonoBehaviour
         music.Pause();
         phonographImage.SetActive(false);
     }
-
-
 
     private void SetHalfVolume()
     {
@@ -198,8 +236,33 @@ public class VolumeMinigame : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameManager.Instance.GoToRandomChannel();
     }
+
+    private void setPostProcessWeight(float weight, float maxTime)
+    {
+        postProcess.weight = MapValueLog(weight, 0, maxTime, 0, 1);
+    }
+    public float MapValue(float value, float fromMin, float fromMax, float toMin, float toMax)
+    {
+        float normalizedValue = (value - fromMin) / (fromMax - fromMin);
+        float mappedValue = normalizedValue * (toMax - toMin) + toMin;
+        return mappedValue;
+    }
+
+    public static float MapValueLog(float value, float fromMin, float fromMax, float toMin, float toMax)
+    {
+        float normalizedValue = (value - fromMin) / (fromMax - fromMin);
+        normalizedValue = Mathf.Log10(normalizedValue * 9 + 1);
+        float mappedValue = normalizedValue * (toMax - toMin) + toMin;
+        return mappedValue;
+    }
+
+    float currentHealth;
     private void Update()
     {
+
+        //use commercial view timer to adjust post process weight during commercials
+        //use music view timer to adjust post process weight during phonograph
+
         repeatInputTimer += Time.deltaTime;
 
         if (repeatInputTimer < repeatInputDelay) return;
@@ -216,25 +279,39 @@ public class VolumeMinigame : MonoBehaviour
 
         if (isCommercialPlaying && VolumePercentage > 0.15f)
         {
-            commercialViewTimer += Time.deltaTime;
-            if (commercialViewTimer > commercialViewTimeThreshold && !playingJumpScare)
+            //commercialViewTimer += Time.deltaTime;
+            currentHealth += Time.deltaTime;
+            //if (commercialViewTimer > commercialViewTimeThreshold && !playingJumpScare)
+            if(currentHealth > commercialViewTimeThreshold && !playingJumpScare)
             {
                 StopAllCoroutines();
                 StartCoroutine(PlayJumpScareFailureCoroutine());
             }
+            
         }
         else
         {
             if (!isCommercialPlaying && VolumePercentage < 0.2f)
             {
-                musicMutedTimer += Time.deltaTime;
-                if (musicMutedTimer > musicMutedTimeThreshold && !playingJumpScare)
+                //musicMutedTimer += Time.deltaTime;
+                currentHealth += Time.deltaTime;
+                //if (musicMutedTimer > musicMutedTimeThreshold && !playingJumpScare)
+                if (currentHealth > musicMutedTimeThreshold && !playingJumpScare)
                 {
                     StopAllCoroutines();
                     StartCoroutine(PlayJumpScareFailureCoroutine());
-                }            
+                }
+            }
+            else
+            {
+                currentHealth -= Time.deltaTime;
+                if(currentHealth < 0)
+                {
+                    currentHealth = 0;
+                }
             }
         }
+        setPostProcessWeight(currentHealth, commercialViewTimeThreshold);
         //Debug.Log($"commercialViewTimer: {commercialViewTimer}");
     }
 
