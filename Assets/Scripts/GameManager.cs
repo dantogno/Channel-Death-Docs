@@ -123,7 +123,10 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         Victim.InitializeNameListsFromCSV();
-        bloodVideo.SetActive(false);
+        if(bloodVideo != null)
+        {
+            bloodVideo.SetActive(false);
+        }
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
         InitializeChannelArray();
@@ -295,9 +298,12 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            var victim = victimModels[victimModelIndex].GetComponent<Victim>();
-            CurrentVictim = victim;
-            victim.SetRandomName();
+            if(victimModelIndex <= victimModels.Count() - 1)
+            {
+                var victim = victimModels[victimModelIndex].GetComponent<Victim>();
+                CurrentVictim = victim;
+                victim.SetRandomName();
+            }
         }
     }
 
@@ -332,9 +338,12 @@ public class GameManager : Singleton<GameManager>
         }
         else 
         { 
-            victimModels[victimModelIndex].transform.SetParent(victimSpawnPoint.transform, false);
-            victimModels[victimModelIndex].transform.localPosition = Vector3.zero;
-            victimModels[victimModelIndex].transform.rotation = Quaternion.Euler(victimLocalRotation);
+            if(victimModelIndex <= victimModels.Count() - 1)
+            {
+                victimModels[victimModelIndex].transform.SetParent(victimSpawnPoint.transform, false);
+                victimModels[victimModelIndex].transform.localPosition = Vector3.zero;
+                victimModels[victimModelIndex].transform.rotation = Quaternion.Euler(victimLocalRotation);
+            }
         }
     }
 
