@@ -63,6 +63,8 @@ public class MazeGenerator : MonoBehaviour
         midPoint.transform.position = mp + new Vector3(0, 0, 0);
         JumpScare.Instance.InitializeJumpscare();
         MazePlayerController.Instance.InitializePlayerLocation();
+        MazeGrid[0, 0].ClearFrontWall();
+        MazeGrid[0, 1].ClearBackWall();
         if (parentChannel == null)
         {
             parentChannel = GetComponentInParent<Channel>();

@@ -2820,7 +2820,7 @@ MonoBehaviour:
   fillBars:
   - {fileID: 5179175020729356119}
   MaxPower: 1
-  PowerDepletionRate: 0.09
+  PowerDepletionRate: 0.08
   monster: {fileID: 8312879808191622562}
   LoseThreshHold: 2.5
   clockText: {fileID: 3897122577073559608}
@@ -2833,8 +2833,8 @@ MonoBehaviour:
   - 6:00AM
   hourLength: 12
   flashlight: {fileID: 7728105931762456510}
-  lightOn: {fileID: 8300000, guid: 8d53a7150d2e06c478ed82ddfaaf13d6, type: 3}
-  lightOff: {fileID: 8300000, guid: d8e5a587202e1974e80c688dc678b007, type: 3}
+  lightOn: {fileID: 8300000, guid: 8bd5fc0ebaf2e94419594cd49c551262, type: 3}
+  lightOff: {fileID: 8300000, guid: 35c28761617707946a6ece38a3afa48c, type: 3}
   flashLightSource: {fileID: 6426845372106750748}
   whisperSource: {fileID: 4124079830513350965}
   postProcess: {fileID: 5194143800513629005}
@@ -3699,8 +3699,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterState: 0
-  ApproachSpeed: 0.2
-  RetractSpeed: 2
+  ApproachSpeed: 0.15
+  RetractSpeed: 1.8
   ApproachSpeedIncrease: 0.01
   startDistance: 0
   monsterMesh: {fileID: 6530774351869752990}
@@ -3987,7 +3987,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8753037239801942080
@@ -4444,6 +4444,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: b1fb87b5df12d37498b0d60650bcd405,
         type: 3}
+    - target: {fileID: 5775647089728878730, guid: c4f2255061b56ab4ba1cc298fb935d39,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5828352169506853099, guid: c4f2255061b56ab4ba1cc298fb935d39,
         type: 3}
       propertyPath: m_SizeDelta.x

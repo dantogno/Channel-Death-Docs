@@ -1457,7 +1457,7 @@ PrefabInstance:
     - target: {fileID: 7015343717820124607, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3337,30 +3337,10 @@ PrefabInstance:
       propertyPath: ChannelEntered.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1173894687}
-    - target: {fileID: 1642797860829978315, guid: a313526c4d06320459c2638572f5c4ba,
-        type: 3}
-      propertyPath: lightOn
-      value: 
-      objectReference: {fileID: 8300000, guid: 8bd5fc0ebaf2e94419594cd49c551262, type: 3}
-    - target: {fileID: 1642797860829978315, guid: a313526c4d06320459c2638572f5c4ba,
-        type: 3}
-      propertyPath: lightOff
-      value: 
-      objectReference: {fileID: 8300000, guid: 35c28761617707946a6ece38a3afa48c, type: 3}
-    - target: {fileID: 1642797860829978315, guid: a313526c4d06320459c2638572f5c4ba,
-        type: 3}
-      propertyPath: PowerDepletionRate
-      value: 0.08
-      objectReference: {fileID: 0}
     - target: {fileID: 2858909706686109454, guid: a313526c4d06320459c2638572f5c4ba,
         type: 3}
       propertyPath: m_Name
       value: PowerChannel
-      objectReference: {fileID: 0}
-    - target: {fileID: 5256077024394984654, guid: a313526c4d06320459c2638572f5c4ba,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7314062120610722470, guid: a313526c4d06320459c2638572f5c4ba,
         type: 3}
@@ -3411,21 +3391,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7697505143995179120, guid: a313526c4d06320459c2638572f5c4ba,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8312879808191622562, guid: a313526c4d06320459c2638572f5c4ba,
-        type: 3}
-      propertyPath: RetractSpeed
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8312879808191622562, guid: a313526c4d06320459c2638572f5c4ba,
-        type: 3}
-      propertyPath: ApproachSpeed
-      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
