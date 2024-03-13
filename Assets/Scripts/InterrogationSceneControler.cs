@@ -22,10 +22,17 @@ public class InterrogationSceneControler : MonoBehaviour
     [SerializeField]private TMP_Text closedCaptionText;
     [SerializeField] private GameObject closedCaptionBG;
 
+    [SerializeField]
+    private List<GameObject> objectsToTurnOffOnChannelExit;
+
     private const string victimPrefix = ">>VICTIM: ";
     private const string detectivePrefix = ">>DETECTIVE: ";
 
     private static ClueFollowUpLines clueFollowUpLines;
+    private bool isPlaying = false;
+    private List<Renderer> renderers;
+    private List<Camera> cameras;
+    private GameObject currentVictim = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,11 +45,28 @@ public class InterrogationSceneControler : MonoBehaviour
         closedCaptionText.gameObject.SetActive(false);
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
 
+        // not sure if I should disable the renderers or just deactivate the game objects
+        // renderers leaves out the camera.
+        renderers = new List<Renderer>();
+        // add all of the renderers from the objects to turn off on channel exit to the renderers list
+        foreach (var obj in objectsToTurnOffOnChannelExit)
+        {
+            renderers.AddRange(obj.GetComponentsInChildren<Renderer>());
+        }
+
+        cameras = new List<Camera>();
+        // add all of the cameras from the objects to turn off on channel exit to the cameras list
+        foreach (var obj in objectsToTurnOffOnChannelExit)
+        {
+            cameras.AddRange(obj.GetComponentsInChildren<Camera>());
+        }
+
         RunTest(3);
     }
 
-    private IEnumerator PlaySequence()
+    private IEnumerator InterrogationSequenceCoroutine()
     {
+        isPlaying = true;
         // Detective: confirm your name:
         closedCaptionText.text = detectivePrefix + "Can please you state your name for the recording?";
         closedCaptionText.gameObject.SetActive(true);
@@ -95,6 +119,8 @@ public class InterrogationSceneControler : MonoBehaviour
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
         //yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
         // we can probably just leave the last line up? or should we clear it?
+        isPlaying = false;
+        currentVictim = null;
     }
 
     private string GetVictimFollowUpLine()
@@ -138,20 +164,49 @@ public class InterrogationSceneControler : MonoBehaviour
         return detectivePrefix + clueFollowUpLines.DetectiveIntroLines[Random.Range(0, clueFollowUpLines.DetectiveIntroLines.Length)];
     }
 
-    public void OnChannelEntered()
+    public void BeginSequence()
     {
-        // if we have anyone rescued, play the sequence
-        StopAllCoroutines();
-        TurnOffVictimModels();
-        SelectVictimModel();
-        closedCaptionText.gameObject.SetActive(false);
-        StartCoroutine(PlaySequence());
+        foreach (var renderer in renderers)
+        {
+            renderer.enabled = true;
+        }
+
+        foreach (var camera in cameras)
+        {
+            camera.enabled = true;
+        }
+
+
+        if (!isPlaying)
+        {
+            SelectVictimModel();
+            closedCaptionText.gameObject.SetActive(false);
+            StartCoroutine(InterrogationSequenceCoroutine());
+        }
+        else
+        {
+            // resume
+            DisableRenderersInVictims();
+            var victimRenderers = currentVictim.GetComponentsInChildren<Renderer>();
+            foreach (var renderer in victimRenderers)
+            {
+                renderer.enabled = true;
+            }
+        }
     }
 
     public void OnChannelExited()
     {
-        StopAllCoroutines();
-        closedCaptionText.gameObject.SetActive(false);
+        DisableRenderersInVictims();
+        // turn off all the renderers in the list
+        foreach (var renderer in renderers)
+        {
+            renderer.enabled = false;
+        }
+        foreach (var camera in cameras)
+        {
+            camera.enabled = false;
+        }
     }
 
     public void RunTest(int numRescuedVictims)
@@ -166,7 +221,16 @@ public class InterrogationSceneControler : MonoBehaviour
             victim.State = VictimState.Rescued;
             SaveSystem.CurrentGameData.VictimHistory.Add(victim);
         }
-        OnChannelEntered();
+        BeginSequence();
+        StartCoroutine(TestChannelChange());
+    }
+
+    private IEnumerator TestChannelChange()
+    {
+        yield return new WaitForSeconds(3);
+        OnChannelExited();
+        yield return new WaitForSeconds(1f);
+        BeginSequence();
     }
 
     /// <summary>
@@ -175,11 +239,17 @@ public class InterrogationSceneControler : MonoBehaviour
     private void SelectVictimModel()
     {
         // select a random victim model
-        var randomVictim = victims[Random.Range(0, victims.Length)];
-        randomVictim.SetActive(true);
+        currentVictim = victims[Random.Range(0, victims.Length)];
+        
+        // enable the renderers on the selected victim
+        var renderers = currentVictim.GetComponentsInChildren<Renderer>();
+        foreach (var renderer in renderers)
+        {
+            renderer.enabled = true;
+        }
 
         // find the child gameobject named "head" and assign it as the follow target
-        var head = randomVictim.GetComponentInChildren<CensorFollowTarget>();
+        var head = currentVictim.GetComponentInChildren<CensorFollowTarget>();
         if (head != null)
         {
             censorFollowTargetEmptyGameObject.transform.SetParent(head.transform, false);
@@ -189,11 +259,16 @@ public class InterrogationSceneControler : MonoBehaviour
             Debug.LogWarning("Can't find head censor follow target on victim model");
         }
     }
-    private void TurnOffVictimModels()
+    private void DisableRenderersInVictims()
     {
+      // iterate through all the victims and disable their renderers
         foreach (var victim in victims)
         {
-            victim.SetActive(false);
+            var renderers = victim.GetComponentsInChildren<Renderer>();
+            foreach (var renderer in renderers)
+            {
+                renderer.enabled = false;
+            }
         }
     }
 }
