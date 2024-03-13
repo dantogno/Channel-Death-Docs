@@ -109,9 +109,9 @@ public class GameManager : Singleton<GameManager>
     private ChannelChangeEffects channelChangeEffects;
     private MinigameSelector minigameSelector;
     private bool neverChangedChannel = true;
+    public bool IsReadyForEnding => overarchingPuzzleController.IsQuizComplete; //RescuedCount + KillCount >= numberOVictimsToSpawnBoss;
+    private OverarchingPuzzleController overarchingPuzzleController;
     private bool inlossLoad = false;
-    public bool IsReadyForEnding => RescuedCount + KillCount >= numberOVictimsToSpawnBoss;
-   
 
     //protected override void Awake()
     //{
@@ -122,11 +122,14 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        // hide the mouse cursor
+        Cursor.visible = false;
         Victim.InitializeNameListsFromCSV();
         if(bloodVideo != null)
         {
             bloodVideo.SetActive(false);
         }
+        overarchingPuzzleController = FindAnyObjectByType<OverarchingPuzzleController>();
         channelChangeEffects = GetComponent<ChannelChangeEffects>();
         ChannelIndex = 0;
         InitializeChannelArray();
@@ -470,6 +473,11 @@ public class GameManager : Singleton<GameManager>
     {
         var randomIndex = UnityEngine.Random.Range(0, channels.Length);
         StartCoroutine(ChangeChannel(randomIndex));
+    }
+
+    public void GoToKillingFloorChannel()
+    {
+        StartCoroutine(ChangeChannel(KillingFloorChannelIndex));
     }
 
     private void UpdateChannelText()
