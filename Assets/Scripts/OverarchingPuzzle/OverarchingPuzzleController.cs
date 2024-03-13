@@ -44,6 +44,11 @@ public class OverarchingPuzzleController : MonoBehaviour
     [SerializeField]
     private Color progressDotActiveColor;
 
+    [SerializeField]
+    private GameObject ending;
+
+    public bool IsQuizComplete { get; private set; } = false;
+
     private Color selectedColor = Color.white;
     private Color normalColor;
     private Color progressDotInactiveColor = Color.white;
@@ -109,10 +114,14 @@ public class OverarchingPuzzleController : MonoBehaviour
         var lockedTextGameObject = lockedPrompt.GetComponentInChildren<TMP_Text>().gameObject;
         LeanTween.moveLocalY(lockedTextGameObject, lockedTextGameObject.transform.localPosition.y + 1300, 10f).setEaseInOutSine().setLoopPingPong();
         TurnOffMonitor();
+        //StartCoroutine(PlayEnding());
     }
     private void Update()
     {
         UpdateTimers();
+        if (IsQuizComplete)
+            return;
+
         // if turned off...
         if (!isTurnedOn)
         {
@@ -334,9 +343,9 @@ public class OverarchingPuzzleController : MonoBehaviour
             }
             else
             {
-                // todo: big finish
+                // trigger finale
+                IsQuizComplete = true;
             }
-  
         }
         else
         {
@@ -344,11 +353,29 @@ public class OverarchingPuzzleController : MonoBehaviour
             HandleWrongAnswer();
         }
 
-
         // wait for transition to finish
         yield return new WaitForSeconds(0.5f);
 
         blockInput = false;
+
+        if (IsQuizComplete)
+        {
+            StartCoroutine(PlayEnding());
+        }
+    }
+
+    private IEnumerator PlayEnding()
+    {
+        blockInput = true;
+        // set the ending object scale y to 0
+        ending.transform.localScale = new Vector3(1, 0, 1);
+        ending.SetActive(true);
+        // have the ending object scale in from Y=0 in a dynamic celebratory way with leantween
+        LeanTween.scaleY(ending, 1, 0.5f).setEase(LeanTweenType.easeOutBack);
+
+        yield return new WaitForSeconds(4);
+        GameManager.Instance.SetUpNextVictim();
+        GameManager.Instance.GoToKillingFloorChannel();
     }
 
     private void HandleWrongAnswer()
