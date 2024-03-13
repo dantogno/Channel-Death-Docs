@@ -33,6 +33,7 @@ public class InterrogationSceneControler : MonoBehaviour
     private bool isPlaying = false;
     private List<Renderer> renderers;
     private List<Camera> cameras;
+    private List<AudioListener> audioListeners;
     private GameObject currentVictim = null;
     
     public event Action InterrogationSequenceFinished;
@@ -59,11 +60,17 @@ public class InterrogationSceneControler : MonoBehaviour
         }
 
         cameras = new List<Camera>();
+        audioListeners = new List<AudioListener>();
         // add all of the cameras from the objects to turn off on channel exit to the cameras list
         foreach (var obj in objectsToTurnOffOnChannelExit)
         {
             cameras.AddRange(obj.GetComponentsInChildren<Camera>());
         }
+        foreach (var cam in cameras)
+        {
+            audioListeners.AddRange(cam.GetComponentsInChildren<AudioListener>());
+        }
+        OnChannelExited();
 
         //RunTest(3);
     }
@@ -207,11 +214,20 @@ public class InterrogationSceneControler : MonoBehaviour
         // turn off all the renderers in the list
         foreach (var renderer in renderers)
         {
-            renderer.enabled = false;
+            if (renderer != null)
+            {
+                renderer.enabled = false;
+            }
         }
         foreach (var camera in cameras)
         {
-            camera.enabled = false;
+            if (camera != null)
+                camera.enabled = false;
+        }
+        foreach (var listener in audioListeners)
+        {
+            if (listener != null)
+                listener.enabled = false;
         }
     }
 
@@ -259,6 +275,7 @@ public class InterrogationSceneControler : MonoBehaviour
         if (head != null)
         {
             censorFollowTargetEmptyGameObject.transform.SetParent(head.transform, false);
+            censorFollowTargetEmptyGameObject.transform.localPosition = Vector3.zero;
         }
         else
         {

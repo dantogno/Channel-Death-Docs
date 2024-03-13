@@ -1725,6 +1725,7 @@ MonoBehaviour:
   killPosition: {fileID: 0}
   victimModels: []
   victimLocalRotation: {x: 0, y: 279.76187, z: 0}
+  LastVictimRescuePos: {x: 0, y: 0, z: 0}
 --- !u!4 &1669507143
 Transform:
   m_ObjectHideFlags: 0

@@ -187,7 +187,7 @@ MonoBehaviour:
   KillTimeInSeconds: 180
   KillerName: The Broadcast Killer
   channelChangeAudio: {fileID: 5695622606203281616}
-  numberOVictimsToSpawnBoss: 4
+  numberOVictimsToSpawnBoss: 49
   timePenaltyMultiplier: 20
   timePenaltyDuration: 2
   distanceToClearBelt: 10
@@ -196,6 +196,12 @@ MonoBehaviour:
   killer: {fileID: 0}
   channelNumberText: {fileID: 4392192750692720688}
   channelPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -212,8 +218,15 @@ MonoBehaviour:
   beltUVAnimation: {fileID: 0}
   victimSpawnPoint: {fileID: 0}
   killPosition: {fileID: 0}
-  victimModels: []
+  victimModels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   victimLocalRotation: {x: 11, y: 279.76187, z: 0}
+  LastVictimRescuePos: {x: 0, y: 0, z: 0}
 --- !u!114 &8791959693069228541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +352,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigamePossibilities:
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -565,7 +580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15, y: -15}
+  m_AnchoredPosition: {x: -46.9, y: -28.7}
   m_SizeDelta: {x: 117.4658, y: 65.155}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &2213538409146996900
