@@ -86,6 +86,12 @@ public class OverarchingPuzzleController : MonoBehaviour
     {
         isChannelActive = false;
         mainContainer.SetActive(false);
+        if (quizIsStarted)
+        {
+            // set Y scale question and answer panel to 0
+            LeanTween.scaleY(questionAndAnswerPanel, 0, 0.1f).setEaseInQuart();
+            HandleWrongAnswer();
+        }  
     }
 
     public void OnChannelEnter()
