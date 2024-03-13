@@ -12,6 +12,6 @@ public class StatsChannel : MonoBehaviour
     private void OnEnable()
     {
         kills.text = GameManager.Instance.KillCount.ToString();
-        saves.text = GameManager.Instance.SaveCount.ToString();
+        saves.text = GameManager.Instance.RescuedCount.ToString();
     }
 }

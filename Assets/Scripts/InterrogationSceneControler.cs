@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,9 @@ public class InterrogationSceneControler : MonoBehaviour
     private List<Renderer> renderers;
     private List<Camera> cameras;
     private GameObject currentVictim = null;
+    
+    public event Action InterrogationSequenceFinished;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +65,7 @@ public class InterrogationSceneControler : MonoBehaviour
             cameras.AddRange(obj.GetComponentsInChildren<Camera>());
         }
 
-        RunTest(3);
+        //RunTest(3);
     }
 
     private IEnumerator InterrogationSequenceCoroutine()
@@ -80,7 +84,7 @@ public class InterrogationSceneControler : MonoBehaviour
 
         // Victim: I'm [name]
         var rescuedVictims = SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == VictimState.Rescued);
-        var randomVictim = rescuedVictims.ElementAt(Random.Range(0, rescuedVictims.Count()));
+        var randomVictim = rescuedVictims.ElementAt(UnityEngine.Random.Range(0, rescuedVictims.Count()));
         closedCaptionText.text = victimPrefix + "I'm " + randomVictim.Name;
         closedCaptionText.gameObject.SetActive(true);
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
@@ -121,26 +125,28 @@ public class InterrogationSceneControler : MonoBehaviour
         // we can probably just leave the last line up? or should we clear it?
         isPlaying = false;
         currentVictim = null;
+        InterrogationSequenceFinished?.Invoke();
     }
 
     private string GetVictimFollowUpLine()
     {
-        return victimPrefix + clueFollowUpLines.VictimFollowUpLines[Random.Range(0, clueFollowUpLines.VictimFollowUpLines.Length)];
+        return victimPrefix + clueFollowUpLines.VictimFollowUpLines[UnityEngine.Random.Range(0, clueFollowUpLines.VictimFollowUpLines.Length)];
     }
 
     private string GetClueText()
     {
-        if (GameManager.Instance.SaveCount == 0)
+        if (GameManager.Instance.RescuedCount == 0)
         {
             // TODO: make sure we don't get here if we haven't saved anyone
             Debug.LogWarning("shouldn't be here if we haven't saved anyone");
             return detectivePrefix + "We have to keep looking!";
         }
 
-        int maxIndex = GameManager.Instance.SaveCount > SaveSystem.CurrentGameData.QuestionList.Count 
-            ? SaveSystem.CurrentGameData.QuestionList.Count : GameManager.Instance.SaveCount;
+        // choose the max index to be the smaller of the save count and the total number of questions/clues
+        int maxIndex = GameManager.Instance.RescuedCount > SaveSystem.CurrentGameData.QuestionList.Count 
+            ? SaveSystem.CurrentGameData.QuestionList.Count : GameManager.Instance.RescuedCount;
 
-        // 
+        // I guess we'll reveal the clues in order? no sense getting a clue for a question they can't see yet, right?
         for (int i = 1; i < maxIndex; i++)
         {
             var question = SaveSystem.CurrentGameData.QuestionList[i];
@@ -151,9 +157,9 @@ public class InterrogationSceneControler : MonoBehaviour
             }
         }
 
-        // if we get here, we've given all the clues
-        // give a random clue
-        var randomClueIndex = Random.Range(0, maxIndex);
+        // if we get here, we've given all the clues within this index.
+        // repeat a random clue (don't show clues they haven't seen yet)
+        var randomClueIndex = UnityEngine.Random.Range(0, maxIndex);
         var randomQuestion = SaveSystem.CurrentGameData.QuestionList[randomClueIndex];
         return victimPrefix + randomQuestion.ClueBank[randomQuestion.CorrectAnswerIndex];
     }
@@ -161,10 +167,10 @@ public class InterrogationSceneControler : MonoBehaviour
     private string GetDetectiveIntroLine()
     {
         // get a random line from the detective intro lines
-        return detectivePrefix + clueFollowUpLines.DetectiveIntroLines[Random.Range(0, clueFollowUpLines.DetectiveIntroLines.Length)];
+        return detectivePrefix + clueFollowUpLines.DetectiveIntroLines[UnityEngine.Random.Range(0, clueFollowUpLines.DetectiveIntroLines.Length)];
     }
 
-    public void BeginSequence()
+    public void ShowInterrogationScene()
     {
         foreach (var renderer in renderers)
         {
@@ -216,12 +222,12 @@ public class InterrogationSceneControler : MonoBehaviour
             // initialize a dummy victim and add it to the save data
             // create an empty gameobject and add the victim component to it
             var victim = new GameObject().AddComponent<Victim>();
-            victim.isFemale = Random.Range(0, 2) == 0;
+            victim.isFemale = UnityEngine.Random.Range(0, 2) == 0;
             victim.Name = "Victim " + i;
             victim.State = VictimState.Rescued;
             SaveSystem.CurrentGameData.VictimHistory.Add(victim);
         }
-        BeginSequence();
+        ShowInterrogationScene();
         StartCoroutine(TestChannelChange());
     }
 
@@ -230,7 +236,7 @@ public class InterrogationSceneControler : MonoBehaviour
         yield return new WaitForSeconds(3);
         OnChannelExited();
         yield return new WaitForSeconds(1f);
-        BeginSequence();
+        ShowInterrogationScene();
     }
 
     /// <summary>
@@ -239,7 +245,7 @@ public class InterrogationSceneControler : MonoBehaviour
     private void SelectVictimModel()
     {
         // select a random victim model
-        currentVictim = victims[Random.Range(0, victims.Length)];
+        currentVictim = victims[UnityEngine.Random.Range(0, victims.Length)];
         
         // enable the renderers on the selected victim
         var renderers = currentVictim.GetComponentsInChildren<Renderer>();

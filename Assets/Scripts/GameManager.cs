@@ -33,9 +33,7 @@ public class GameManager : Singleton<GameManager>
 
     [Tooltip("These should be in the scene, we don't instantiate them in code.")]
     [SerializeField]
-    private GameObject[] channelPrefabs;
-
-    
+    private GameObject[] channelPrefabs;   
 
     [Tooltip("How long to wait before spawning a new victim after the previous one dies or is rescued.")]
     public float DelayInSecondsBetweenVictims = 5;
@@ -65,7 +63,7 @@ public class GameManager : Singleton<GameManager>
     public static event Action NewVictimSpawned;
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
-
+    public static event Action VictimRescued;
 
     public bool CurrentVictimIsKiller => CurrentVictim == killer;
     //public bool BeginGameplay { get;  set; } = false;
@@ -90,7 +88,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public int KillCount => SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == Victim.VictimState.Dead).Count();
-    public int SaveCount => SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == Victim.VictimState.Rescued).Count();
+    public int RescuedCount => SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == Victim.VictimState.Rescued).Count();
 
     private float conveyorBeltDefaultSpeed;
     private bool currentVictimIsDead;
@@ -111,7 +109,7 @@ public class GameManager : Singleton<GameManager>
     private ChannelChangeEffects channelChangeEffects;
     private MinigameSelector minigameSelector;
     private bool neverChangedChannel = true;
-    public bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
+    public bool IsReadyForEnding => RescuedCount + KillCount >= numberOVictimsToSpawnBoss;
    
 
     //protected override void Awake()
@@ -512,5 +510,6 @@ public class GameManager : Singleton<GameManager>
         //SaveCount++;
         victimIsBeingRescued = true;
         CurrentVictim.State = Victim.VictimState.Rescued;
+        VictimRescued?.Invoke();
     }
 }

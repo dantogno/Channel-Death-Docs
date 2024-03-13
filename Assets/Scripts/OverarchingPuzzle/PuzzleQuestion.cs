@@ -106,10 +106,10 @@ public class PuzzleQuestion: ScriptableObject
                 AnswerBank[i] = UnityEngine.Random.Range(11, 50).ToString();
         }
 
-        if (GameManager.Instance.SaveCount > 0)
+        if (GameManager.Instance.RescuedCount > 0)
         {
             CorrectAnswerIndex = UnityEngine.Random.Range(1, AnswerBank.Length);
-            AnswerBank[CorrectAnswerIndex] = GameManager.Instance.SaveCount.ToString();
+            AnswerBank[CorrectAnswerIndex] = GameManager.Instance.RescuedCount.ToString();
         }
         else
         {
