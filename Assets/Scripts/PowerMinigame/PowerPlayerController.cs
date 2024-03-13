@@ -59,6 +59,8 @@ public class PowerPlayerController : MonoBehaviour
     [SerializeField]
     Channel parentChannel;
 
+    bool HasHitPowerOnce;
+
     private void Awake()
     {
         Instance = this;
@@ -83,15 +85,17 @@ public class PowerPlayerController : MonoBehaviour
 
     private void Setup()
     {
+
         StopAllCoroutines();
+        HasHitPowerOnce = false;
         jumpscareMonster.SetActive(false);
         flashlight.enabled = false;        
         currentHour = 0;
-        clockText.text = hours[0];
+        clockText.text = "--:--";
         powerState = PowerState.idle;
         powerRemaining = MaxPower;
         monster.SetupMonster();
-        waitingForNextHour = false;
+        
         lost = false;
         numText.enabled = false;
     }
@@ -99,6 +103,7 @@ public class PowerPlayerController : MonoBehaviour
     bool waitingForNextHour;
     IEnumerator IncreaseTime()
     {
+        clockText.text = hours[currentHour];
         waitingForNextHour = true;
         yield return new WaitForSeconds(hourLength);
         currentHour += 1;
@@ -128,7 +133,10 @@ public class PowerPlayerController : MonoBehaviour
             switch (powerState)
             {
                 case PowerState.idle:
-                    monster.monsterState = Monster.MonsterState.approaching;
+                    if (HasHitPowerOnce)
+                    {
+                        monster.monsterState = Monster.MonsterState.approaching;
+                    }
                     break;
                 case PowerState.consuming:
                     monster.monsterState = Monster.MonsterState.retracting;
@@ -151,12 +159,24 @@ public class PowerPlayerController : MonoBehaviour
         {
             JumpScare();
         }
-        if(!waitingForNextHour)
+        if(!waitingForNextHour && HasHitPowerOnce)
         {
             StartCoroutine(IncreaseTime());
         }
         UpdatePostProcess();
-        whisperSource.volume = MapValueReverseExponential(currentDistance, monster.startDistance, LoseThreshHold, 0, 0.8f);
+        updateWhisperVolume();
+    }
+
+    private void updateWhisperVolume()
+    {
+        if (HasHitPowerOnce)
+        {
+            whisperSource.volume = MapValueReverseExponential(currentDistance, monster.startDistance, LoseThreshHold, 0, 0.8f);
+        }
+        else
+        {
+            whisperSource.volume = 0.0f;
+        }
     }
     private void JumpScare()
     {
@@ -175,7 +195,14 @@ public class PowerPlayerController : MonoBehaviour
 
     private void UpdatePostProcess()
     {
-        postProcess.weight = MapValue(currentDistance, monster.startDistance, LoseThreshHold, 0, 1);
+        if(HasHitPowerOnce)
+        {
+            postProcess.weight = MapValue(currentDistance, monster.startDistance, LoseThreshHold, 0, 1);
+        }
+        else
+        {
+            postProcess.weight = 0;
+        }
     }
     public float MapValue(float value, float fromMin, float fromMax, float toMin, float toMax)
     {
@@ -236,6 +263,11 @@ public class PowerPlayerController : MonoBehaviour
 
     private void turnLightOn()
     {
+        if (!HasHitPowerOnce)
+        {
+            waitingForNextHour = false;
+            HasHitPowerOnce = true;
+        }
         if (powerRemaining > 0 && !lost)
         {
             powerState = PowerState.consuming;
