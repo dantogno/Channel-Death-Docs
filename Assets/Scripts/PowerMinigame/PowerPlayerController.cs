@@ -191,6 +191,7 @@ public class PowerPlayerController : MonoBehaviour
         jumpscareMonster.SetActive(true);
         yield return new WaitForSeconds(JumpscareTime);
         Setup();
+        GameManager.Instance.GoToRandomChannel();
     }
 
     private void UpdatePostProcess()
