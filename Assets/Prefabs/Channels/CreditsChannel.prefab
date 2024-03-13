@@ -69,7 +69,9 @@ MonoBehaviour:
 
     Ian Beckman
 
-    Michael Vaughn Green'
+    Michael Vaughn Green
+
+    Mack Pearson-Muggli'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ed3f4768457dd28498ba40366db89bd0, type: 2}
   m_sharedMaterial: {fileID: -539591599051456448, guid: ed3f4768457dd28498ba40366db89bd0,
@@ -710,6 +712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChannelNumber: 99
+  suitImage: {fileID: 0}
   ChannelEntered:
     m_PersistentCalls:
       m_Calls:
@@ -740,6 +743,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSuit: 0
 --- !u!1 &6272256393115133923
 GameObject:
   m_ObjectHideFlags: 0
