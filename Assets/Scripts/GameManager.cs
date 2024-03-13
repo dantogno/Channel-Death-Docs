@@ -110,8 +110,8 @@ public class GameManager : Singleton<GameManager>
     private MinigameSelector minigameSelector;
     private bool neverChangedChannel = true;
     public bool IsReadyForEnding => overarchingPuzzleController.IsQuizComplete; //RescuedCount + KillCount >= numberOVictimsToSpawnBoss;
-    private OverarchingPuzzleController overarchingPuzzleController; 
-   
+    private OverarchingPuzzleController overarchingPuzzleController;
+    private bool inlossLoad = false;
 
     //protected override void Awake()
     //{
@@ -199,6 +199,18 @@ public class GameManager : Singleton<GameManager>
         }
         // Update the time remaining
         SaveSystem.CurrentGameData.TimeRemainingInSeconds -= Time.deltaTime;
+
+        //Trigger Loss
+        if (SaveSystem.CurrentGameData.TimeRemainingInSeconds < 0 && !inlossLoad) {
+            inlossLoad = false;
+
+            //TODO
+            //Instead of reseting time here, we should just be making a new save?
+            SaveSystem.CurrentGameData.TimeRemainingInSeconds = TotalTimeLimitInSeconds;
+
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameLose");
+        }
     }
 
 
@@ -499,6 +511,13 @@ public class GameManager : Singleton<GameManager>
         InputManager.InputActions.Gameplay.ChannelUp.performed += OnChannelUpPressed;
         InputManager.InputActions.Gameplay.ChannelDown.performed += OnChannelDownPressed;
         PasscodeManager.ValidationCompleted += OnPasscodeValidationCompleted;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.InputActions.Gameplay.ChannelUp.performed -= OnChannelUpPressed;
+        InputManager.InputActions.Gameplay.ChannelDown.performed -= OnChannelDownPressed;
+        PasscodeManager.ValidationCompleted -= OnPasscodeValidationCompleted;
     }
 
     private void OnPasscodeValidationCompleted(bool isSuccessful)
