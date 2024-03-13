@@ -1163,7 +1163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7723316987521410405
 Transform:
   m_ObjectHideFlags: 0
@@ -1762,7 +1762,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.00015664}
-  m_SizeDelta: {x: 0, y: 19.671}
+  m_SizeDelta: {x: 742.57, y: 19.671}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3460024734785383275
 CanvasRenderer:
@@ -5050,7 +5050,7 @@ PrefabInstance:
     - target: {fileID: 1248787219117060282, guid: d700168fb844dcc479a696ecdf47f74c,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3917815479453770111, guid: d700168fb844dcc479a696ecdf47f74c,
         type: 3}
@@ -5274,7 +5274,7 @@ PrefabInstance:
     - target: {fileID: 7640334492936964969, guid: 116d9a3522a7dcf44927f4f0042a9429,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

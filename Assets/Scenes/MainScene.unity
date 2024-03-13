@@ -2604,12 +2604,12 @@ PrefabInstance:
     - target: {fileID: 158736000403932345, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -314.59375
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 158736000403932345, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 598.87
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 611784928233326490, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
@@ -2899,12 +2899,12 @@ PrefabInstance:
     - target: {fileID: 7015343717820124607, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
       propertyPath: m_Name
-      value: IntroNews
+      value: News Channel
       objectReference: {fileID: 0}
     - target: {fileID: 7015343717820124607, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7213319327360471588, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
@@ -5225,11 +5225,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1173894691}
-    - target: {fileID: 4339614848070747312, guid: accf6d74f659f0a458b3df13a80a0bb5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4971066373963362827, guid: accf6d74f659f0a458b3df13a80a0bb5,
         type: 3}
       propertyPath: ChannelExited.m_PersistentCalls.m_Calls.Array.data[5].m_Target
