@@ -84,7 +84,7 @@ public class OverarchingPuzzleController : MonoBehaviour
     {
         quizIsStarted = false;
         currentQuestionIndex = 0;
-        lockOutTimerInSeconds = 10;//TODO: remove test code! lockOutTimeInMinutes * 60;
+        lockOutTimerInSeconds = lockOutTimeInMinutes * 60;
     }
 
     public void OnChannelExit()
