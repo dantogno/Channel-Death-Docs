@@ -112,13 +112,14 @@ public class GameManager : Singleton<GameManager>
     private MinigameSelector minigameSelector;
     private bool neverChangedChannel = true;
     public bool IsReadyForEnding => SaveCount + KillCount >= numberOVictimsToSpawnBoss;
-   
+
 
     //protected override void Awake()
     //{
     //    //base.Awake();
 
     //}
+    public Vector3 LastVictimRescuePos;
 
     private void Start()
     {
@@ -510,6 +511,7 @@ public class GameManager : Singleton<GameManager>
     {
         // Unneeded since we use victim history list now... Right?
         //SaveCount++;
+        LastVictimRescuePos = CurrentVictim.transform.position;
         victimIsBeingRescued = true;
         CurrentVictim.State = Victim.VictimState.Rescued;
     }

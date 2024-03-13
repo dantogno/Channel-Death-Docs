@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class PasscodeInput : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class PasscodeInput : MonoBehaviour
     private bool blockInput = false;
     private int passcodeEntryIndex = 0;
 
+    [SerializeField]
+    ParticleSystem confetti;
+
+    [SerializeField]
+    ParticleSystem smoke;
     public void ResetInputFields()
     {
         for (int i = 0; i < DigitEntryFields.Length; i++)
@@ -46,10 +52,24 @@ public class PasscodeInput : MonoBehaviour
             blockInput = true;
             StartCoroutine(ResetInputFieldsAfterPenaltyCooldown());
         }
+        if (isCorrectCode)
+        {
+            confetti.Play();
+            Vector3 smokepos = GameManager.Instance.LastVictimRescuePos;
+            smoke.transform.position = smokepos;
+            smoke.Play();
+            StartCoroutine(waitForConfetti());
+        }
     }
 
+    IEnumerator waitForConfetti()
+    {
+        yield return new WaitForSeconds(4);
+        confetti.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+    }
     private void OnDisable()
     {
+        StopAllCoroutines();
         GameManager.NewVictimSpawned -= OnNewVictimSpawned;
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
     }
