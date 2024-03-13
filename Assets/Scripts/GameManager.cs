@@ -122,6 +122,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        // hide the mouse cursor
+        Cursor.visible = false;
         Victim.InitializeNameListsFromCSV();
         if(bloodVideo != null)
         {
