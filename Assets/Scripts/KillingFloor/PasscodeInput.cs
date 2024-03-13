@@ -18,6 +18,8 @@ public class PasscodeInput : MonoBehaviour
 
     [SerializeField]
     ParticleSystem smoke;
+
+    
     public void ResetInputFields()
     {
         for (int i = 0; i < DigitEntryFields.Length; i++)
