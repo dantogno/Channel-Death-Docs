@@ -2158,6 +2158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7005344136853207933, guid: 50c746a91bd5f5f49967abd789b48a0f,
         type: 3}
+      propertyPath: ChannelNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7005344136853207933, guid: 50c746a91bd5f5f49967abd789b48a0f,
+        type: 3}
       propertyPath: ChannelExited.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1819957283}
@@ -3397,7 +3402,7 @@ PrefabInstance:
     - target: {fileID: 7842979448520099289, guid: e2fa53d90018b784d89e0aba7a0e1bac,
         type: 3}
       propertyPath: m_Name
-      value: ScoreboardChannel
+      value: NewsStatusReportChannel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4653,62 +4658,62 @@ PrefabInstance:
         type: 3}
       propertyPath: channelPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 5068702}
+      objectReference: {fileID: 1808833932}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 890712733}
+      objectReference: {fileID: 1846106498}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 507860267}
+      objectReference: {fileID: 1980442548}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 1980442548}
+      objectReference: {fileID: 1586249285}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[4]
       value: 
-      objectReference: {fileID: 2066552065}
+      objectReference: {fileID: 1505371374}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[5]
       value: 
-      objectReference: {fileID: 1505371374}
+      objectReference: {fileID: 1869423087}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[6]
       value: 
-      objectReference: {fileID: 1586249285}
+      objectReference: {fileID: 2066552065}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[7]
       value: 
-      objectReference: {fileID: 1808833932}
+      objectReference: {fileID: 890712733}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[8]
       value: 
-      objectReference: {fileID: 1846106498}
+      objectReference: {fileID: 2042889886}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[9]
       value: 
-      objectReference: {fileID: 1869423087}
+      objectReference: {fileID: 1832904095}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[10]
       value: 
-      objectReference: {fileID: 1832904095}
+      objectReference: {fileID: 5068702}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[11]
       value: 
-      objectReference: {fileID: 2042889886}
+      objectReference: {fileID: 507860267}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[12]
