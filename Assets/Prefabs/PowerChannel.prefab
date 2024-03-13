@@ -2819,7 +2819,7 @@ MonoBehaviour:
   fillBars:
   - {fileID: 5179175020729356119}
   MaxPower: 1
-  PowerDepletionRate: 0.08
+  PowerDepletionRate: 0.075
   monster: {fileID: 8312879808191622562}
   LoseThreshHold: 2.5
   clockText: {fileID: 3897122577073559608}
@@ -3663,6 +3663,7 @@ GameObject:
   - component: {fileID: 2634407776797137573}
   - component: {fileID: 8312879808191622562}
   - component: {fileID: 381026045771435797}
+  - component: {fileID: 1511400306580954512}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -3699,14 +3700,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterState: 0
-  ApproachSpeed: 0.15
+  ApproachSpeed: 0.1
   RetractSpeed: 1.8
   ApproachSpeedIncrease: 0.01
   startDistance: 0
   monsterMesh: {fileID: 6530774351869752990}
   monsterRunSource: {fileID: 381026045771435797}
   monsterLoopSource: {fileID: 8206636703499123670}
+  hissSource: {fileID: 1511400306580954512}
   footstepVolume: 0.6
+  hissVolume: 0.4
   distanceTowardsPlayerAtStart: 0.65
 --- !u!82 &381026045771435797
 AudioSource:
@@ -3794,6 +3797,111 @@ AudioSource:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.2800874
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &1511400306580954512
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8298509120445167988}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 587957534c828e742af1876bd5b0b385, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 0.9
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 14
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.4217499
+      value: 0.9882355
+      inSlope: -2.6310184
+      outSlope: -2.6310184
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13808613
+    - serializedVersion: 3
+      time: 0.9013184
+      value: 0
+      inSlope: -0.4817637
+      outSlope: -0.4817637
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.18839987
+      outWeight: 1
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.024295269
+      outSlope: 0.024295269
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.22609808
+    - serializedVersion: 3
+      time: 0.7915048
+      value: 0
+      inSlope: -0.033007808
+      outSlope: -0.033007808
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16641863
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

@@ -29,15 +29,16 @@ public class Monster : MonoBehaviour
     AudioSource monsterRunSource;
 
     [SerializeField]
-    AudioSource monsterLoopSource;
+    AudioSource monsterLoopSource, hissSource;
 
     [SerializeField]
-    float footstepVolume;
+    float footstepVolume, hissVolume;
 
     float initialLoopVOl;
 
     [SerializeField]
     float distanceTowardsPlayerAtStart;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +63,7 @@ public class Monster : MonoBehaviour
         currentApproachSpeed += ApproachSpeedIncrease;
     }
 
+    MonsterState prevState;
     // Update is called once per frame
     void Update()
     {
@@ -78,6 +80,11 @@ public class Monster : MonoBehaviour
                 transform.position += direction * currentApproachSpeed * Time.deltaTime;
                 break; 
             case MonsterState.retracting:
+                if(prevState == MonsterState.idle || prevState == MonsterState.approaching)
+                {
+                    hissSource.volume = MapValueReverseExponential(distanceFromPlayer, startDistance, PowerPlayerController.Instance.LoseThreshHold, 0, hissVolume);
+                    hissSource.Play();
+                }
                 monsterLoopSource.volume = initialLoopVOl;
                 monsterRunSource.volume = footstepVolume;
                 if(distanceFromPlayer < startDistance)
@@ -86,11 +93,19 @@ public class Monster : MonoBehaviour
                 }
                 break;
         }
+        prevState = monsterState;
+
     }
 
     public void HideMonster()
     {
         monsterMesh.SetActive(false);
     }
-
+    public static float MapValueReverseExponential(float value, float fromMin, float fromMax, float toMin, float toMax)
+    {
+        float normalizedValue = (value - fromMin) / (fromMax - fromMin);
+        normalizedValue = Mathf.Pow(normalizedValue, 3f);
+        float mappedValue = normalizedValue * (toMax - toMin) + toMin;
+        return mappedValue;
+    }
 }

@@ -117,6 +117,7 @@ public class GameManager : Singleton<GameManager>
     //    //base.Awake();
 
     //}
+    public Vector3 LastVictimRescuePos;
 
     private void Start()
     {
@@ -508,6 +509,7 @@ public class GameManager : Singleton<GameManager>
     {
         // Unneeded since we use victim history list now... Right?
         //SaveCount++;
+        LastVictimRescuePos = CurrentVictim.transform.position;
         victimIsBeingRescued = true;
         CurrentVictim.State = Victim.VictimState.Rescued;
         VictimRescued?.Invoke();

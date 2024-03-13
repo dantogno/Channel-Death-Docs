@@ -30,7 +30,6 @@ public class MinigameSelector : MonoBehaviour
 
     public void SelectMiniGames()
     {
-        Debug.Log(activeGames.Count);
         if (activeGames.Count == 0) {
             for (int i = 0; i < 4; i++) {
                 PickOneGame();
