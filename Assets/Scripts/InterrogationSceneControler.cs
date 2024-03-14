@@ -241,7 +241,7 @@ public class InterrogationSceneControler : MonoBehaviour
             victim.isFemale = UnityEngine.Random.Range(0, 2) == 0;
             victim.Name = "Victim " + i;
             victim.State = VictimState.Rescued;
-            SaveSystem.CurrentGameData.VictimHistory.Add(victim);
+            SaveSystem.CurrentGameData.VictimHistory.Add(victim.VictimData);
         }
         ShowInterrogationScene();
         StartCoroutine(TestChannelChange());

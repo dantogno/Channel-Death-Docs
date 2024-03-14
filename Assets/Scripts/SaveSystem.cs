@@ -97,12 +97,12 @@ public class SaveData
 {
     public float TimeRemainingInSeconds;
     public List<PuzzleQuestion> QuestionList;
-    public List<Victim> VictimHistory;
+    public List<VictimData> VictimHistory;
 
     public SaveData()
     {
         TimeRemainingInSeconds = GameManager.Instance.TotalTimeLimitInSeconds;
         QuestionList = new List<PuzzleQuestion>();
-        VictimHistory = new List<Victim>();
+        VictimHistory = new List<VictimData>();
     }
 }

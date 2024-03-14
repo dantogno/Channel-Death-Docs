@@ -9,6 +9,7 @@ public class Victim : MonoBehaviour
 {
     public static Action<string> VictimNameUpdated;
     public bool isFemale;
+    public VictimData VictimData = new VictimData();
 
     public string Name
     {
@@ -17,10 +18,21 @@ public class Victim : MonoBehaviour
         {
             displayName = value;
             VictimNameUpdated?.Invoke(displayName);
+            VictimData.Name = displayName;
         }
     }
 
-    public VictimState State { get; set; } = VictimState.None;
+    public VictimState State
+    {
+        get => state;
+        set
+        {
+            state = value;
+            VictimData.State = state;
+        }
+    }
+
+    private VictimState state;
 
     private string displayName;
     public static List<string> AvailableFemaleNames { get; private set; } = new List<string>();

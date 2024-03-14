@@ -286,7 +286,8 @@ public class GameManager : Singleton<GameManager>
         // Save the previous victim to history, if there is one
         if (currentVictim_useProprety != null)
         {
-            SaveSystem.CurrentGameData.VictimHistory.Add(CurrentVictim);
+            SaveSystem.CurrentGameData.VictimHistory.Add(CurrentVictim.VictimData);
+            SaveSystem.SaveGameToFile();
         }
         isKilling = false;
         // Move old victim out of view
