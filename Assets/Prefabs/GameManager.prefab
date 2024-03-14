@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTimeLimitInMinutes: 180
-  KillTimeInSeconds: 180
+  KillTimeInSeconds: 420
   KillerName: The Broadcast Killer
   channelChangeAudio: {fileID: 5695622606203281616}
   numberOVictimsToSpawnBoss: 49

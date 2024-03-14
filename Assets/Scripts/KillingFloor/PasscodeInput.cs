@@ -45,6 +45,7 @@ public class PasscodeInput : MonoBehaviour
         ResetInputFields();
         GameManager.NewVictimSpawned += OnNewVictimSpawned;
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
+        GameManager.bonusSpeed = 2.5f;
     }
 
     private void OnValidationCompleted(bool isCorrectCode)
@@ -74,6 +75,7 @@ public class PasscodeInput : MonoBehaviour
         StopAllCoroutines();
         GameManager.NewVictimSpawned -= OnNewVictimSpawned;
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
+        GameManager.bonusSpeed = 1f;
     }
 
     private void AddInputToDigitEntryField(PasscodeDigitEntry digitEntryField, string input)

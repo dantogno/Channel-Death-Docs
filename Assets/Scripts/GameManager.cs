@@ -65,6 +65,8 @@ public class GameManager : Singleton<GameManager>
     public static event Action ChangedToKillingChannel;
     public static event Action VictimRescued;
 
+    public static float bonusSpeed = 1f;
+
     public bool CurrentVictimIsKiller => CurrentVictim == killer;
     //public bool BeginGameplay { get;  set; } = false;
   
@@ -163,7 +165,7 @@ public class GameManager : Singleton<GameManager>
         // if the victim is dead we speed up the belt to make it look cooler.
         if (!waitingToChangeToKillingFloor && !currentVictimIsDead)
         {
-            float timeMultiplier =  GetMultiplierBasedOnPenaltyStatus();
+            float timeMultiplier =  GetMultiplierBasedOnPenaltyStatus() * bonusSpeed;
             UpdateKillTimer(timeMultiplier);
             UpdateBeltSpeed(timeMultiplier);
             UpdateVictimPosition(timeMultiplier);
@@ -171,6 +173,7 @@ public class GameManager : Singleton<GameManager>
         else
         {    
             float timeMultiplier = isKilling ? deathBeltSpeedMultiplier : 0;
+            Debug.Log(timeMultiplier);
             UpdateKillTimer(timeMultiplier);
             UpdateBeltSpeed(timeMultiplier);
             UpdateVictimPosition(timeMultiplier);
