@@ -24,11 +24,15 @@ MonoBehaviour:
   - Knife
   - Darkness
   ClueBank:
-  - They tied me up and read the Riddles in the Dark chapter of The Hobbit.
-  - I saw a bunch of skulls missing teeth.
-  - They kept saying, "A penny saved is a penny earned."
-  - They kept the keys to the others' cells in their pocket!
-  - They kept taking out a deck of cards and shuffling them.
-  - They showed me a crumpled picture of their mom they had jammed in their pocket.
-  - I tried to resist but they pulled a knife!
-  - They showed me they had nothing in their pockets.
+  - They tied me up and read the Riddles in the Dark chapter of <color=yellow>The
+    Hobbit.</color>
+  - I saw a bunch of skulls missing <color=yellow>teeth.</color>
+  - They kept saying, "A <color=yellow>penny</color> saved is a <color=yellow>penny</color>
+    earned."
+  - They kept the <color=yellow>keys</color> to the others' cells in their pocket!
+  - They kept taking out a <color=yellow>deck of cards</color> and shuffling them.
+  - They showed me a crumpled <color=yellow>picture of their mom</color> they had
+    jammed in their pocket.
+  - I tried to resist but they pulled a <color=yellow>knife</color>!
+  - They showed me they had <color=yellow>nothing in their pockets.</color>
+  HasClueBeenGiven: 0

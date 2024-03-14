@@ -15,21 +15,25 @@ MonoBehaviour:
   Type: 1
   QuestionText: Name a victim that perished.
   AnswerBank:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - No one has died
+  - Julie
+  - Mark
+  - Kristin
+  - Sarah
+  - Brandy
+  - Jacqueline
+  - Jamie
   ClueBank:
-  - They said it was important to remember the names of the fallen.
-  - They wrote down and underlined the names of vicitims who were killed.
-  - They said it was important to remember the names of the fallen.
-  - They wrote down and underlined the names of vicitims who were killed.
-  - They said it was important to remember the names of the fallen.
-  - They wrote down and underlined the names of vicitims who were killed.
-  - They said it was important to remember the names of the fallen.
-  - They wrote down and underlined the names of vicitims who were killed.
+  - They said it was important to <color=yellow>remember the names of the fallen.</color>
+  - They <color=yellow>wrote down</color> and underlined the <color=yellow>names
+    of vicitims who were killed.</color>
+  - They said it was important to <color=yellow>remember the names of the fallen.</color>
+  - They <color=yellow>wrote down</color> and underlined the <color=yellow>names
+    of vicitims who were killed.</color>
+  - They said it was important to <color=yellow>remember the names of the fallen.</color>
+  - They <color=yellow>wrote down</color> and underlined the <color=yellow>names
+    of vicitims</color> who were killed.
+  - They said it was important to <color=yellow>remember the names of the fallen.</color>
+  - They <color=yellow>wrote down</color> and underlined the <color=yellow>names
+    of vicitims who were killed.</color>
   HasClueBeenGiven: 0

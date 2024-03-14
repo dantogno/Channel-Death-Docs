@@ -24,10 +24,10 @@ MonoBehaviour:
   - Mushroom
   - Human meat
   ClueBank:
-  - 'They said: ''Remember to answer the question about pizza on an even numbered
-    minute.'' '
-  - 'They said: ''Remember to answer the question about pizza on an odd numbered
-    minute.'' '
+  - 'They said: ''Remember to answer the question about pizza on an <color=yellow>even
+    numbered minute.</color>'' '
+  - 'They said: ''Remember to answer the question about pizza on an <color=yellow>odd
+    numbered minute.</color>'' '
   - 
   - 
   - 

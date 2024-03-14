@@ -15,20 +15,25 @@ MonoBehaviour:
   Type: 2
   QuestionText: Name a victim that was saved.
   AnswerBank:
-  - No one has been saved
-  - Andy
-  - Simon
+  - No one has been rescued
   - Monique
-  - Harry
-  - Pete
-  - George
-  - Simon
+  - Linda
+  - Johnny
+  - Jodi
+  - Floyd
+  - Joanne
+  - Samantha
   ClueBank:
-  - They said it was important to remember the names of the victims that were rescued.
-  - They told me to tell everyone my name?
-  - They said it was important to remember the names of the victims that were rescued.
-  - They told me to tell everyone my name?
-  - They said it was important to remember the names of the victims that were rescued.
-  - They told me to tell everyone my name?
-  - They said it was important to remember the names of the victims that were rescued.
-  - They told me to tell everyone my name?
+  - They said it was important to remember the <color=yellow>names of the victims
+    that were rescued.</color>
+  - They told me to tell everyone<color=yellow> my name?</color>
+  - They said it was important to remember the <color=yellow>names of the victims
+    that were rescued.</color>
+  - They told me to tell everyone<color=yellow> my name?</color>
+  - They said it was important to remember the <color=yellow>names of the victims
+    that were rescued.</color>
+  - They told me to tell everyone<color=yellow> my name?</color>
+  - They said it was important to remember the <color=yellow>names of the victims
+    that were rescued.</color>
+  - They told me to tell everyone<color=yellow> my name?</color>
+  HasClueBeenGiven: 0

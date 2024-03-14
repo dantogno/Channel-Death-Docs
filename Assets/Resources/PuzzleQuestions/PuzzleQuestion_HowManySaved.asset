@@ -15,21 +15,29 @@ MonoBehaviour:
   Type: 5
   QuestionText: How many victims have been saved?
   AnswerBank:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - 0
+  - 38
+  - 25
+  - 30
+  - 1
+  - 1
+  - 9
+  - 8
   ClueBank:
-  - They put a chip on a weighing scale each time someone was saved and someone died.
-  - They said it was important to keep track of how many people have been saved.
-  - They put a chip on a weighing scale each time someone was saved and someone died.
-  - They said it was important to keep track of how many people have been saved.
-  - They put a chip on a weighing scale each time someone was saved and someone died.
-  - They said it was important to keep track of how many people have been saved.
-  - They put a chip on a weighing scale each time someone was saved and someone died.
-  - They said it was important to keep track of how many people have been saved.
+  - They put a chip on a weighing scale <color=yellow>each time someone was saved</color>
+    and someone died.
+  - They said it was important to keep track of <color=yellow>how many people have
+    been saved.</color>
+  - They put a chip on a weighing scale <color=yellow>each time someone was saved</color>
+    and someone died.
+  - They said it was important to keep track of <color=yellow>how many people have
+    been saved.</color>
+  - They put a chip on a weighing scale <color=yellow>each time someone was saved</color>
+    and someone died.
+  - They said it was important to keep track of <color=yellow>how many people have
+    been saved.</color>
+  - They put a chip on a weighing scale <color=yellow>each time someone was saved</color>
+    and someone died.
+  - They said it was important to keep track of <color=yellow>how many people have
+    been saved.</color>
   HasClueBeenGiven: 0

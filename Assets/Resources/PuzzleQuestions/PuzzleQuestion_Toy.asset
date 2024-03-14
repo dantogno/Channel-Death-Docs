@@ -24,11 +24,15 @@ MonoBehaviour:
   - Human skin mask
   - Clown dolls
   ClueBank:
-  - I saw them brushing a Barbie doll's hair.
-  - They had a bunch of Funko Pop toys lined up around their desk.
-  - They kept a red toy sled on the wall.
-  - I saw them talking to a Toxic Avenger action figure.
-  - I saw them brushing a My Little Pony doll's hair.
-  - They kept talking about Delta City and OCP.
-  - They had a creepy mask that looked like stitched together skin.
-  - 'There were clown dolls all over the cell they kept me in. '
+  - I saw them brushing a <color=yellow>Barbie</color> doll's hair.
+  - They had a bunch of <color=yellow>Funko Pop toys</color> lined up around their
+    desk.
+  - They kept a <color=yellow>red toy sled</color> on the wall.
+  - I saw them talking to a <color=yellow>Toxic Avenger action figure.</color>
+  - I saw them brushing a <color=yellow>My Little Pony</color> doll's hair.
+  - They kept talking about <color=yellow>Delta City and OCP</color>.
+  - They had a <color=yellow>creepy mask</color> that looked like stitched together
+    skin.
+  - 'There were <color=yellow>clown dolls</color> all over the cell they kept me
+    in. '
+  HasClueBeenGiven: 0

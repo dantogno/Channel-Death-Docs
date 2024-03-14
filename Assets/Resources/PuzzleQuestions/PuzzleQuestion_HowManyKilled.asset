@@ -15,21 +15,21 @@ MonoBehaviour:
   Type: 4
   QuestionText: How many victims have died?
   AnswerBank:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - 0
+  - 69
+  - 60
+  - 33
+  - 8
+  - 12
+  - 10
+  - 4
   ClueBank:
-  - They scratched a  tally mark on the wall each time someone died.
-  - They said it was important to know how many people have been slain.
-  - They scratched a  tally mark on the wall each time someone died.
-  - They said it was important to know how many people have been slain.
-  - They scratched a  tally mark on the wall each time someone died.
-  - They said it was important to know how many people have been slain.
-  - They scratched a  tally mark on the wall each time someone died.
-  - They said it was important to know how many people have been slain.
+  - They scratched a  tally mark on the wall <color=yellow>each time someone died.</color>
+  - They said it was important to know <color=yellow>how many people have been slain.</color>
+  - They scratched a  tally mark on the wall <color=yellow>each time someone died.</color>
+  - They said it was important to know <color=yellow>how many people have been slain.</color>
+  - They scratched a  tally mark on the wall <color=yellow>each time someone died.</color>
+  - They said it was important to know <color=yellow>how many people have been slain.</color>
+  - They scratched a  tally mark on the wall <color=yellow>each time someone died.</color>
+  - They said it was important to know <color=yellow>how many people have been slain.</color>
   HasClueBeenGiven: 0

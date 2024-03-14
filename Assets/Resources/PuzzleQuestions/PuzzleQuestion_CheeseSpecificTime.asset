@@ -24,10 +24,10 @@ MonoBehaviour:
   - "Ch\xE8vre"
   - Manchego
   ClueBank:
-  - 'They said: ''Remember to answer the question about cheese on an even numbered
-    minute.'' '
-  - 'They said: ''Remember to answer the question about cheese on an odd numbered
-    minute.'' '
+  - 'They said: ''Remember to answer the question about <color=yellow>cheese on an
+    even numbered minute.</color>'' '
+  - 'They said: ''Remember to answer the question about <color=yellow>cheese on an
+    odd numbered minute.''</color> '
   - 
   - 
   - 

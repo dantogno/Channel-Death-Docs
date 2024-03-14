@@ -24,15 +24,16 @@ MonoBehaviour:
   - Squirrel
   - Fish
   ClueBank:
-  - They had were petting a cat on their lap while they watched people get butchered!
-  - There was a tank with some kind of lizard in it. I think they fed it pieces of
-    the victims!
-  - They had a dog. They played fetch with human bones!
-  - They had a pet pig that ate the human remains.
-  - There was a tank with some kind of snake in it. I think they fed it pieces of
-    the victims!
-  - They had several tanks with spiders in them.
-  - They had a squirrel that road around on their shoulder.
-  - They had a tank with some kind of fish in it. I think they fed it pieces of the
-    victims!
+  - They had were petting a <color=yellow>cat</color> on their lap while they watched
+    people get butchered!
+  - There was a tank with some kind of <color=yellow>lizard</color> in it. I think
+    they fed it pieces of the victims!
+  - They had a <color=yellow>dog</color>. They played fetch with human bones!
+  - They had a pet <color=yellow>pig</color> that ate the human remains.
+  - There was a tank with some kind of <color=yellow>snake</color> in it. I think
+    they fed it pieces of the victims!
+  - They had several tanks with <color=yellow>spiders</color> in them.
+  - They had a <color=yellow>squirrel</color> that road around on their shoulder.
+  - They had a tank with some kind of <color=yellow>fish</color> in it. I think they
+    fed it pieces of the victims!
   HasClueBeenGiven: 0

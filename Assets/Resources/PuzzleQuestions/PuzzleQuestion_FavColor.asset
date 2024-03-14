@@ -24,14 +24,17 @@ MonoBehaviour:
   - Cherry
   - Carmine
   ClueBank:
-  - They kept saying something about 'red' being the first color of the rainbow.
-  - I woke up in a room full of roses.
-  - They kept muttering about someone named Scarlet.
-  - They wouldn't stop playing some weird music they called "King Crimson."
-  - They kept talking about Pokemon Ruby?
-  - I found a note that says "Sanguine, or red chalk, is a chalk of reddish-browrn
-    color, so called because it resembles the color of dried blood."
-  - When I woke up, I found a drawing of three cherries in my pocket.
-  - They said the only way to produce the color carmine was by crushing insects.
-    So gross!
+  - They kept saying something about <color=yellow>'red'</color> being the first
+    color of the rainbow.
+  - I woke up in a room full of <color=yellow>roses.</color>
+  - They kept muttering about someone named <color=yellow>Scarlet.</color>
+  - They wouldn't stop playing some weird music they called <color=yellow>"King Crimson."</color>
+  - They kept talking about <color=yellow>Pokemon Ruby</color>?
+  - I found a note that says <color=yellow>"Sanguine</color>, or red chalk, is a
+    chalk of reddish-browrn color, so called because it resembles the color of dried
+    blood."
+  - When I woke up, I found a drawing of three <color=yellow>cherries</color> in
+    my pocket.
+  - They said the only way to produce the color <color=yellow>carmine</color> was
+    by crushing insects. So gross!
   HasClueBeenGiven: 0
