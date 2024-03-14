@@ -677,7 +677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1339054293100853571
 Transform:
   m_ObjectHideFlags: 0
@@ -1440,7 +1440,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &460976909968903224
 Transform:
   m_ObjectHideFlags: 0
@@ -1637,7 +1637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8600370963178435509
 Transform:
   m_ObjectHideFlags: 0
@@ -1762,7 +1762,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.00015664}
-  m_SizeDelta: {x: 742.57, y: 19.671}
+  m_SizeDelta: {x: 0, y: 19.671}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3460024734785383275
 CanvasRenderer:
@@ -2903,6 +2903,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFemale: 1
+  VictimData:
+    Name: 
 --- !u!1001 &1430050540603515146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3088,6 +3090,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFemale: 0
+  VictimData:
+    Name: 
 --- !u!4 &1977952208805464537 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3c9e89e3bd19cde458590ab4f3e87786,
@@ -3321,6 +3325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFemale: 1
+  VictimData:
+    Name: 
 --- !u!1001 &2799726933614685891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3400,6 +3406,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5905856087541491190}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: be0da01943f54a54690e8a81b4923efb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3785511846735343172}
   m_SourcePrefab: {fileID: 100100000, guid: be0da01943f54a54690e8a81b4923efb, type: 3}
 --- !u!4 &2400446834298259752 stripped
 Transform:
@@ -3522,6 +3532,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3785511846735343172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3034239783959221138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb3bed0f5387da64b8c6af9ee4529905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodySaw: {fileID: 2100000, guid: 91ca0e5bb0b67a74db7b39849cfa3f65, type: 2}
+  splatters:
+  - {fileID: 6185204169234092122}
+  - {fileID: 2554957945856376937}
+  - {fileID: 6844500260064619937}
 --- !u!1001 &2981248248694004838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3734,6 +3761,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFemale: 0
+  VictimData:
+    Name: 
 --- !u!4 &3280202285056323846 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d0f9e8c65513adb46a3834f96834c832,
@@ -4011,6 +4040,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFemale: 1
+  VictimData:
+    Name: 
 --- !u!1001 &3911215529401300049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4670,6 +4701,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFemale: 0
+  VictimData:
+    Name: 
 --- !u!4 &5200301761612402574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7a2e48bd5761e12438666b605aba0494,
@@ -5050,7 +5083,7 @@ PrefabInstance:
     - target: {fileID: 1248787219117060282, guid: d700168fb844dcc479a696ecdf47f74c,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917815479453770111, guid: d700168fb844dcc479a696ecdf47f74c,
         type: 3}
@@ -5274,7 +5307,7 @@ PrefabInstance:
     - target: {fileID: 7640334492936964969, guid: 116d9a3522a7dcf44927f4f0042a9429,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5579,6 +5612,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFemale: 0
+  VictimData:
+    Name: 
 --- !u!1001 &9038702008140045715
 PrefabInstance:
   m_ObjectHideFlags: 0

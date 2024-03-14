@@ -5009,6 +5009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3959659001404812195}
   - component: {fileID: 3814455142986868212}
+  - component: {fileID: 5973600141505235143}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -5041,9 +5042,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3d82882daa60951428e84e13d8ce2d4e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ccc28c1a424013344b97479f63ca7b4d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5127,6 +5128,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!165 &5973600141505235143
+AudioHighPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566542831758006016}
+  m_Enabled: 1
+  m_CutoffFrequency: 10
+  m_HighpassResonanceQ: 1
 --- !u!1 &3643027761805844547
 GameObject:
   m_ObjectHideFlags: 0
@@ -8778,6 +8789,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7b6cc27293a0f024b9a41aa146705234, type: 3}
   parentChannel: {fileID: 4881820044719825211}
   numText: {fileID: 1951064164177870488}
+  musicFilter: {fileID: 5973600141505235143}
 --- !u!1 &5824708290826629603
 GameObject:
   m_ObjectHideFlags: 0
@@ -12068,6 +12080,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   ChannelExited:
     m_PersistentCalls:
       m_Calls:
@@ -12082,6 +12106,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine

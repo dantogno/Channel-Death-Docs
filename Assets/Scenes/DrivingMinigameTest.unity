@@ -254,11 +254,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DrivingChannel
       objectReference: {fileID: 0}
-    - target: {fileID: 5055290758204233529, guid: 50c746a91bd5f5f49967abd789b48a0f,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6221241878258487495, guid: 50c746a91bd5f5f49967abd789b48a0f,
         type: 3}
       propertyPath: m_LocalPosition.x

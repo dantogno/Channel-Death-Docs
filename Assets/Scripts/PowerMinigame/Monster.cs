@@ -38,6 +38,11 @@ public class Monster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void InitializeMonster()
+    {
         initialPosition = transform.position;
         initialLoopVOl = monsterLoopSource.volume;
     }

@@ -2750,18 +2750,33 @@ MonoBehaviour:
   fillBars:
   - {fileID: 5179175020729356119}
   MaxPower: 1
-  PowerDepletionRate: 0.075
+  PowerDepletionRate: 0.04
   monster: {fileID: 8312879808191622562}
   LoseThreshHold: 2.5
   clockText: {fileID: 3897122577073559608}
   hours:
   - 1:00AM
+  - 1:15AM
+  - 1:30AM
+  - 1:45AM
   - 2:00AM
+  - 2:15AM
+  - 2:30AM
+  - 2:45AM
   - 3:00AM
+  - 3:15AM
+  - 3:30AM
+  - 3:45AM
   - 4:00AM
+  - 4:15AM
+  - 4:30AM
+  - 4:45AM
   - 5:00AM
+  - 5:15AM
+  - 5:30AM
+  - 5:45AM
   - 6:00AM
-  hourLength: 12
+  hourLength: 2
   flashlight: {fileID: 7728105931762456510}
   lightOn: {fileID: 8300000, guid: 8bd5fc0ebaf2e94419594cd49c551262, type: 3}
   lightOff: {fileID: 8300000, guid: 35c28761617707946a6ece38a3afa48c, type: 3}
