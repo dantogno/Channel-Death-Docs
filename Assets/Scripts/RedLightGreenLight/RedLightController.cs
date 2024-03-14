@@ -112,7 +112,7 @@ public class RedLightController : MonoBehaviour
                 if (currentCharge < 0) currentCharge = 0;
             }
         } else {
-            currentCharge -= Time.deltaTime * .2f;
+            //currentCharge -= Time.deltaTime * .2f;
             if (currentCharge < 0) currentCharge = 0f;
         }
         if (lightState == LightState.red) {

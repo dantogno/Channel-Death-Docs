@@ -102,7 +102,7 @@ public class MazePlayerController : MonoBehaviour
         RenderSettings.fogDensity = 0.2f;
         currentFov = baseFov;
         InputManager.InputActions.Gameplay.Input2.performed += Walk;
-        //InputManager.InputActions.Gameplay.Input2.canceled += StopWalking;
+        InputManager.InputActions.Gameplay.Input2.canceled += StopWalking;
         //InputManager.InputActions.Gameplay.Input8.canceled += StopWalking;
         InputManager.InputActions.Gameplay.Input4.performed += TurnLeft;
         InputManager.InputActions.Gameplay.Input6.performed += TurnRight;
@@ -117,7 +117,7 @@ public class MazePlayerController : MonoBehaviour
     private void OnDisable()
     {
         RenderSettings.fogDensity = 0.01f;
-        //InputManager.InputActions.Gameplay.Input2.canceled -= StopWalking;
+        InputManager.InputActions.Gameplay.Input2.canceled -= StopWalking;
         //InputManager.InputActions.Gameplay.Input8.canceled -= StopWalking;
         InputManager.InputActions.Gameplay.Input2.performed -= Walk;
         InputManager.InputActions.Gameplay.Input4.performed -= TurnLeft;
@@ -200,8 +200,8 @@ public class MazePlayerController : MonoBehaviour
 
     void Walk(InputAction.CallbackContext context)
     {
-        //HoldingWalkInput = true;
-        if(playerState == PlayerState.idle)
+        HoldingWalkInput = true;
+        if (playerState == PlayerState.idle)
         {
             Move();
         }

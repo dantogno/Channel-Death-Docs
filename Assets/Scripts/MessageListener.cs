@@ -27,6 +27,8 @@ public class MessageListener : OnScreenControl
 
     private void Update()
     {
+        //TODO
+        //Test whether checking the queue length is 0 helps this situation?
         if (waitingRelease) {
             timeSinceLast += Time.deltaTime;
             if (timeSinceLast > waitTimeSinceLast) {
