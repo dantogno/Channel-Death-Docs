@@ -37,9 +37,9 @@ public class PuzzleQuestion: ScriptableObject
     /// <summary>
     /// Single correct answer to be used in the puzzle, chosen from the AnswerBank
     /// </summary>
-    public int CorrectAnswerIndex { get; private set; }
+    public int CorrectAnswerIndex { get; set; }
 
-    public bool IsInitialized { get; private set; } = false;
+    public bool IsInitialized { get; set; } = false;
 
     /// <summary>
     /// Clue revealed when victim is saved. Clue given should correspond with the correct answer index.
@@ -100,10 +100,15 @@ public class PuzzleQuestion: ScriptableObject
         // other answers will be randomized, with some lower and some higher
         for (int i = 1; i < AnswerBank.Length; i++)
         {
+            float answer = 0f;
             if (i > 3)
-                AnswerBank[i] = UnityEngine.Random.Range(1, 10).ToString();
+                answer = UnityEngine.Random.Range(1, 10);
             else
-                AnswerBank[i] = UnityEngine.Random.Range(11, 50).ToString();
+                answer = UnityEngine.Random.Range(11, 50);
+
+            if (answer == GameManager.Instance.RescuedCount) answer += UnityEngine.Random.Range(1, 10);
+            AnswerBank[i] = answer.ToString();
+
         }
 
         if (GameManager.Instance.RescuedCount > 0)
@@ -124,10 +129,14 @@ public class PuzzleQuestion: ScriptableObject
         // other answers will be randomized, with some lower and some higher
         for (int i = 1; i < AnswerBank.Length; i++)
         {
+            float answer = 0f;
             if (i > 3)
-                AnswerBank[i] = UnityEngine.Random.Range(1, 20).ToString();
+                answer = UnityEngine.Random.Range(1, 20);
             else
-                AnswerBank[i] = UnityEngine.Random.Range(21, 80).ToString();
+                answer = UnityEngine.Random.Range(21, 80);
+
+            if (answer == GameManager.Instance.KillCount) answer += UnityEngine.Random.Range(1, 10);
+            AnswerBank[i] = answer.ToString();
         }
 
         if (GameManager.Instance.KillCount > 0) 

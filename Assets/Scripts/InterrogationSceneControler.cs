@@ -79,7 +79,7 @@ public class InterrogationSceneControler : MonoBehaviour
     {
         isPlaying = true;
         // Detective: confirm your name:
-        closedCaptionText.text = detectivePrefix + "Can please you state your name for the recording?";
+        closedCaptionText.text = detectivePrefix + "Can you please state your name for the recording?";
         closedCaptionText.gameObject.SetActive(true);
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
         yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
@@ -167,6 +167,7 @@ public class InterrogationSceneControler : MonoBehaviour
         // if we get here, we've given all the clues within this index.
         // repeat a random clue (don't show clues they haven't seen yet)
         var randomClueIndex = UnityEngine.Random.Range(0, maxIndex);
+        Debug.Log(SaveSystem.CurrentGameData.QuestionList.Count);
         var randomQuestion = SaveSystem.CurrentGameData.QuestionList[randomClueIndex];
         return victimPrefix + randomQuestion.ClueBank[randomQuestion.CorrectAnswerIndex];
     }

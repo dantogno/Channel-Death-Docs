@@ -19,12 +19,17 @@ public static class SaveSystem
                 if (File.Exists(fileLocation))
                 {
                     string jsonFileData = File.ReadAllText(fileLocation);
+                    Debug.Log(jsonFileData);
+
                     currentGameData = JsonConvert.DeserializeObject<SaveData>(jsonFileData);
                     // clear victims in history that have state == none
                     // these are victims that were not saved or killed when the game was saved
                     if (currentGameData.VictimHistory != null)
                     {
                         currentGameData.VictimHistory.RemoveAll(victim => victim.State == VictimState.None);
+                    }
+                    foreach (PuzzleQuestion question in currentGameData.QuestionList) {
+                        Debug.Log(question.QuestionText + " and " + question.CorrectAnswerIndex + " and " + question.IsInitialized);
                     }
                 }
                 else
@@ -41,9 +46,9 @@ public static class SaveSystem
         }
     }
 
-    private static void CreateNewGame()
+    public static void CreateNewGame()
     {
-        currentGameData = new SaveData();
+        currentGameData = new SaveData(new List<PuzzleQuestion>(), new List<VictimData>(), new List<PuzzleQuestionSave>(), GameManager.Instance.TotalTimeLimitInSeconds);
 
         InitializePuzzleQuestionList();
 
@@ -75,6 +80,16 @@ public static class SaveSystem
             chosenQuestions.Add(question);
             question.InitializeQuestion();
         }
+        for (int i = 0; i < chosenQuestions.Count; i++) {
+            currentGameData.SavedQuestionList.Add(new PuzzleQuestionSave());
+            currentGameData.SavedQuestionList[i].AnswerBank = chosenQuestions[i].AnswerBank;
+            currentGameData.SavedQuestionList[i].ClueBank = chosenQuestions[i].ClueBank;
+            currentGameData.SavedQuestionList[i].HasClueBeenGiven = chosenQuestions[i].HasClueBeenGiven ;
+            currentGameData.SavedQuestionList[i].QuestionText = chosenQuestions[i].QuestionText ;
+            currentGameData.SavedQuestionList[i].IsInitialized = chosenQuestions[i].IsInitialized;
+            currentGameData.SavedQuestionList[i].CorrectAnswerIndex = chosenQuestions[i].CorrectAnswerIndex ;
+            currentGameData.SavedQuestionList[i].Type = chosenQuestions[i].Type ;
+        }
         currentGameData.QuestionList = chosenQuestions;
     }
 
@@ -98,11 +113,24 @@ public class SaveData
     public float TimeRemainingInSeconds;
     public List<PuzzleQuestion> QuestionList;
     public List<VictimData> VictimHistory;
+    public List<PuzzleQuestionSave> SavedQuestionList;
 
-    public SaveData()
+    public SaveData(List<PuzzleQuestion> QuestionList, List<VictimData> VictimHistory, List<PuzzleQuestionSave> SavedQuestionList, float TimeRemainingInSeconds)
     {
-        TimeRemainingInSeconds = GameManager.Instance.TotalTimeLimitInSeconds;
-        QuestionList = new List<PuzzleQuestion>();
-        VictimHistory = new List<VictimData>();
+        this.TimeRemainingInSeconds = TimeRemainingInSeconds;
+        this.QuestionList = QuestionList;
+        this.VictimHistory = VictimHistory;
+        this.SavedQuestionList = SavedQuestionList;
+        if (SavedQuestionList.Count > 0) {
+            for (int i = 0; i < SavedQuestionList.Count; i++) {
+                this.QuestionList[i].AnswerBank = SavedQuestionList[i].AnswerBank;
+                this.QuestionList[i].ClueBank = SavedQuestionList[i].ClueBank;
+                this.QuestionList[i].HasClueBeenGiven = SavedQuestionList[i].HasClueBeenGiven;
+                this.QuestionList[i].QuestionText = SavedQuestionList[i].QuestionText;
+                this.QuestionList[i].IsInitialized = SavedQuestionList[i].IsInitialized;
+                this.QuestionList[i].CorrectAnswerIndex = SavedQuestionList[i].CorrectAnswerIndex;
+                this.QuestionList[i].Type = SavedQuestionList[i].Type;
+            }
+        }
     }
 }
