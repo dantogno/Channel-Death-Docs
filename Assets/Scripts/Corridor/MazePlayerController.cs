@@ -64,6 +64,7 @@ public class MazePlayerController : MonoBehaviour
         Vector3 startPos = MazeGenerator.Instance.MazeGrid[0, 0].transform.position;
         transform.position = new Vector3(startPos.x, transform.position.y, startPos.z);
         currentCell = new Vector2(0, 0);
+        TurnLeft(new InputAction.CallbackContext());
     }
 
     private Vector2 getNextCell()

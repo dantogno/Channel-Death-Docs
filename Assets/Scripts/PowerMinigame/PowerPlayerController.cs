@@ -67,6 +67,7 @@ public class PowerPlayerController : MonoBehaviour
     }
     void Start()
     {
+        monster.InitializeMonster();
         Setup();
         started = true;
         PasscodeManager.NewPasscodeSet += NewPasscodeSet;
@@ -103,14 +104,13 @@ public class PowerPlayerController : MonoBehaviour
     bool waitingForNextHour;
     IEnumerator IncreaseTime()
     {
-        clockText.text = hours[currentHour];
+        setCurrentHour();
         waitingForNextHour = true;
         yield return new WaitForSeconds(hourLength);
         currentHour += 1;
-        clockText.text = hours[currentHour];
-        if(currentHour >= hours.Length - 1 && !lost)
+        setCurrentHour();
+        if (currentHour >= hours.Length - 1 && !lost)
         {
-            Debug.Log("You win! Display Number");
             won = true;
             numText.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
             numText.enabled = true;
@@ -118,6 +118,14 @@ public class PowerPlayerController : MonoBehaviour
         else
         {
             waitingForNextHour=false;
+        }
+    }
+
+    private void setCurrentHour()
+    {
+        if(currentHour <= hours.Length -1)
+        {
+            clockText.text = hours[currentHour];
         }
     }
 
@@ -155,7 +163,7 @@ public class PowerPlayerController : MonoBehaviour
         }
         currentDistance = Vector3.Distance(transform.position, monster.transform.position);
         updateProgressBar();
-        if(currentDistance < LoseThreshHold && !won)
+        if(currentDistance < LoseThreshHold && !won && HasHitPowerOnce)
         {
             JumpScare();
         }

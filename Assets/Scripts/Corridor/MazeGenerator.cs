@@ -15,8 +15,6 @@ public class MazeGenerator : MonoBehaviour
     private GameObject endPoint;
     [SerializeField]
     private TMP_Text numberDisplay;
-    [SerializeField]
-    private GameObject midPoint;
 
     public int mazeWidth;
 
@@ -27,6 +25,9 @@ public class MazeGenerator : MonoBehaviour
     public int cellScale;
 
     private Channel parentChannel;
+
+    [SerializeField]
+    GameObject instructions;
 
     private void Awake()
     {
@@ -59,8 +60,9 @@ public class MazeGenerator : MonoBehaviour
         MazeCell[,] endhall = generateEndingHall();
         MazeGrid = concantonate2DArray(MazeGrid, endhall);
         endPoint.transform.position = MazeGrid[0, mazeDepth - 1].transform.position;
-        Vector3 mp = MazeGrid[(int)((mazeWidth - 1) / 2), (int)((mazeDepth - 1) / 2)].transform.position;
-        midPoint.transform.position = mp + new Vector3(0, 0, 0);
+        //Vector3 mp = MazeGrid[(int)((mazeWidth - 1) / 2), (int)((mazeDepth - 1) / 2)].transform.position;
+        //midPoint.transform.position = mp + new Vector3(0, 0, 0);
+        instructions.transform.position = MazeGrid[0, 0].transform.position;
         JumpScare.Instance.InitializeJumpscare();
         MazePlayerController.Instance.InitializePlayerLocation();
         MazeGrid[0, 0].ClearFrontWall();

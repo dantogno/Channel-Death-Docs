@@ -65,6 +65,7 @@ public class PlayerCarController : MonoBehaviour
         StartPosition = transform.position;
         direction = transform.forward;
         StartCoroutine(WaitForMessage());
+        CanMove = true;
     }
 
     IEnumerator WaitForMessage()
@@ -72,7 +73,7 @@ public class PlayerCarController : MonoBehaviour
         Message.SetActive(true);
         yield return new WaitForSeconds(messageDisplayLength);
         Message.SetActive(false);
-        CanMove = true;
+        //CanMove = true;
     }
 
     private void OnEnable()
@@ -269,6 +270,6 @@ public class PlayerCarController : MonoBehaviour
         transform.position = StartPosition;
         direction = transform.forward;
         currentSpeed = 0;
-        CanMove = false;
+        CanMove = true;
     }
 }
