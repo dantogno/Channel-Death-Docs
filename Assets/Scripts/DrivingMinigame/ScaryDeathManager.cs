@@ -47,6 +47,12 @@ public class ScaryDeathManager : MonoBehaviour
     void Start()
     {
         scareAS = GetComponent<AudioSource>();
+        PasscodeManager.NewPasscodeSet += FullReset;
+    }
+
+    private void OnDestroy()
+    {
+        PasscodeManager.NewPasscodeSet -= FullReset;
     }
 
     // Update is called once per frame
@@ -97,6 +103,14 @@ public class ScaryDeathManager : MonoBehaviour
     {
         if(PlayerCarController.Instance == null || PlayerCarController.Instance.CompletedMiniGame)
         {
+            return;
+        }
+        FullReset("");
+    }
+
+    public void FullReset(string passcode)
+    {
+        if (PlayerCarController.Instance == null) {
             return;
         }
         StopAllCoroutines();
