@@ -211,7 +211,7 @@ public class GameManager : Singleton<GameManager>
 
             //TODO
             //Instead of reseting time here, we should just be making a new save?
-            SaveSystem.CurrentGameData.TimeRemainingInSeconds = TotalTimeLimitInSeconds;
+            SaveSystem.CreateNewGame();
 
 
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameLose");

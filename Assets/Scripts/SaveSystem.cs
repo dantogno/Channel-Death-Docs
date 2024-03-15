@@ -28,9 +28,6 @@ public static class SaveSystem
                     {
                         currentGameData.VictimHistory.RemoveAll(victim => victim.State == VictimState.None);
                     }
-                    foreach (PuzzleQuestion question in currentGameData.QuestionList) {
-                        Debug.Log(question.QuestionText + " and " + question.CorrectAnswerIndex + " and " + question.IsInitialized);
-                    }
                 }
                 else
                 {
