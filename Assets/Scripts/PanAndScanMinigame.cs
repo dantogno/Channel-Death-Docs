@@ -110,20 +110,22 @@ public class PanAndScanMinigame : MonoBehaviour
         {
             var zoomInPressed = InputManager.InputActions.Gameplay.UpPlusR.IsInProgress();
             var zoomOutPressed = InputManager.InputActions.Gameplay.DownMinusL.IsInProgress();
+            var volumeUpPress = InputManager.InputActions.Gameplay.VolumeUp.IsInProgress();
+            var volumeDownPress = InputManager.InputActions.Gameplay.VolumeDown.IsInProgress();
             var upPressed = InputManager.InputActions.Gameplay.Input2.IsInProgress();
             var downPressed = InputManager.InputActions.Gameplay.Input8.IsInProgress();
             var leftPressed = InputManager.InputActions.Gameplay.Input4.IsInProgress();
             var rightPressed = InputManager.InputActions.Gameplay.Input6.IsInProgress();
 
-            if (zoomInPressed) { Zoom(true); }
-            if (zoomOutPressed) { Zoom(false); }
+            if (zoomInPressed || volumeUpPress) { Zoom(true); }
+            if (zoomOutPressed || volumeDownPress) { Zoom(false); }
             if (upPressed) { PanVertical(true); }
             if (downPressed) { PanVertical(false); }
             if (leftPressed) { PanHorizontal(false); }
             if (rightPressed) { PanHorizontal(true); }
 
             // if any button is pressed, reset the timer
-            if (zoomInPressed || zoomOutPressed || upPressed || downPressed || leftPressed || rightPressed)
+            if (zoomInPressed || zoomOutPressed || upPressed || downPressed || leftPressed || rightPressed || volumeUpPress || volumeDownPress)
             {
                 repeatInputTimer = 0;
             }
