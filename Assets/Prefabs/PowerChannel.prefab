@@ -1205,6 +1205,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5875327679651409787}
+        m_TargetAssemblyTypeName: SuitPulse, Assembly-CSharp
+        m_MethodName: Pulse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   ChannelExited:
     m_PersistentCalls:
       m_Calls:
@@ -2750,7 +2762,7 @@ MonoBehaviour:
   fillBars:
   - {fileID: 5179175020729356119}
   MaxPower: 1
-  PowerDepletionRate: 0.04
+  PowerDepletionRate: 0.055
   monster: {fileID: 8312879808191622562}
   LoseThreshHold: 2.5
   clockText: {fileID: 3897122577073559608}
@@ -3544,9 +3556,9 @@ Canvas:
   m_GameObject: {fileID: 8219272818591843655}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 2197212432005333149}
+  m_PlaneDistance: 0.42
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -3570,7 +3582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -4140,6 +4152,7 @@ GameObject:
   - component: {fileID: 6052953365203347162}
   - component: {fileID: 1306555171504231549}
   - component: {fileID: 6587223291167177903}
+  - component: {fileID: 5875327679651409787}
   m_Layer: 0
   m_Name: Suit Image
   m_TagString: Untagged
@@ -4163,8 +4176,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15, y: -15}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: 26.3, y: -28.6}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1306555171504231549
 CanvasRenderer:
@@ -4204,6 +4217,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5875327679651409787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812930344184685877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e549c3927c68da1488e831d6b3e77f3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8976549752578055434
 GameObject:
   m_ObjectHideFlags: 0
