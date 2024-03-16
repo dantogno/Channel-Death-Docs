@@ -207,7 +207,7 @@ public class PuzzleQuestion: ScriptableObject
         if (deadVictims.Count > 0)
         {
             CorrectAnswerIndex = UnityEngine.Random.Range(1, AnswerBank.Length);
-            AnswerBank[CorrectAnswerIndex] = deadVictims[UnityEngine.Random.Range(0, deadVictims.Count)].Name;
+            AnswerBank[CorrectAnswerIndex] = deadVictims[deadVictims.Count - 1].Name;
         }
         // if there are no dead victims, index 0 is the correct answer
         else
