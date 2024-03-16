@@ -22,11 +22,20 @@ public class EndgameSequence : MonoBehaviour
     IEnumerator RestartDelay()
     {
         yield return new WaitForSeconds(delaytillOffVideo);
-        offSound.Play();
-        black.SetActive(true);
-        tone.Stop();
-        video.SetActive(false);
+        if (offSound != null) {
+            offSound.Play();
+        }
+        if (black != null) {
+            black.SetActive(true);
+        }
+        if (tone != null) {
+            tone.Stop();
+        }
+        if (video != null) {
+            video.SetActive(false);
+        }
         yield return new WaitForSeconds(delaytillReload);
+        SaveSystem.CreateNewGame();
         SceneManager.LoadScene("TitleScene");
     }
 }

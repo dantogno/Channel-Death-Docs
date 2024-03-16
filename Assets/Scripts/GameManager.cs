@@ -209,11 +209,6 @@ public class GameManager : Singleton<GameManager>
         if (SaveSystem.CurrentGameData.TimeRemainingInSeconds < 0 && !inlossLoad) {
             inlossLoad = false;
 
-            //TODO
-            //Instead of reseting time here, we should just be making a new save?
-            SaveSystem.CreateNewGame();
-
-
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameLose");
         }
     }
