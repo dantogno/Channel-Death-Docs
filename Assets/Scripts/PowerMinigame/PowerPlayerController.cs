@@ -242,7 +242,7 @@ public class PowerPlayerController : MonoBehaviour
     bool started;
     private void OnEnable()
     {
-        if (started)
+        if (started && !won)
         {
             Setup();
         }
