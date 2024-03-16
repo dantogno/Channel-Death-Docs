@@ -3414,6 +3414,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 649379037460272688}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: be0da01943f54a54690e8a81b4923efb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3861673437096830690}
   m_SourcePrefab: {fileID: 100100000, guid: be0da01943f54a54690e8a81b4923efb, type: 3}
 --- !u!4 &2400446834298259752 stripped
 Transform:
@@ -3554,6 +3558,23 @@ MonoBehaviour:
   - {fileID: 2554957945856376937}
   - {fileID: 6844500260064619937}
 --- !u!114 &649379037460272688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3034239783959221138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb3bed0f5387da64b8c6af9ee4529905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodySaw: {fileID: 2100000, guid: 91ca0e5bb0b67a74db7b39849cfa3f65, type: 2}
+  splatters:
+  - {fileID: 6185204169234092122}
+  - {fileID: 2554957945856376937}
+  - {fileID: 6844500260064619937}
+--- !u!114 &3861673437096830690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5438,6 +5459,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Mineing
       objectReference: {fileID: 0}
+    - target: {fileID: 6104106576010339515, guid: 5a0db2ebfbaf7214b9fb9e6e04be1151,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9ec4316547e963345b2fc6e656a324d4, type: 2}
     - target: {fileID: 6909340422180886160, guid: 5a0db2ebfbaf7214b9fb9e6e04be1151,
         type: 3}
       propertyPath: playOnAwake

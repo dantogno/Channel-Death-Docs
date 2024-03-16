@@ -80,13 +80,16 @@ public class PowerPlayerController : MonoBehaviour
 
     private void NewPasscodeSet(string str)
     {
+        started = false;
         Setup();
+        started = true;
         numText.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
     }
 
     private void Setup()
     {
-
+        powerState = PowerState.idle;
+        flashlight.enabled = false;
         StopAllCoroutines();
         HasHitPowerOnce = false;
         jumpscareMonster.SetActive(false);
@@ -96,7 +99,7 @@ public class PowerPlayerController : MonoBehaviour
         powerState = PowerState.idle;
         powerRemaining = MaxPower;
         monster.SetupMonster();
-        
+        won = false;
         lost = false;
         numText.enabled = false;
     }
