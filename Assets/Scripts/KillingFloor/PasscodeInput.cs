@@ -76,6 +76,7 @@ public class PasscodeInput : MonoBehaviour
         GameManager.NewVictimSpawned -= OnNewVictimSpawned;
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
         GameManager.bonusSpeed = 1f;
+        blockInput = false;
     }
 
     private void AddInputToDigitEntryField(PasscodeDigitEntry digitEntryField, string input)
