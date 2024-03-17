@@ -147,6 +147,7 @@ public class VolumeMinigame : MonoBehaviour
         clueAudioSource.Play();
         SetClueCaption();
         shouldSkipToClue = true;
+        currentHealth = 0;
     }
 
 
@@ -276,38 +277,30 @@ public class VolumeMinigame : MonoBehaviour
             repeatInputTimer = 0;
             DecreaseVolume(); 
         }
-
-        if (isCommercialPlaying && VolumePercentage > 0.15f)
-        {
-            //commercialViewTimer += Time.deltaTime;
-            currentHealth += Time.deltaTime;
-            //if (commercialViewTimer > commercialViewTimeThreshold && !playingJumpScare)
-            if(currentHealth > commercialViewTimeThreshold && !playingJumpScare)
-            {
-                StopAllCoroutines();
-                StartCoroutine(PlayJumpScareFailureCoroutine());
-            }
-            
-        }
-        else
-        {
-            if (!isCommercialPlaying && VolumePercentage < 0.2f)
-            {
-                //musicMutedTimer += Time.deltaTime;
+        if (!shouldSkipToClue) {
+            if (isCommercialPlaying && VolumePercentage > 0.15f) {
+                //commercialViewTimer += Time.deltaTime;
                 currentHealth += Time.deltaTime;
-                //if (musicMutedTimer > musicMutedTimeThreshold && !playingJumpScare)
-                if (currentHealth > musicMutedTimeThreshold && !playingJumpScare)
-                {
+                //if (commercialViewTimer > commercialViewTimeThreshold && !playingJumpScare)
+                if (currentHealth > commercialViewTimeThreshold && !playingJumpScare) {
                     StopAllCoroutines();
                     StartCoroutine(PlayJumpScareFailureCoroutine());
                 }
-            }
-            else
-            {
-                currentHealth -= Time.deltaTime;
-                if(currentHealth < 0)
-                {
-                    currentHealth = 0;
+
+            } else {
+                if (!isCommercialPlaying && VolumePercentage < 0.2f) {
+                    //musicMutedTimer += Time.deltaTime;
+                    currentHealth += Time.deltaTime;
+                    //if (musicMutedTimer > musicMutedTimeThreshold && !playingJumpScare)
+                    if (currentHealth > musicMutedTimeThreshold && !playingJumpScare) {
+                        StopAllCoroutines();
+                        StartCoroutine(PlayJumpScareFailureCoroutine());
+                    }
+                } else {
+                    currentHealth -= Time.deltaTime;
+                    if (currentHealth < 0) {
+                        currentHealth = 0;
+                    }
                 }
             }
         }
@@ -401,6 +394,7 @@ public class VolumeMinigame : MonoBehaviour
     {
         volumeCanvas.gameObject.SetActive(false);
         musicMutedTimer = 0;
+        currentHealth = 0;
         commercialViewTimer = 0;
         playingJumpScare = false;
         jumpScare.SetActive(false );
