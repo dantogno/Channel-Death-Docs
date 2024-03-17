@@ -36,6 +36,7 @@ public class MazeGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
         InitializeMaze();
     }
 
@@ -59,6 +60,7 @@ public class MazeGenerator : MonoBehaviour
         StartMazeGeneration();
         MazeCell[,] endhall = generateEndingHall();
         MazeGrid = concantonate2DArray(MazeGrid, endhall);
+        //AssignPosiions();
         endPoint.transform.position = MazeGrid[0, mazeDepth - 1].transform.position;
         //Vector3 mp = MazeGrid[(int)((mazeWidth - 1) / 2), (int)((mazeDepth - 1) / 2)].transform.position;
         //midPoint.transform.position = mp + new Vector3(0, 0, 0);
@@ -71,8 +73,11 @@ public class MazeGenerator : MonoBehaviour
         {
             parentChannel = GetComponentInParent<Channel>();
         }
+        Instance = this;
         numberDisplay.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
     }
+
+
 
     public Vector3 GetGoalPos()
     {
@@ -88,6 +93,16 @@ public class MazeGenerator : MonoBehaviour
             return true;
         }
         return false;
+    }
+    private void AssignPosiions()
+    {
+        for(int x = 0; x < MazeGrid.GetLength(0)-1; x++)
+        {
+            for(int y = 0; y < MazeGrid.GetLength(1)-1; y++)
+            {
+                MazeGrid[x, y].gridPos = new Vector2(x, y);
+            }
+        }
     }
     private MazeCell[,] concantonate2DArray(MazeCell[,] main, MazeCell[,] end)
     {

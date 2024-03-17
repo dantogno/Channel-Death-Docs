@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -77,6 +78,10 @@ public class PasscodeInput : MonoBehaviour
         PasscodeManager.ValidationCompleted += OnValidationCompleted;
         GameManager.bonusSpeed = 1f;
         blockInput = false;
+        if (confetti.isEmitting)
+        {
+            confetti.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        }
     }
 
     private void AddInputToDigitEntryField(PasscodeDigitEntry digitEntryField, string input)

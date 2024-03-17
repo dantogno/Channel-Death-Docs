@@ -46,6 +46,11 @@ public class MusicPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(MazeGenerator.Instance == null)
+        {
+            Debug.LogError("MAZEGENERATORISNULL");
+            return;
+        }
         if (!MazeGenerator.Instance.IsPlayerInEndingHall())
         {
             float dis = Vector3.Distance(GoalPos, MazePlayerController.Instance.transform.position);
@@ -62,6 +67,17 @@ public class MusicPlayer : MonoBehaviour
             filter.cutoffFrequency = cutoff;
             float dry = MapValue(weight, 0, 1, -10000, -100);
             reverbFilter.dryLevel = dry;
+        }
+        if(JumpScare.Instance != null)
+        {
+            if (JumpScare.Instance.ScareComplete)
+            {
+                postProcess.weight -= 0.02f;
+                if(postProcess.weight < 0)
+                {
+                    postProcess.weight = 0;
+                }
+            }
         }
     }
 

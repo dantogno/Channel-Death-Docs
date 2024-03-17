@@ -17,6 +17,8 @@ public class MazeCell : MonoBehaviour
     [SerializeField]
     private GameObject light;
 
+    public Vector2 gridPos;
+
     public bool Visited { get; private set; }
 
     public void Visit()
@@ -48,5 +50,46 @@ public class MazeCell : MonoBehaviour
     public void DisableLight()
     {
         light.SetActive(false);
+    }
+
+    public bool isFrontWallActive()
+    {
+        return frontWall.activeSelf;
+    }
+
+    public bool isBackWallActive()
+    {
+        return backWall.activeSelf;
+    }
+
+    public bool isLeftWallActive()
+    {
+        return leftWall.activeSelf;
+    }
+
+    public bool isRightWallActive()
+    {
+        return rightWall.activeSelf;
+    }
+
+    bool IsWalkable(MazeCell currentCell)
+    {
+        if(currentCell.gridPos.x < gridPos.x)
+        {
+            return !(isBackWallActive() && currentCell.isFrontWallActive());
+        }
+        if(currentCell.gridPos.x > gridPos.x)
+        {
+            return !(isFrontWallActive() && currentCell.isBackWallActive());
+        }
+        if(currentCell.gridPos.y < gridPos.y)
+        {
+            return !(isLeftWallActive() && currentCell.isRightWallActive());
+        }
+        if(currentCell.gridPos.y > gridPos.y)
+        {
+            return !(isRightWallActive() && currentCell.isLeftWallActive());
+        }
+        return true;
     }
 }

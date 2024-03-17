@@ -24,7 +24,11 @@ public class JumpScare : MonoBehaviour
 
     AudioSource jumpScareSource;
 
-    bool JumpScareTriggered;
+    [HideInInspector]
+    public bool JumpScareTriggered;
+
+    [HideInInspector]
+    public bool ScareComplete;
 
     [SerializeField]
     float scareTime, crawlScareDelay, jumpScareVol;
@@ -68,6 +72,7 @@ public class JumpScare : MonoBehaviour
     {
         crawling = false;
         JumpScareTriggered = false;
+        ScareComplete = false;
         Crawl.transform.position = initialCrawlPos;
         canvasObj.SetActive(false);
         jumpScareObj.SetActive(false);
@@ -110,5 +115,6 @@ public class JumpScare : MonoBehaviour
         yield return new WaitForSeconds(scareTime);
         jumpScareObj.SetActive(false);
         canvasObj.SetActive(true);
+        ScareComplete = true;
     }
 }
