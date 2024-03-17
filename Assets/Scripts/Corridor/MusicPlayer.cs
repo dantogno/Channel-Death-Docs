@@ -34,8 +34,13 @@ public class MusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void InitMusicPlayer()
+    {
         GoalPos = MazeGenerator.Instance.GetGoalPos();
-        musicSource = GetComponent<AudioSource>();        
+        musicSource = GetComponent<AudioSource>();
         initDis = Vector3.Distance(GoalPos, MazePlayerController.Instance.transform.position);
         initialVolume = musicSource.volume;
         filter = GetComponent<AudioLowPassFilter>();

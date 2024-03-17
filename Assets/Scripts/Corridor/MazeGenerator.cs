@@ -57,13 +57,11 @@ public class MazeGenerator : MonoBehaviour
 
     void InitializeMaze()
     {
+        Instance = this;
         StartMazeGeneration();
         MazeCell[,] endhall = generateEndingHall();
         MazeGrid = concantonate2DArray(MazeGrid, endhall);
-        //AssignPosiions();
         endPoint.transform.position = MazeGrid[0, mazeDepth - 1].transform.position;
-        //Vector3 mp = MazeGrid[(int)((mazeWidth - 1) / 2), (int)((mazeDepth - 1) / 2)].transform.position;
-        //midPoint.transform.position = mp + new Vector3(0, 0, 0);
         instructions.transform.position = MazeGrid[0, 0].transform.position;
         JumpScare.Instance.InitializeJumpscare();
         MazePlayerController.Instance.InitializePlayerLocation();
@@ -73,7 +71,6 @@ public class MazeGenerator : MonoBehaviour
         {
             parentChannel = GetComponentInParent<Channel>();
         }
-        Instance = this;
         numberDisplay.text = PasscodeManager.Instance.Passcode[(int)parentChannel.currentSuit].ToString();
     }
 
