@@ -44,6 +44,8 @@ public class MazePlayerController : MonoBehaviour
     [SerializeField]
     private float footstepPlayRate;
 
+    private float turnTimer;
+
     private void Awake()
     {
         Instance = this;
@@ -131,6 +133,7 @@ public class MazePlayerController : MonoBehaviour
         {
             CameraManager.instance.ToggleCamera();
         }
+        turnTimer = 0f;
     }
 
     // Update is called once per frame
@@ -178,10 +181,12 @@ public class MazePlayerController : MonoBehaviour
             case PlayerState.turning:
                 armVisuals.bobScale = 0;
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetQuaternion, turnSpeed * Time.deltaTime);
-                if (Quaternion.Dot(transform.rotation, targetQuaternion) > 0.9999f)
+                turnTimer += Time.deltaTime;
+                if (Quaternion.Dot(transform.rotation, targetQuaternion) > 0.9999f || turnTimer > 1f)
                 {
                     playerState = PlayerState.idle;
                     transform.rotation = targetQuaternion;
+                    turnTimer = 0;
                 }
                 break;
             default:
