@@ -173,7 +173,6 @@ public class GameManager : Singleton<GameManager>
         else
         {    
             float timeMultiplier = isKilling ? deathBeltSpeedMultiplier : 0;
-            Debug.Log(timeMultiplier);
             UpdateKillTimer(timeMultiplier);
             UpdateBeltSpeed(timeMultiplier);
             UpdateVictimPosition(timeMultiplier);
