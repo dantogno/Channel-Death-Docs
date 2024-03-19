@@ -75,7 +75,7 @@ public class InterrogationSceneControler : MonoBehaviour
         //RunTest(3);
     }
 
-    private IEnumerator InterrogationSequenceCoroutine()
+    private IEnumerator InterrogationSequenceCoroutine(string victimName = null)
     {
         isPlaying = true;
         // Detective: confirm your name:
@@ -90,9 +90,12 @@ public class InterrogationSceneControler : MonoBehaviour
         yield return new WaitForSeconds(delayBetweenLines);
 
         // Victim: I'm [name]
-        var rescuedVictims = SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == VictimState.Rescued);
-        var randomVictim = rescuedVictims.ElementAt(UnityEngine.Random.Range(0, rescuedVictims.Count()));
-        closedCaptionText.text = victimPrefix + "I'm " + randomVictim.Name;
+        if (victimName == null)
+        {
+            var rescuedVictims = SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == VictimState.Rescued);
+            victimName = rescuedVictims.ElementAt(UnityEngine.Random.Range(0, rescuedVictims.Count())).Name;
+        }
+        closedCaptionText.text = victimPrefix + "I'm " + victimName;
         closedCaptionText.gameObject.SetActive(true);
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
         yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
@@ -178,7 +181,7 @@ public class InterrogationSceneControler : MonoBehaviour
         return detectivePrefix + clueFollowUpLines.DetectiveIntroLines[UnityEngine.Random.Range(0, clueFollowUpLines.DetectiveIntroLines.Length)];
     }
 
-    public void ShowInterrogationScene()
+    public void ShowInterrogationScene(string mostRecentVictim = null)
     {
         foreach (var renderer in renderers)
         {
@@ -195,7 +198,7 @@ public class InterrogationSceneControler : MonoBehaviour
         {
             SelectVictimModel();
             closedCaptionText.gameObject.SetActive(false);
-            StartCoroutine(InterrogationSequenceCoroutine());
+            StartCoroutine(InterrogationSequenceCoroutine(mostRecentVictim));
         }
         else
         {
@@ -245,16 +248,16 @@ public class InterrogationSceneControler : MonoBehaviour
             SaveSystem.CurrentGameData.VictimHistory.Add(victim.VictimData);
         }
         ShowInterrogationScene();
-        StartCoroutine(TestChannelChange());
+       // StartCoroutine(TestChannelChange());
     }
 
-    private IEnumerator TestChannelChange()
-    {
-        yield return new WaitForSeconds(3);
-        OnChannelExited();
-        yield return new WaitForSeconds(1f);
-        ShowInterrogationScene();
-    }
+    //private IEnumerator TestChannelChange()
+    //{
+    //    yield return new WaitForSeconds(3);
+    //    OnChannelExited();
+    //    yield return new WaitForSeconds(1f);
+    //    ShowInterrogationScene();
+    //}
 
     /// <summary>
     /// Pick a random victim model to use

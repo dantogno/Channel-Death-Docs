@@ -63,7 +63,7 @@ public class GameManager : Singleton<GameManager>
     public static event Action NewVictimSpawned;
     public static event Action WillInterruptBroadcastToChangeToKillingChannel;
     public static event Action ChangedToKillingChannel;
-    public static event Action VictimRescued;
+    public static event Action<string> VictimRescued;
 
     public static float bonusSpeed = 1f;
 
@@ -112,6 +112,9 @@ public class GameManager : Singleton<GameManager>
     private MinigameSelector minigameSelector;
     private bool neverChangedChannel = true;
     public bool IsReadyForEnding => overarchingPuzzleController.IsQuizComplete; //RescuedCount + KillCount >= numberOVictimsToSpawnBoss;
+
+    public int NewsChannelIndex { get; private set; }
+
     private OverarchingPuzzleController overarchingPuzzleController;
     private bool inlossLoad = false;
     private bool inReset = false;
@@ -410,6 +413,10 @@ public class GameManager : Singleton<GameManager>
             {
                 KillingFloorChannelIndex = i;
             }
+            if (channels[i].name == "News Channel")
+            {
+                NewsChannelIndex = i;
+            }
         }
     }
 
@@ -481,6 +488,11 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(ChangeChannel(KillingFloorChannelIndex));
     }
 
+    public void GotoChannel(int index)
+    {
+        StartCoroutine(ChangeChannel(index));
+    }
+
     private void UpdateChannelText()
     {
         if (channelTextCoroutine != null)
@@ -541,6 +553,6 @@ public class GameManager : Singleton<GameManager>
         LastVictimRescuePos = CurrentVictim.transform.position;
         victimIsBeingRescued = true;
         CurrentVictim.State = Victim.VictimState.Rescued;
-        VictimRescued?.Invoke();
+        VictimRescued?.Invoke(CurrentVictim.Name);
     }
 }
