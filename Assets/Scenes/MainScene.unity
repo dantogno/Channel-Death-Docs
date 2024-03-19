@@ -3822,30 +3822,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1832904093}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1846106498 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 73847733482347341, guid: f1086b7b16125c84aaf1a2c1cb53bb00,
-    type: 3}
-  m_PrefabInstance: {fileID: 4222172098084111848}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1846106499 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3068080872854331955, guid: f1086b7b16125c84aaf1a2c1cb53bb00,
     type: 3}
   m_PrefabInstance: {fileID: 4222172098084111848}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1846106500 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6589449723661361420, guid: f1086b7b16125c84aaf1a2c1cb53bb00,
-    type: 3}
-  m_PrefabInstance: {fileID: 4222172098084111848}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846106498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998362ae4181990499a833885cafa0bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1869423085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4441,7 +4423,7 @@ PrefabInstance:
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.size
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
@@ -4517,57 +4499,57 @@ PrefabInstance:
         type: 3}
       propertyPath: channelPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 1846106498}
+      objectReference: {fileID: 1980442548}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 1980442548}
+      objectReference: {fileID: 1586249285}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 1586249285}
+      objectReference: {fileID: 1505371374}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[4]
       value: 
-      objectReference: {fileID: 1505371374}
+      objectReference: {fileID: 1869423087}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[5]
       value: 
-      objectReference: {fileID: 1869423087}
+      objectReference: {fileID: 2066552065}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[6]
       value: 
-      objectReference: {fileID: 2066552065}
+      objectReference: {fileID: 890712733}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[7]
       value: 
-      objectReference: {fileID: 890712733}
+      objectReference: {fileID: 2042889886}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[8]
       value: 
-      objectReference: {fileID: 2042889886}
+      objectReference: {fileID: 1832904095}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[9]
       value: 
-      objectReference: {fileID: 1832904095}
+      objectReference: {fileID: 5068702}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[10]
       value: 
-      objectReference: {fileID: 5068702}
+      objectReference: {fileID: 507860267}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[11]
       value: 
-      objectReference: {fileID: 507860267}
+      objectReference: {fileID: 7983217984124695624}
     - target: {fileID: 4154983523082897676, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: channelPrefabs.Array.data[12]
@@ -4651,48 +4633,48 @@ PrefabInstance:
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.size
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[0]
       value: 
-      objectReference: {fileID: 1846106500}
+      objectReference: {fileID: 1869423088}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[1]
       value: 
-      objectReference: {fileID: 1869423088}
+      objectReference: {fileID: 2042889888}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[2]
       value: 
-      objectReference: {fileID: 2042889888}
+      objectReference: {fileID: 890712735}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[3]
       value: 
-      objectReference: {fileID: 890712735}
+      objectReference: {fileID: 1980442550}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[4]
       value: 
-      objectReference: {fileID: 1980442550}
+      objectReference: {fileID: 507860269}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[5]
       value: 
-      objectReference: {fileID: 507860269}
+      objectReference: {fileID: 1505371376}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[6]
       value: 
-      objectReference: {fileID: 1505371376}
+      objectReference: {fileID: 5068704}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[7]
       value: 
-      objectReference: {fileID: 5068704}
+      objectReference: {fileID: 7983217984124695625}
     - target: {fileID: 8970025992810310895, guid: 531fa3e76924f5e4195f57ca9d1159ed,
         type: 3}
       propertyPath: minigamePossibilities.Array.data[8]

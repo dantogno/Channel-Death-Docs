@@ -494,9 +494,21 @@ public class GameManager : Singleton<GameManager>
             BlockChannelInput = false;
     }
 
+    [ContextMenu("RandomChannel")]
     public void GoToRandomChannel()
     {
-        var randomIndex = UnityEngine.Random.Range(0, channels.Length);
+        var Channel = minigameSelector.activeChannels[UnityEngine.Random.Range(0, minigameSelector.activeChannels.Count)];
+        int randomIndex = 0;
+        for (int i = 0; i < channels.Length; i++) {
+            if (Channel == channels[i]) {
+                randomIndex = i;
+                if (randomIndex == ChannelIndex) {
+                    randomIndex = 0;
+                }
+                break;
+            }
+        }
+
         StartCoroutine(ChangeChannel(randomIndex));
     }
 
