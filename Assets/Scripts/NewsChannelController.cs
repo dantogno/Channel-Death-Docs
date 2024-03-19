@@ -30,6 +30,8 @@ public class NewsChannelController : MonoBehaviour
     private bool shouldShowInterrogation = false;
     private int rescueQueue = 0;
     private bool isScenarioOverviewPlaying = false;
+
+    public string mostRecentVictim = null;
     
 
     /// <summary>
@@ -39,7 +41,8 @@ public class NewsChannelController : MonoBehaviour
     {
         if (shouldShowInterrogation || rescueQueue > 0)
         {
-            interrogation.ShowInterrogationScene();
+            interrogation.ShowInterrogationScene(mostRecentVictim);
+            mostRecentVictim = null;
         }
         else
         {
@@ -69,9 +72,17 @@ public class NewsChannelController : MonoBehaviour
         isScenarioOverviewPlaying = false;
     }
 
-    private void OnVictimRescued()
+    private void OnVictimRescued(string victimName)
     {
         rescueQueue++;
+        mostRecentVictim = victimName;
+        StartCoroutine(SwitchToInterrogationAfterDelay());
+    }
+
+    private IEnumerator SwitchToInterrogationAfterDelay()
+    {
+        yield return new WaitForSeconds(10);
+        GameManager.Instance.GotoChannel(GameManager.Instance.NewsChannelIndex);
     }
 
     private void OnInterrogationSequenceFnished()
