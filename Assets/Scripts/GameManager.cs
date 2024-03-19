@@ -33,7 +33,7 @@ public class GameManager : Singleton<GameManager>
 
     [Tooltip("These should be in the scene, we don't instantiate them in code.")]
     [SerializeField]
-    private GameObject[] channelPrefabs;   
+    public GameObject[] channelPrefabs;   
 
     [Tooltip("How long to wait before spawning a new victim after the previous one dies or is rescued.")]
     public float DelayInSecondsBetweenVictims = 5;
@@ -424,15 +424,15 @@ public class GameManager : Singleton<GameManager>
     {
         if (BlockChannelInput)
             return;
-
-        if (ChannelIndex == channels.Length - 1)
-        {
-            StartCoroutine(ChangeChannel(0));
-        }
-        else
-        {
-            StartCoroutine(ChangeChannel(ChannelIndex + 1));
-        }
+        StartCoroutine(ChangeChannel(GetNextChannel(true)));
+        //if (ChannelIndex == channels.Length - 1)
+        //{
+        //    StartCoroutine(ChangeChannel(0));
+        //}
+        //else
+        //{
+        //    StartCoroutine(ChangeChannel(ChannelIndex + 1));
+        //}
     }
 
     public void ChannelDown()
@@ -440,14 +440,38 @@ public class GameManager : Singleton<GameManager>
         if (BlockChannelInput)
             return;
 
-        if (ChannelIndex == 0)
-        {
-            StartCoroutine(ChangeChannel(channels.Length - 1));
+        StartCoroutine(ChangeChannel(GetNextChannel(false)));
+        //if (ChannelIndex == 0)
+        //{
+        //    StartCoroutine(ChangeChannel(channels.Length - 1));
+        //}
+        //else
+        //{
+            
+        //    StartCoroutine(ChangeChannel(ChannelIndex - 1));
+        //}
+    }
+
+    public int GetNextChannel(bool up)
+    {
+        bool correct = false;
+        int nextIndex = up? 1: -1;
+        while (!correct) {
+            if (ChannelIndex + nextIndex < channels.Length && ChannelIndex + nextIndex > 0 && minigameSelector.activeChannels.Contains(channels[ChannelIndex + nextIndex])) {
+                correct = true;
+                nextIndex = ChannelIndex + nextIndex;
+            } else {
+                nextIndex += up ? 1 : -1;
+                if (nextIndex + ChannelIndex > channels.Length) {
+                    nextIndex = -ChannelIndex;
+                }
+                if (nextIndex + ChannelIndex < 0) {
+                    nextIndex = channels.Length - ChannelIndex;
+                    
+                }
+            }
         }
-        else
-        {
-            StartCoroutine(ChangeChannel(ChannelIndex - 1));
-        }
+        return nextIndex;
     }
 
     private IEnumerator ChangeChannel(int newIndex)
@@ -477,9 +501,21 @@ public class GameManager : Singleton<GameManager>
             BlockChannelInput = false;
     }
 
+    [ContextMenu("RandomChannel")]
     public void GoToRandomChannel()
     {
-        var randomIndex = UnityEngine.Random.Range(0, channels.Length);
+        var Channel = minigameSelector.activeChannels[UnityEngine.Random.Range(0, minigameSelector.activeChannels.Count)];
+        int randomIndex = 0;
+        for (int i = 0; i < channels.Length; i++) {
+            if (Channel == channels[i]) {
+                randomIndex = i;
+                if (randomIndex == ChannelIndex) {
+                    randomIndex = 0;
+                }
+                break;
+            }
+        }
+
         StartCoroutine(ChangeChannel(randomIndex));
     }
 

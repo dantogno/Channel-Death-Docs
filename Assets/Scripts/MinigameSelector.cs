@@ -10,6 +10,9 @@ public class MinigameSelector : MonoBehaviour
     private List<Channel> usedGames = new List<Channel>();
     private List<Channel> availableGames = new List<Channel>();
 
+    [HideInInspector]
+    public List<Channel> activeChannels = new List<Channel>();
+
     public Channel staticChannel;
 
     [Tooltip("This should match the order of the suit enum")]
@@ -20,7 +23,16 @@ public class MinigameSelector : MonoBehaviour
         foreach (Channel chan in minigamePossibilities) {
             availableGames.Add(chan);
         }
+        ResetChannels();
         PasscodeManager.NewPasscodeSet += NewPasscodeSet;
+    }
+
+
+    public void ResetChannels()
+    {
+        foreach (GameObject go in GameManager.Instance.channelPrefabs) {
+            activeChannels.Add(go.GetComponent<Channel>());
+        }
     }
 
     void NewPasscodeSet(string str)
@@ -30,6 +42,7 @@ public class MinigameSelector : MonoBehaviour
 
     public void SelectMiniGames()
     {
+        ResetChannels();
         if (activeGames.Count == 0) {
             for (int i = 0; i < 4; i++) {
                 PickOneGame();
@@ -54,6 +67,11 @@ public class MinigameSelector : MonoBehaviour
             int random = Random.Range(0, nums.Count);
             chan.SetSuit(suitSprites[nums[random]], nums[random]);
             nums.RemoveAt(random);
+        }
+        for (int i = activeChannels.Count - 1; i > 0; i--) {
+            if (minigamePossibilities.Contains(activeChannels[i]) && !activeGames.Contains(activeChannels[i])) {
+                activeChannels.RemoveAt(i);
+            }
         }
     }
 
