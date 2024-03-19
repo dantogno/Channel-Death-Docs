@@ -589,6 +589,7 @@ public class GameManager : Singleton<GameManager>
         LastVictimRescuePos = CurrentVictim.transform.position;
         victimIsBeingRescued = true;
         CurrentVictim.State = Victim.VictimState.Rescued;
+        BlockChannelInput = true;
         VictimRescued?.Invoke(CurrentVictim.Name);
     }
 }

@@ -95,7 +95,7 @@ public class InterrogationSceneControler : MonoBehaviour
             var rescuedVictims = SaveSystem.CurrentGameData.VictimHistory.Where(v => v.State == VictimState.Rescued);
             victimName = rescuedVictims.ElementAt(UnityEngine.Random.Range(0, rescuedVictims.Count())).Name;
         }
-        closedCaptionText.text = victimPrefix + "I'm " + victimName;
+        closedCaptionText.text = victimPrefix + "I'm " + "<color=yellow>" + victimName + "</color>";
         closedCaptionText.gameObject.SetActive(true);
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
         yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
@@ -133,6 +133,8 @@ public class InterrogationSceneControler : MonoBehaviour
         closedCaptionBG.SetActive(closedCaptionText.gameObject.activeSelf);
         //yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
         // we can probably just leave the last line up? or should we clear it?
+        yield return new WaitForSeconds(delayBetweenLines);
+        GameManager.Instance.GoToKillingFloorChannel(); 
         isPlaying = false;
         currentVictim = null;
         InterrogationSequenceFinished?.Invoke();

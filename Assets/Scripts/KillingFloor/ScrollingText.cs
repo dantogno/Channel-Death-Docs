@@ -73,7 +73,7 @@ public class ScrollingText : MonoBehaviour
         }
         else
         {
-            text.text = $"Oh no! {GameManager.Instance.CurrentVictim.Name} has died! More blood on your hands...";
+            text.text = $"Oh no! <color=red>{GameManager.Instance.CurrentVictim.Name}</color> has died! More blood on your hands...";
         }
         RefreshTextNow();
     }
@@ -89,7 +89,7 @@ public class ScrollingText : MonoBehaviour
                 text.text = $"You have done well. I am free. I will not forget your kindness.";
             }
             else
-                text.text = $"Correct! {GameManager.Instance.CurrentVictim.Name} has been set free. But another head will be on the chopping block soon...";
+                text.text = $"Correct! <color=yellow>{GameManager.Instance.CurrentVictim.Name}</color> has been set free. But another head will be on the chopping block soon...";
         }
         else 
         {

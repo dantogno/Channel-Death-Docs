@@ -209,7 +209,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  DelayInSecondsBetweenVictims: 10
+  DelayInSecondsBetweenVictims: 11
   breakingNewsUI: {fileID: 5948043151081247356}
   bloodStream: {fileID: 0}
   bloodBurst: {fileID: 0}
@@ -361,6 +361,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  activeChannels: []
   staticChannel: {fileID: 0}
   suitSprites:
   - {fileID: 21300000, guid: 479dd64eed4e1c547b5549b03e6466cd, type: 3}

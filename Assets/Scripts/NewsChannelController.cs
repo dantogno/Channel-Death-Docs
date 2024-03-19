@@ -74,6 +74,7 @@ public class NewsChannelController : MonoBehaviour
 
     private void OnVictimRescued(string victimName)
     {
+        if (victimName == GameManager.Instance.KillerName) { return; }
         rescueQueue++;
         mostRecentVictim = victimName;
         StartCoroutine(SwitchToInterrogationAfterDelay());
