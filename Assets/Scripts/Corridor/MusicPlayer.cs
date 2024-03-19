@@ -27,6 +27,9 @@ public class MusicPlayer : MonoBehaviour
 
     AudioLowPassFilter filter;
     AudioReverbFilter reverbFilter;
+
+    public TMPro.TMP_Text distanceText;
+
     private void Awake()
     {
         instance = this;
@@ -59,6 +62,11 @@ public class MusicPlayer : MonoBehaviour
         if (!MazeGenerator.Instance.IsPlayerInEndingHall())
         {
             float dis = Vector3.Distance(GoalPos, MazePlayerController.Instance.transform.position);
+            if (dis >= 1.5) {
+                distanceText.text = "DISTANCE TO EXIT\n" + ((int)dis).ToString();
+            } else {
+                distanceText.text = "DISTANCE TO EXIT\n" + "????";
+            }
             float ratio = dis / initDis;
             float weight = (1 - ratio);
             Mathf.Clamp(weight, 0, 1);
