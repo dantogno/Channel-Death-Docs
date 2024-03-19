@@ -19,4 +19,9 @@ public class TweenUIImageAlpha : MonoBehaviour
         // Fade out the image from 1 to 0 in 1 second
         LeanTween.alpha(image.rectTransform, 1f, tweenDuration).setEaseInCubic().setLoopPingPong();
     }
+
+    private void OnDisable()
+    {
+        LeanTween.cancel(image.rectTransform);
+    }
 }

@@ -116,6 +116,7 @@ public class ScaryDeathManager : MonoBehaviour
         StopAllCoroutines();
         EnemySpawner.Instance.DestroyEnemies();
         PlayerCarController.Instance.ResetPlayerCar();
+        PlayerCarController.Instance.CompletedMiniGame = false;
         slendyScare.SetActive(false);
         BlackScreen.SetActive(false);
         gathering.SetActive(false);

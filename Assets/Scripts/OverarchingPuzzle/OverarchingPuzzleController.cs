@@ -84,6 +84,9 @@ public class OverarchingPuzzleController : MonoBehaviour
     {
         quizIsStarted = false;
         currentQuestionIndex = 0;
+        foreach (Image image in progressDots) {
+            LeanTween.cancel(image.gameObject);
+        }
         lockOutTimerInSeconds = lockOutTimeInMinutes * 60;
     }
 

@@ -114,6 +114,7 @@ public class GameManager : Singleton<GameManager>
     public bool IsReadyForEnding => overarchingPuzzleController.IsQuizComplete; //RescuedCount + KillCount >= numberOVictimsToSpawnBoss;
     private OverarchingPuzzleController overarchingPuzzleController;
     private bool inlossLoad = false;
+    private bool inReset = false;
 
     //protected override void Awake()
     //{
@@ -173,7 +174,6 @@ public class GameManager : Singleton<GameManager>
         else
         {    
             float timeMultiplier = isKilling ? deathBeltSpeedMultiplier : 0;
-            Debug.Log(timeMultiplier);
             UpdateKillTimer(timeMultiplier);
             UpdateBeltSpeed(timeMultiplier);
             UpdateVictimPosition(timeMultiplier);
@@ -184,7 +184,7 @@ public class GameManager : Singleton<GameManager>
             BlockChannelInput = true;
         }
 
-        if (!currentVictimIsDead && TimeUntilNextKill <= 0 && !waitingToChangeToKillingFloor)
+        if (!currentVictimIsDead && TimeUntilNextKill <= 0 && !waitingToChangeToKillingFloor && !inReset)
         {
             BlockChannelInput = true;
             waitingToKillVictim = true;
@@ -229,9 +229,11 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator SetUpNewVictimAfterDelayCoroutine()
     {
+        inReset = true;
         yield return new WaitForSeconds(DelayInSecondsBetweenVictims);
         SetUpNextVictim();
         waitingToKillVictim = false;
+        inReset = false;
     }
 
     private IEnumerator DisableBloodAfterDelay()
