@@ -457,7 +457,7 @@ public class GameManager : Singleton<GameManager>
         bool correct = false;
         int nextIndex = up? 1: -1;
         while (!correct) {
-            if (ChannelIndex + nextIndex < channels.Length && ChannelIndex + nextIndex > 0 && minigameSelector.activeChannels.Contains(channels[ChannelIndex + nextIndex])) {
+            if (ChannelIndex + nextIndex < channels.Length && ChannelIndex + nextIndex >= 0 && minigameSelector.activeChannels.Contains(channels[ChannelIndex + nextIndex])) {
                 correct = true;
                 nextIndex = ChannelIndex + nextIndex;
             } else {
