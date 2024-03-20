@@ -2600,6 +2600,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2071890596}
     m_Modifications:
+    - target: {fileID: 158736000403932345, guid: eb76fd023eca1914b84d862b18b11541,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 158736000403932345, guid: eb76fd023eca1914b84d862b18b11541,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 611784928233326490, guid: eb76fd023eca1914b84d862b18b11541,
         type: 3}
       propertyPath: m_Mesh
