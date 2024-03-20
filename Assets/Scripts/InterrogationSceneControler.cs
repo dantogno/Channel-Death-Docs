@@ -37,6 +37,8 @@ public class InterrogationSceneControler : MonoBehaviour
     private GameObject currentVictim = null;
     
     public event Action InterrogationSequenceFinished;
+    
+    public Coroutine MainSequenceCoroutine { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -134,10 +136,25 @@ public class InterrogationSceneControler : MonoBehaviour
         //yield return new WaitForSeconds(readingTimePerCharacter * closedCaptionText.text.Length);
         // we can probably just leave the last line up? or should we clear it?
         yield return new WaitForSeconds(delayBetweenLines);
-        GameManager.Instance.GoToKillingFloorChannel(); 
         isPlaying = false;
         currentVictim = null;
         InterrogationSequenceFinished?.Invoke();
+        // if the current channel is the interrogation scene, change the channel to the killing floor
+        if(GameManager.Instance.ChannelIndex == GameManager.Instance.NewsChannelIndex)
+        {
+            GameManager.Instance.GoToKillingFloorChannel();
+        }
+    }
+
+    public void CancelSequence()
+    {
+        if (MainSequenceCoroutine != null)
+        {
+            StopCoroutine(MainSequenceCoroutine);
+            MainSequenceCoroutine = null;
+            isPlaying = false;
+            currentVictim = null;
+        }
     }
 
     private string GetVictimFollowUpLine()
@@ -200,7 +217,7 @@ public class InterrogationSceneControler : MonoBehaviour
         {
             SelectVictimModel();
             closedCaptionText.gameObject.SetActive(false);
-            StartCoroutine(InterrogationSequenceCoroutine(mostRecentVictim));
+            MainSequenceCoroutine = StartCoroutine(InterrogationSequenceCoroutine(mostRecentVictim));
         }
         else
         {

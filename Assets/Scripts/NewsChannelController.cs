@@ -83,6 +83,7 @@ public class NewsChannelController : MonoBehaviour
     private IEnumerator SwitchToInterrogationAfterDelay()
     {
         yield return new WaitForSeconds(10);
+        interrogation.CancelSequence();
         GameManager.Instance.GotoChannel(GameManager.Instance.NewsChannelIndex);
     }
 
