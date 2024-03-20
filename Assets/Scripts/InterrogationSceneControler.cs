@@ -37,6 +37,8 @@ public class InterrogationSceneControler : MonoBehaviour
     private GameObject currentVictim = null;
     
     public event Action InterrogationSequenceFinished;
+    
+    public Coroutine MainSequenceCoroutine { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -144,6 +146,17 @@ public class InterrogationSceneControler : MonoBehaviour
         }
     }
 
+    public void CancelSequence()
+    {
+        if (MainSequenceCoroutine != null)
+        {
+            StopCoroutine(MainSequenceCoroutine);
+            MainSequenceCoroutine = null;
+            isPlaying = false;
+            currentVictim = null;
+        }
+    }
+
     private string GetVictimFollowUpLine()
     {
         return victimPrefix + clueFollowUpLines.VictimFollowUpLines[UnityEngine.Random.Range(0, clueFollowUpLines.VictimFollowUpLines.Length)];
@@ -204,7 +217,7 @@ public class InterrogationSceneControler : MonoBehaviour
         {
             SelectVictimModel();
             closedCaptionText.gameObject.SetActive(false);
-            StartCoroutine(InterrogationSequenceCoroutine(mostRecentVictim));
+            MainSequenceCoroutine = StartCoroutine(InterrogationSequenceCoroutine(mostRecentVictim));
         }
         else
         {
