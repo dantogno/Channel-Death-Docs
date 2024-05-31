@@ -13,7 +13,7 @@ Channel: Death is an installation-based digital escape room where players use a
 
 ## Documentation
 
-- [Portfolio entry](https://www.davidantognoli.com/channel-death/) - Detailed description of the game with annotated game visuals and photography.
+- [Portfolio entry](https://www.davidantognoli.com/channel-death/) - Detailed description of the game with annotated game visuals and photography
 - [Why?](Documentation/Why.md) - High-level reflections on the research objectives of the project
 - [Process journal](https://process.davidantognoli.com/channel-death/channel-death-chat-p1.html) -  A diary of design discussion maintained throughout the project
   - Part [1](https://process.davidantognoli.com/channel-death/channel-death-chat-p1.html) | [2](https://process.davidantognoli.com/channel-death/channel-death-chat-p2.html) | [3](https://process.davidantognoli.com/channel-death/channel-death-chat-p3.html) | [4](https://process.davidantognoli.com/channel-death/channel-death-chat-p4.html) | [5](https://process.davidantognoli.com/channel-death/channel-death-chat-p5.html) | [6](https://process.davidantognoli.com/channel-death/channel-death-chat-p6.html) | [7](https://process.davidantognoli.com/channel-death/channel-death-chat-p7.html)
