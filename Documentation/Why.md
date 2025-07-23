@@ -8,7 +8,7 @@
 2. Must be completed in two weeks.
 3. Project will be exhibited at an in-person event.
 
-The idea of doing a game with a TV remote as the controller was proposed by Ian, and it immediately resonated with me as a great solution to items #1 and #3 above.
+The idea of doing a game with a TV remote as the controller was proposed by Ian Beckman, who I approached as a potential collaborator, and it immediately resonated with me as a great solution to items #1 and #3 above.
 
 ## TV remote as game control interface
 
