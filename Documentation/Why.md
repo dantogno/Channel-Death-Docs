@@ -2,7 +2,7 @@
 
 ## Origins
 
-*Chanel: Death* began as a game jam game for Chicaghoul 2023. This created three original constraints that originally guided the design of the project:
+*Chanel: Death* began as a game jam game for [Chicaghoul 2023](https://itch.io/jam/chicaghoul23). This created three original constraints that originally guided the design of the project:
 
 1. Must be horror or Halloween themed.
 2. Must be completed in two weeks.
